@@ -46,10 +46,8 @@ int main(int argc, char** argv) {
   renderer.init();
 
   while (!glfwWindowShouldClose(window)) {
-    renderer.render();
+    renderer.render(window, glfwGetTime());
     glfwSwapBuffers(window);
-    glfwWaitEventsTimeout(frame_wait_time);
-    CHECK_GLFW("glfwWaitEventsTimeout");
   }
   glfwDestroyWindow(window);
   return 0;
