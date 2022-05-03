@@ -6,8 +6,8 @@
 #include <iostream>
 
 #include "lib/errors.h"
-#include "window_size.h"
 #include "renderer.h"
+#include "window_size.h"
 
 constexpr double frame_wait_time = 0.01;
 
@@ -48,7 +48,8 @@ int main(int argc, char** argv) {
   while (!glfwWindowShouldClose(window)) {
     renderer.render();
     glfwSwapBuffers(window);
-    glfwWaitEvents();
+    glfwWaitEventsTimeout(frame_wait_time);
+    CHECK_GLFW("glfwWaitEventsTimeout");
   }
   glfwDestroyWindow(window);
   return 0;

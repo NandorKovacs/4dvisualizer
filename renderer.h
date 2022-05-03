@@ -14,6 +14,11 @@ class Renderer {
   GLuint vao[NUM_VAOs];
   GLuint vbo[NUM_VBOs];
   GLuint prog;
+
+  float offset = 0;
+  float max_offset = 1.0;
+  bool direction = true;
+  float inc = 0.01;
 };
 
 #endif // VIZ_RENDERER_H
