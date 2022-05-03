@@ -15,10 +15,7 @@ class Renderer {
   GLuint vbo[NUM_VBOs];
   GLuint prog;
 
-  float offset = 0;
-  float max_offset = 1.0;
-  bool direction = true;
-  float inc = 0.01;
+  glm::vec3 camera_loc = glm::vec3(0.0, 0.0, 8.0);
 };
 
 #endif // VIZ_RENDERER_H
