@@ -15,5 +15,5 @@ void Renderer::init() {
 
 void Renderer::render() {
   glPointSize(30.0f);
-  glDrawArrays(GL_POINTS, 0, 1);
+  glDrawArrays(GL_TRIANGLES, 0, 3);
 }
