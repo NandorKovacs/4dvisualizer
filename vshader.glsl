@@ -1,4 +1,5 @@
-#version 330
+#version 410
+
 layout (location=0) in vec3 position;
 
 uniform mat4 mv_matrix;

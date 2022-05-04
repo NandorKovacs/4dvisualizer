@@ -26,8 +26,8 @@ class Renderer {
   float aspect;
   glm::mat4 pMat, vMat, mMat, mvMat;
 
-  glm::vec3 camera_loc = glm::vec3(0.0f, 0.0f, 8.0f);
-  glm::vec3 cube_loc = glm::vec3(0.0f, -2.0f, 0.0f);
+  glm::vec3 camera_loc = glm::vec3(0.0f, 0.0f, 0.0f);
+  glm::vec3 cube_loc = glm::vec3(0.0f, -4.0f, -8.0f);
 };
 
 #endif  // VIZ_RENDERER_H

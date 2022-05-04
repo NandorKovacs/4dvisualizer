@@ -53,10 +53,10 @@ void Renderer::init() {
 void Renderer::render(GLFWwindow* window, double currentTime) {
   glClear(GL_DEPTH_BUFFER_BIT);
   CHECK_GL();
-  glClearColor(1.0, 1.0, 1.0, 1.0);
-  CHECK_GL();
-  glClear(GL_COLOR_BUFFER_BIT);
-  CHECK_GL();
+  // glClearColor(1.0, 1.0, 1.0, 1.0);
+  // CHECK_GL();
+  // glClear(GL_COLOR_BUFFER_BIT);
+  // CHECK_GL();
 
   glUseProgram(prog);
   CHECK_GL();
