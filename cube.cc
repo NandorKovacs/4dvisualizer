@@ -43,19 +43,18 @@ int main(int argc, char** argv) {
 
   WindowSizeTracker window_size{window};
   Renderer renderer;
-  renderer.init();
-
-  std::cerr << "init done" << std::endl;
-
-  int frame_count = 0;
+  renderer.init(window_size.get());
 
   while (!glfwWindowShouldClose(window)) {
-    renderer.render(window, glfwGetTime());
-    // std::cerr << "render " << frame_count << std::endl;
-    ++frame_count;
+    if (window_size.should_update()) {
+      renderer.set_size(window_size.get());
+    }
+    renderer.render(glfwGetTime());
 
     glfwPollEvents();
     CHECK_GLFW("poll events");
+    glfwSwapBuffers(window);
+    CHECK_GLFW("bufferswap");
   }
   glfwDestroyWindow(window);
   return 0;

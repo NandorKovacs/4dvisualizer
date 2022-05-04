@@ -2,7 +2,6 @@
 #define VIZ_RENDERER_H
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 
@@ -11,8 +10,9 @@
 
 class Renderer {
  public:
-  void init();
-  void render(GLFWwindow* window, double currentTime);
+  void init(glm::ivec2 size);
+  void render(double currentTime);
+  void set_size(glm::ivec2 size);
 
  private:
   void setup_vertices();
@@ -22,7 +22,7 @@ class Renderer {
   GLuint prog;
 
   GLuint mvLoc, projLoc;
-  int width, height;
+  glm::ivec2 window_size;
   float aspect;
   glm::mat4 pMat, vMat, mMat, mvMat, rotMat, tiltMat;
 

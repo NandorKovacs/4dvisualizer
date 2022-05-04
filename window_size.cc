@@ -30,13 +30,21 @@ WindowSizeTracker::WindowSizeTracker(GLFWwindow* window) : window(window) {
   CHECK_GLFW("glfwSetWindowSizeCallback");
 
   trackers[window] = this;
+  did_change = false;
 }
 
 void WindowSizeTracker::on_size_changed(int width, int height) {
   size.x = width;
   size.y = height;
+  did_change = true;
 }
 
 glm::ivec2 WindowSizeTracker::get() const {
   return size;
+}
+
+bool WindowSizeTracker::should_update() {
+  bool old_did_change = did_change;
+  did_change = false;
+  return old_did_change;
 }

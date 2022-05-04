@@ -1,7 +1,6 @@
 #include "renderer.h"
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #include <cmath>
 #include <glm/glm.hpp>
@@ -45,13 +44,14 @@ void Renderer::setup_vertices() {
   CHECK_GL();
 }
 
-void Renderer::init() {
+void Renderer::init(glm::ivec2 size) {
   prog = create_shader_program("vshader.glsl", "fshader.glsl");
 
   setup_vertices();
+  window_size = size;
 }
 
-void Renderer::render(GLFWwindow* window, double currentTime) {
+void Renderer::render(double currentTime) {
   ++roation_count;
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
@@ -70,10 +70,10 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
   projLoc = glGetUniformLocation(prog, "proj_matrix");
   CHECK_GL();
 
-  glfwGetFramebufferSize(window, &width, &height);
-  CHECK_GLFW("get frame buffer size");
+  // glfwGetFramebufferSize(window, &width, &height);
+  // CHECK_GLFW("get frame buffer size");
 
-  aspect = (float)width / (float)height;
+  aspect = (float)window_size.x / (float)window_size.y;
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
   vMat = glm::translate(glm::mat4(1.0f), camera_loc);
@@ -105,6 +105,8 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
   CHECK_GL();
   glDrawArrays(GL_TRIANGLES, 0, 36);
   CHECK_GL();
-  glfwSwapBuffers(window);
-  CHECK_GLFW("bufferswap");
+}
+
+void Renderer::set_size(glm::ivec2 size) {
+  window_size = size;
 }
