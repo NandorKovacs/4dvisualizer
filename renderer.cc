@@ -52,6 +52,11 @@ void Renderer::init() {
 
 void Renderer::render(GLFWwindow* window, double currentTime) {
   glClear(GL_DEPTH_BUFFER_BIT);
+  CHECK_GL();
+  glClearColor(1.0, 1.0, 1.0, 1.0);
+  CHECK_GL();
+  glClear(GL_COLOR_BUFFER_BIT);
+  CHECK_GL();
 
   glUseProgram(prog);
   CHECK_GL();
@@ -73,10 +78,7 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
 
   mvMat = vMat * mMat;
 
-  // std::cerr << pMat << std::endl
-  //           << vMat << std::endl
-  //           << mMat << std::endl
-  //           << mvMat << std::endl;
+  std::cerr << mvMat * pMat * glm::vec4(-1, -1, -1, 0) << std::endl;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
@@ -95,4 +97,6 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
   CHECK_GL();
   glDrawArrays(GL_TRIANGLES, 0, 36);
   CHECK_GL();
+  glfwSwapBuffers(window);
+  CHECK_GLFW("bufferswap");
 }
