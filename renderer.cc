@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <cmath>
 #include <glm/glm.hpp>
 #include <iostream>
 
@@ -51,6 +52,8 @@ void Renderer::init() {
 }
 
 void Renderer::render(GLFWwindow* window, double currentTime) {
+  ++roation_count;
+  glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
   CHECK_GL();
   // glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -75,6 +78,11 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
 
   vMat = glm::translate(glm::mat4(1.0f), camera_loc);
   mMat = glm::translate(glm::mat4(1.0f), cube_loc);
+  rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
+                       glm::vec3(0.0f, 1.0f, 0.0f));
+  tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f,
+                       glm::vec3(1.0f, 0.0f, 1.0f));
+  mMat = mMat * rotMat * tiltMat;
 
   mvMat = vMat * mMat;
 
