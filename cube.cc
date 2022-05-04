@@ -45,9 +45,20 @@ int main(int argc, char** argv) {
   Renderer renderer;
   renderer.init();
 
+  std::cerr << "init done" << std::endl;
+
+  int frame_count = 0;
+
   while (!glfwWindowShouldClose(window)) {
     renderer.render(window, glfwGetTime());
+    // std::cerr << "render " << frame_count << std::endl;
+    ++frame_count;
+    
     glfwSwapBuffers(window);
+    CHECK_GLFW("bufferswap");
+
+    glfwPollEvents();
+    CHECK_GLFW("poll events");
   }
   glfwDestroyWindow(window);
   return 0;

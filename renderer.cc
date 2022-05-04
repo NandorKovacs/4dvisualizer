@@ -11,17 +11,19 @@
 
 void Renderer::setup_vertices() {
   float vertex_positions[108] = {
-      -1.0f, 1.0f,  -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,  -1.0f, -1.0f, 1.0f,
-      -1.0f, -1.0f, 1.0f,  1.0f,  -1.0f, -1.0f, 1.0f,  -1.0f, 1.0f,  -1.0f,
-      -1.0f, 1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  -1.0f, 1.0f,  -1.0f, 1.0f,
-      1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  -1.0f, 1.0f,  -1.0f, 1.0f,  -1.0f,
-      -1.0f, 1.0f,  1.0f,  1.0f,  1.0f,  -1.0f, -1.0f, 1.0f,  -1.0f, 1.0f,
-      1.0f,  1.0f,  1.0f,  1.0f,  -1.0f, -1.0f, 1.0f,  -1.0f, -1.0f, -1.0f,
-      -1.0f, 1.0f,  1.0f,  -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,  -1.0f, -1.0f,
-      1.0f,  1.0f,  -1.0f, -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f,  1.0f,  -1.0f,
-      -1.0f, 1.0f,  -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,
-      -1.0f, 1.0f,  -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  1.0f,
-      1.0f,  1.0f,  -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f,  -1};
+      -1.0f, -1.0f, -1.0f,                       // triangle 1 : begin
+      -1.0f, -1.0f, 1.0f,  -1.0f, 1.0f,  1.0f,   // triangle 1 : end
+      1.0f,  1.0f,  -1.0f,                       // triangle 2 : begin
+      -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,  -1.0f,  // triangle 2 : end
+      1.0f,  -1.0f, 1.0f,  -1.0f, -1.0f, -1.0f, 1.0f,  -1.0f, -1.0f, 1.0f,
+      1.0f,  -1.0f, 1.0f,  -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f,
+      -1.0f, -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f,  -1.0f, 1.0f,  -1.0f, 1.0f,
+      -1.0f, -1.0f, 1.0f,  -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,  1.0f,  -1.0f,
+      -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  -1.0f,
+      -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f,  -1.0f, -1.0f, 1.0f,  1.0f,  1.0f,
+      1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  -1.0f, -1.0f,
+      1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  -1.0f, 1.0f,  -1.0f, -1.0f, 1.0f,
+      1.0f,  1.0f,  1.0f,  1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  -1.0f, 1.0f};
 
   std::cerr << "cubesize: " << sizeof(vertex_positions) << std::endl;
 
@@ -45,12 +47,6 @@ void Renderer::setup_vertices() {
 void Renderer::init() {
   prog = create_shader_program("vshader.glsl", "fshader.glsl");
 
-  glGenVertexArrays(NUM_VAOs, vao);
-  CHECK_GL();
-
-  glBindVertexArray(vao[0]);
-  CHECK_GL();
-
   setup_vertices();
 }
 
@@ -67,6 +63,8 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
   CHECK_GL();
 
   glfwGetFramebufferSize(window, &width, &height);
+  CHECK_GLFW("get frame buffer size");
+
   aspect = (float)width / (float)height;
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
@@ -74,6 +72,11 @@ void Renderer::render(GLFWwindow* window, double currentTime) {
   mMat = glm::translate(glm::mat4(1.0f), cube_loc);
 
   mvMat = vMat * mMat;
+
+  // std::cerr << pMat << std::endl
+  //           << vMat << std::endl
+  //           << mMat << std::endl
+  //           << mvMat << std::endl;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
