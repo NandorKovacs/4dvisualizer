@@ -25,8 +25,6 @@ void Renderer::setup_vertices() {
       1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  -1.0f, 1.0f,  -1.0f, -1.0f, 1.0f,
       1.0f,  1.0f,  1.0f,  1.0f,  -1.0f, 1.0f,  1.0f,  1.0f,  -1.0f, 1.0f};
 
-  std::cerr << "cubesize: " << sizeof(vertex_positions) << std::endl;
-
   glGenVertexArrays(1, vao);
   CHECK_GL();
 
@@ -85,8 +83,6 @@ void Renderer::render(double currentTime) {
   mMat = mMat * rotMat * tiltMat;
 
   mvMat = vMat * mMat;
-
-  std::cerr << mvMat * pMat * glm::vec4(-1, -1, -1, 0) << std::endl;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
