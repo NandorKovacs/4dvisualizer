@@ -62,7 +62,7 @@ void Renderer::render(double currentTime) {
   glUseProgram(prog);
   CHECK_GL();
 
-  mvLoc = glGetUniformLocation(prog, "mv_matrix");
+  mvLoc = glGetUniformLocation(prog, "v_matrix");
   CHECK_GL();
 
   projLoc = glGetUniformLocation(prog, "proj_matrix");
@@ -75,17 +75,13 @@ void Renderer::render(double currentTime) {
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
   vMat = glm::translate(glm::mat4(1.0f), camera_loc);
-  mMat = glm::translate(glm::mat4(1.0f), cube_loc);
-  rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
-                       glm::vec3(0.0f, 1.0f, 0.0f));
-  tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f,
-                       glm::vec3(1.0f, 0.0f, 1.0f));
-  mMat = mMat * rotMat * tiltMat;
 
-  mvMat = vMat * mMat;
-
-  glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
+  glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(vMat));
   CHECK_GL();
+  float timefactor = ((float)currentTime);
+  GLuint tfLoc = glGetUniformLocation(prog, "time");
+  glUniform1f(tfLoc, timefactor);
+
   glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
   CHECK_GL();
   glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
@@ -99,7 +95,7 @@ void Renderer::render(double currentTime) {
   CHECK_GL();
   glDepthFunc(GL_LEQUAL);
   CHECK_GL();
-  glDrawArrays(GL_TRIANGLES, 0, 36);
+  glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100000);
   CHECK_GL();
 }
 
