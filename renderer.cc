@@ -99,6 +99,4 @@ void Renderer::render(double currentTime) {
   CHECK_GL();
 }
 
-void Renderer::set_size(glm::ivec2 size) {
-  window_size = size;
-}
+void Renderer::set_size(glm::ivec2 size) { window_size = size; }

@@ -8,12 +8,9 @@
 
 #include "window_size.h"
 
-#include <glm/vec2.hpp>
-
 extern "C" {
 
 void window_size_callback(GLFWwindow* window, int width, int height);
-
 }
 
 class WindowSize {
