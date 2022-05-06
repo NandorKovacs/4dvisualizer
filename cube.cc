@@ -5,6 +5,8 @@
 #include <exception>
 #include <iostream>
 
+#include "camera_manager.h"
+#include "input_handler.h"
 #include "lib/errors.h"
 #include "renderer.h"
 #include "window_size.h"
@@ -42,14 +44,22 @@ int main(int argc, char** argv) {
   }
 
   WindowSizeTracker window_size{window};
+  CameraManager camera_manager;
+  InputHandler input_handler(window, &camera_manager);
   Renderer renderer;
-  renderer.init(window_size.get());
+  renderer.init(window_size.get(), &camera_manager);
 
+  double prev_time = 0;
   while (!glfwWindowShouldClose(window)) {
     if (window_size.should_update()) {
       renderer.set_size(window_size.get());
     }
-    renderer.render(glfwGetTime());
+    double time = glfwGetTime();
+    double time_diff = time - prev_time;
+    prev_time = time;
+
+    camera_manager.tick(time_diff);
+    renderer.render(time);
 
     glfwPollEvents();
     CHECK_GLFW("poll events");

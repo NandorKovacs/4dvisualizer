@@ -4,13 +4,14 @@
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
+#include "camera_manager.h"
 
 #define NUM_VAOs 1
 #define NUM_VBOs 2
 
 class Renderer {
  public:
-  void init(glm::ivec2 size);
+  void init(glm::ivec2 size, CameraManager* camera_manager);
   void render(double currentTime);
   void set_size(glm::ivec2 size);
 
@@ -30,6 +31,8 @@ class Renderer {
   glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, 0.0f);
 
   int roation_count = 0;
+
+  CameraManager* camera_manager;
 };
 
 #endif  // VIZ_RENDERER_H

@@ -8,6 +8,7 @@
 
 #include "lib/errors.h"
 #include "shader_loader.h"
+#include "camera_manager.h"
 
 void Renderer::setup_vertices() {
   float vertex_positions[108] = {
@@ -42,7 +43,7 @@ void Renderer::setup_vertices() {
   CHECK_GL();
 }
 
-void Renderer::init(glm::ivec2 size) {
+void Renderer::init(glm::ivec2 size, CameraManager* camera_manager) {
   prog = create_shader_program("vshader.glsl", "fshader.glsl");
 
   setup_vertices();
