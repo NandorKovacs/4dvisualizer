@@ -8,7 +8,9 @@ class CameraManager {
   CameraManager();
 
   void set_angle(glm::vec3 angle);
+  glm::vec3 get_angle();
   void set_loc(glm::vec3 loc);
+  glm::vec3 get_loc();
   void tick(double time);
 
   void set_move_speed(glm::vec3 move_speed);

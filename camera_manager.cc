@@ -9,8 +9,14 @@
   void CameraManager::set_angle(glm::vec3 angle) {
     this->angle = angle;
   }
+  glm::vec3 CameraManager::get_angle() {
+    return angle;
+  }
   void CameraManager::set_loc(glm::vec3 loc) {
     this->loc = loc;
+  }
+  glm::vec3 CameraManager::get_loc() {
+    return loc;
   }
   void CameraManager::set_move_speed(glm::vec3 move_speed){
     this->move_speed = move_speed;
