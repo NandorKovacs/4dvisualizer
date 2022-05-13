@@ -23,27 +23,29 @@ static void key_event_callback(GLFWwindow* window, int key, int scancode,
 
 void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
                                  int action, int mods) {
-  
-  
   if (action == GLFW_PRESS) {
     switch (key) {
       case GLFW_KEY_LEFT_SHIFT:
         //camera_manager->set_move_speed(glm::cross(camera_manager->get_angle(), glm));
+        camera_manager->add_move_speed(glm::vec3(0.0, 1.0, 0.0));
         break;
       case GLFW_KEY_LEFT_CONTROL:
-        /* code */
+        camera_manager->add_move_speed(glm::vec3(0.0, -1.0, 0.0));
         break;
+      //what if angle is vertical
+      glm::vec3 angle = camera_manager->get_angle();
+      glm::vec3 znull = glm::normalize(glm::vec3(angle.x, 0.0, angle.y));
       case GLFW_KEY_W:
-        /* code */
+        camera_manager->add_move_speed(znull);
         break;
       case GLFW_KEY_S:
-        /* code */
+        camera_manager->add_move_speed(znull * -1.0f);
         break;
       case GLFW_KEY_A:
-        /* code */
+        camera_manager->add_move_speed(glm::rotate(glm::mat4(1.0), -90.0f, glm::vec3(0.0, 1.0, 0.0)) * glm::vec4(znull, 0.0));
         break;
       case GLFW_KEY_D:
-        /* code */
+      camera_manager->add_move_speed(glm::rotate(glm::mat4(1.0), 90.0f, glm::vec3(0.0, 1.0, 0.0)) * glm::vec4(znull, 0.0));
         break;
       default:
         break;

@@ -1,5 +1,9 @@
 #include "camera_manager.h"
 
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+
+
   CameraManager::CameraManager() {
     loc = glm::vec3(0.0, 0.0, -2.0);
     angle = glm::vec3(0.0, 0.0, -1.0);
@@ -18,8 +22,8 @@
   glm::vec3 CameraManager::get_loc() {
     return loc;
   }
-  void CameraManager::set_move_speed(glm::vec3 move_speed){
-    this->move_speed = move_speed;
+  void CameraManager::add_move_speed(glm::vec3 move_speed){
+    this->move_speed = move_speed + this->move_speed;
   }
   glm::vec3 CameraManager::get_move_speed() {
     return move_speed;
@@ -29,13 +33,21 @@
     return transform;
   }
 
-
-  void CameraManager::calculate_transform() {
-    //do some fun math;
+  void CameraManager::set_euler() {
+    
   }
 
-  void CameraManager::tick(double time) {
-    angle = glm::normalize(angle);
+  void CameraManager::calculate_transform() {
+    
+    
+    transform = * glm::translate(glm::mat4(1.0), loc);
+  }
+
+  void CameraManager::prev_event_tick() {
+    move_speed = glm::vec3(0.0, 0.0, 0.0);
+  }
+
+  void CameraManager::post_event_tick(double time) {
     loc += (move_speed * angle) * (float)time;
 
     calculate_transform();
