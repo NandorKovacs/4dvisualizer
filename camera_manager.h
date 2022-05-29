@@ -12,11 +12,10 @@ class CameraManager {
   void set_loc(glm::vec3 loc);
   glm::vec3 get_loc();
 
-  void prev_event_tick();
   void post_event_tick(double time);
 
-  void add_move_speed(glm::vec3 move_speed);
-  glm::vec3 get_move_speed();
+  void set_move_direction(glm::vec3 move_direction);
+  glm::vec3 get_move_directions();
 
   glm::mat4 get_transform();
   void calculate_transform();
@@ -26,7 +25,7 @@ class CameraManager {
   glm::vec3 loc;
   glm::vec3 angle;
 
-  glm::vec3 move_speed;
+  glm::vec3 move_directions;
   glm::mat4 transform;
 };
 

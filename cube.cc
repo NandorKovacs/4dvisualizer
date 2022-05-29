@@ -57,11 +57,11 @@ int main(int argc, char** argv) {
     double time = glfwGetTime();
     renderer.render(time);
 
-    camera_manager.prev_event_tick();
     glfwPollEvents();
     CHECK_GLFW("poll events");
     double time_diff = time - prev_time;
     prev_time = time;
+    
     camera_manager.post_event_tick(time_diff);
 
     glfwSwapBuffers(window);
