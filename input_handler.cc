@@ -27,10 +27,10 @@ void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
   if (action == GLFW_PRESS) {
     switch (key) {
       case GLFW_KEY_LEFT_SHIFT:
-        camera_manager->set_move_direction(glm::vec3(move_direction.x, move_direction.y, 1));
+        camera_manager->set_move_direction(glm::vec3(move_direction.x, 1, move_direction.z));
         break;
       case GLFW_KEY_LEFT_CONTROL:
-        camera_manager->set_move_direction(glm::vec3(move_direction.x, move_direction.y, -1));
+        camera_manager->set_move_direction(glm::vec3(move_direction.x, -1, move_direction.z));
         break;
       case GLFW_KEY_W:
         camera_manager->set_move_direction(glm::vec3(1, move_direction.y, move_direction.z));
@@ -39,10 +39,10 @@ void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
         camera_manager->set_move_direction(glm::vec3(-1, move_direction.y, move_direction.z));
         break;
       case GLFW_KEY_A:
-        camera_manager->set_move_direction(glm::vec3(move_direction.x, 1, move_direction.z));
+        camera_manager->set_move_direction(glm::vec3(move_direction.x, move_direction.y, 1));
         break;
       case GLFW_KEY_D:
-      camera_manager->set_move_direction(glm::vec3(move_direction.x, -1, move_direction.z));
+        camera_manager->set_move_direction(glm::vec3(move_direction.x, move_direction.y, -1));
         break;
       default:
         break;

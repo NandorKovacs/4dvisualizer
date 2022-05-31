@@ -33,17 +33,20 @@
     return transform;
   }
 
-  void CameraManager::set_euler() {
-    
-  }
-
   void CameraManager::calculate_transform() {
-    
-    
     transform = glm::translate(glm::mat4(1.0), loc);
   }
 
-  void CameraManager::post_event_tick(double time) {
+  void CameraManager::move() {
+    glm::vec3 move_vec = glm::normalize(move_directions) * speed;
+    glm::mat4 rot_mat = glm::rotate(glm::mat4(1.0), glm::acos(float(glm::dot(glm::vec3(1.0, 0.0, 0), glm::vec3(angle.x, 0, angle.y)))), glm::vec3(0, 1, 0));
+    glm::vec4 res_vec = glm::vec4(move_vec, 0) * rot_mat;
+    move_vec = glm::vec3(res_vec.x, res_vec.y, res_vec.z);
+    loc += move_vec;
+  }
+
+  void CameraManager::tick(double time) {
+    
 
     calculate_transform();
   }
