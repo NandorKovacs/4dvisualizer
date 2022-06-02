@@ -33,10 +33,9 @@ clean:
 lib/lib.a:
 	$(MAKE) -C lib
 
-cube: cube.o renderer.o shader_loader.o window_size.o lib/lib.a
+cube: cube.o renderer.o shader_loader.o window_size.o lib/lib.a camera_manager.o input_handler.o
 
 # to regenerate the following part: g++ -MM *.cc >> Makefile
-
 
 camera_manager.o: camera_manager.cc camera_manager.h
 cube.o: cube.cc camera_manager.h input_handler.h lib/errors.h renderer.h \

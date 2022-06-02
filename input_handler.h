@@ -1,6 +1,8 @@
 #ifndef VIZ_INPUT_HANDLER
 #define VIZ_INPUT_HANDLER
 
+#include <GL/glew.h>
+
 #include <GLFW/glfw3.h>
 #include "camera_manager.h"
 
