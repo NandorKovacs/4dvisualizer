@@ -1,7 +1,7 @@
 #ifndef VIZ_CAMERA_MANAGER
 #define VIZ_CAMERA_MANAGER
 
-#include "glm/glm.hpp";
+#include "glm/glm.hpp"
 
 class CameraManager {
  public:

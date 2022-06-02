@@ -63,7 +63,7 @@ void Renderer::render(double currentTime) {
   glUseProgram(prog);
   CHECK_GL();
 
-  mvLoc = glGetUniformLocation(prog, "v_matrix");
+  mvLoc = glGetUniformLocation(prog, "mv_matrix");
   CHECK_GL();
 
   projLoc = glGetUniformLocation(prog, "proj_matrix");
@@ -75,14 +75,18 @@ void Renderer::render(double currentTime) {
   aspect = (float)window_size.x / (float)window_size.y;
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
-  vMat = glm::translate(glm::mat4(1.0f), camera_loc);
+  vMat = camera_manager->get_transform();
+  mMat = glm::translate(glm::mat4(1.0f), cube_loc);
+  rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
+                       glm::vec3(0.0f, 1.0f, 0.0f));
+  tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f,
+                       glm::vec3(1.0f, 0.0f, 1.0f));
+  mMat = mMat * rotMat * tiltMat;
 
-  glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(vMat));
+  mvMat = vMat * mMat;
+
+  glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
-  float timefactor = ((float)currentTime);
-  GLuint tfLoc = glGetUniformLocation(prog, "time");
-  glUniform1f(tfLoc, timefactor);
-
   glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
   CHECK_GL();
   glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
@@ -96,8 +100,7 @@ void Renderer::render(double currentTime) {
   CHECK_GL();
   glDepthFunc(GL_LEQUAL);
   CHECK_GL();
-  glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100000);
+  glDrawArrays(GL_TRIANGLES, 0, 36);
   CHECK_GL();
 }
-
 void Renderer::set_size(glm::ivec2 size) { window_size = size; }

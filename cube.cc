@@ -1,4 +1,3 @@
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <cstdlib>
@@ -62,7 +61,7 @@ int main(int argc, char** argv) {
     double time_diff = time - prev_time;
     prev_time = time;
     
-    camera_manager.post_event_tick(time_diff);
+    camera_manager.tick(time_diff);
 
     glfwSwapBuffers(window);
     CHECK_GLFW("bufferswap");
