@@ -76,7 +76,6 @@ void Renderer::render(double currentTime) {
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
   vMat = camera_manager->get_transform();
-  // !vmat 0, why?
 
   mMat = glm::translate(glm::mat4(1.0f), cube_loc);
   rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
@@ -87,10 +86,7 @@ void Renderer::render(double currentTime) {
 
   mvMat = vMat * mMat;
 
-  std::cout << pMat;
-  std::cout << mMat;
   std::cout << vMat;
-  std::cout << mvMat;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
