@@ -6,9 +6,9 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
+#include "camera_manager.h"
 #include "lib/errors.h"
 #include "shader_loader.h"
-#include "camera_manager.h"
 
 void Renderer::setup_vertices() {
   float vertex_positions[108] = {
@@ -77,17 +77,17 @@ void Renderer::render(double currentTime) {
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
   vMat = camera_manager->get_transform();
-  std::cout << "renderer.cc: vMat\n" << vMat << std::endl;
-
+  // std::cerr << "renderer.cc: vMat\n" << vMat << std::endl;
 
   mMat = glm::translate(glm::mat4(1.0f), cube_loc);
   rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
                        glm::vec3(0.0f, 1.0f, 0.0f));
-  tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f,
-                       glm::vec3(1.0f, 0.0f, 1.0f));
+  tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f, glm::vec3(1.0f, 0.0f, 1.0f));
   mMat = mMat * rotMat * tiltMat;
 
   mvMat = vMat * mMat;
+
+  std::cerr << "renderer.cc: mvMat\n" << mvMat << std::endl;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
