@@ -30,18 +30,21 @@ void CameraManager::calculate_transform() {
   //          << std::endl;
   float angle_rot1 = glm::angle(glm::vec3(angle.x, 0, angle.y), glm::vec3(1.0, 0.0, 0.0));
   glm::mat4 rot = glm::rotate(glm::mat4(1.0), angle_rot1, glm::vec3(0, 1, 0));
-  // std::cerr << "rot: " << rot << "---" << angle_rot1 << "---" << std::endl;
+  // DLOG << "angle1 " << angle_rot1 << std::endl;
+  // DLOG << "rot1 " << rot << std::endl;
 
   float angle_rot2 = glm::angle(glm::vec3(angle.x, 0, angle.y), angle);
-  rot = glm::rotate(rot,
+  glm::mat4 rot2 = glm::rotate(glm::mat4(1.0),
                     angle_rot2,
                     glm::vec3(0, 0, 1));
-  // std::cerr << "rot2: " << rot << "---" << angle_rot2 << "---" << std::endl;
-  transform = transform * rot;
-  // std::cerr << "transform2: " << transform << "------" << std::endl;
   
-  DLOG << "angle1 " << angle_rot1 << std::endl;
-  DLOG << "angle2 " << angle_rot2 << std::endl;
+  rot = rot * rot2;
+  // DLOG << "angle2 " << angle_rot2 << std::endl;
+  // DLOG << "rot2 " << rot2 << std::endl;
+  // DLOG << "rot" << rot << std::endl;
+
+  transform = transform * rot;
+  // DLOG << "transform "<< transform << std::endl;
 }
 
 void CameraManager::move() {

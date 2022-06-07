@@ -83,11 +83,11 @@ void Renderer::render(double currentTime) {
   rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
                        glm::vec3(0.0f, 1.0f, 0.0f));
   tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f, glm::vec3(1.0f, 0.0f, 1.0f));
-  mMat = mMat * rotMat * tiltMat;
+  // mMat = mMat * rotMat * tiltMat;
 
   mvMat = vMat * mMat;
 
-  //std::cerr << "renderer.cc: mvMat\n" << mvMat << std::endl;
+  DLOG << "mvmat " << mvMat << std::endl;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
