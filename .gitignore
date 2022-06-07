@@ -2,3 +2,4 @@
 cube
 *.a
 .vscode
+out.txt

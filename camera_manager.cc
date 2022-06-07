@@ -3,6 +3,7 @@
 #include <glm/ext.hpp>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <glm/gtx/vector_angle.hpp>
 
 #include "lib/errors.h"
 
@@ -25,20 +26,19 @@ glm::mat4 CameraManager::get_transform() { return transform; }
 
 void CameraManager::calculate_transform() {
   transform = glm::translate(glm::mat4(1.0), (loc * -1.0f));
-  std::cerr << "transform: " << transform << "------" << std::endl;
-  glm::mat4 rot = glm::rotate(
-      glm::mat4(1.0),
-      -1 * glm::acos(glm::dot(glm::normalize(glm::vec3(angle.x, 0, angle.y)),
-                              glm::vec3(1.0, 0.0, 0.0))),
-      glm::vec3(0, 1, 0));
-  std::cerr << "rot: " << rot << "------" << std::endl;
+  // std::cerr << "transform: " << transform << "--- " << loc << "---"
+  //          << std::endl;
+  float angle_rot1 = glm::angle(glm::vec3(angle.x, 0, angle.y), glm::vec3(1.0, 0.0, 0.0));
+  glm::mat4 rot = glm::rotate(glm::mat4(1.0), angle_rot1, glm::vec3(0, 1, 0));
+  // std::cerr << "rot: " << rot << "---" << angle_rot1 << "---" << std::endl;
+
+  float angle_rot2 = glm::angle(glm::vec3(angle.x, 0, angle.y), angle);
   rot = glm::rotate(rot,
-                    glm::acos(glm::dot(
-                        glm::normalize(glm::vec3(angle.x, 0, angle.y)), angle)),
+                    angle_rot2,
                     glm::vec3(0, 0, 1));
-  std::cerr << "rot2: " << rot << "------" << std::endl;
+  // std::cerr << "rot2: " << rot << "---" << angle_rot2 << "---" << std::endl;
   transform = transform * rot;
-  std::cerr << "transform2: " << transform << "------" << std::endl;
+  // std::cerr << "transform2: " << transform << "------" << std::endl;
 }
 
 void CameraManager::move() {
@@ -56,6 +56,7 @@ void CameraManager::move() {
 // ! be aware of radiant <-> degree bugs
 
 void CameraManager::tick(double time) {
+  std::cerr << "camera_manager.cc: transform\n" << transform << std::endl;
   if (move_directions != glm::vec3(0, 0, 0)) {
     move();
   }
