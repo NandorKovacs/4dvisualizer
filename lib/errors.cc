@@ -71,3 +71,7 @@ void check_glfw(std::string message, std::string file, int line) {
     std::terminate();
   }
 }
+
+void debug_log(std::string message, std::string file, int line) {
+  std::cerr << file << ", line " << line << ": " << message << std::endl;
+}

@@ -53,6 +53,9 @@ std::ostream& operator<<(std::ostream& os, glm::mat<4, 4, T, Q> const& m) {
 
 void check_glfw(std::string message, std::string file, int line);
 
+void debug_log(std::string message, std::string file, int line);
+
 #define CHECK_GLFW(message) check_glfw(message, __FILE__, __LINE__)
 
+#define DLOG std::cerr << __FILE__ << ", line " << __LINE__ << ": "
 #endif  // VIZ_ERRORS_H

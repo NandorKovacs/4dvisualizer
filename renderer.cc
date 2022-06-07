@@ -87,7 +87,7 @@ void Renderer::render(double currentTime) {
 
   mvMat = vMat * mMat;
 
-  std::cerr << "renderer.cc: mvMat\n" << mvMat << std::endl;
+  //std::cerr << "renderer.cc: mvMat\n" << mvMat << std::endl;
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();

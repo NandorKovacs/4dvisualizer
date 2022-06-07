@@ -39,6 +39,9 @@ void CameraManager::calculate_transform() {
   // std::cerr << "rot2: " << rot << "---" << angle_rot2 << "---" << std::endl;
   transform = transform * rot;
   // std::cerr << "transform2: " << transform << "------" << std::endl;
+  
+  DLOG << "angle1 " << angle_rot1 << std::endl;
+  DLOG << "angle2 " << angle_rot2 << std::endl;
 }
 
 void CameraManager::move() {
@@ -56,9 +59,9 @@ void CameraManager::move() {
 // ! be aware of radiant <-> degree bugs
 
 void CameraManager::tick(double time) {
-  std::cerr << "camera_manager.cc: transform\n" << transform << std::endl;
+  // std::cerr << "camera_manager.cc: transform\n" << transform << std::endl;
   if (move_directions != glm::vec3(0, 0, 0)) {
-    move();
+    //move();
   }
 
   calculate_transform();
