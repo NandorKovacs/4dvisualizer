@@ -8,7 +8,7 @@
 #include "lib/errors.h"
 
 CameraManager::CameraManager() {
-  loc = glm::vec3(0.0, 0.0, -2.0);
+  loc = glm::vec3(0.0, 0.0, 0.0);
   angle = glm::vec3(0.0, 0.0, -1.0);
   move_directions = glm::vec3(0.0, 0.0, 0.0);
 }
@@ -58,8 +58,6 @@ void CameraManager::move() {
   move_vec = glm::vec3(res_vec.x, res_vec.y, res_vec.z);
   loc += move_vec * speed;
 }
-
-// ! be aware of radiant <-> degree bugs
 
 void CameraManager::tick(double time) {
   // std::cerr << "camera_manager.cc: transform\n" << transform << std::endl;

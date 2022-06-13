@@ -52,7 +52,6 @@ void Renderer::init(glm::ivec2 size, CameraManager* c_manager) {
 }
 
 void Renderer::render(double currentTime) {
-  ++roation_count;
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
   CHECK_GL();
@@ -77,17 +76,21 @@ void Renderer::render(double currentTime) {
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
   vMat = camera_manager->get_transform();
+
   // std::cerr << "renderer.cc: vMat\n" << vMat << std::endl;
 
   mMat = glm::translate(glm::mat4(1.0f), cube_loc);
-  rotMat = glm::rotate(glm::mat4(1.0f), (float)(fmod(currentTime, 360)),
-                       glm::vec3(0.0f, 1.0f, 0.0f));
-  tiltMat = glm::rotate(glm::mat4(1.0f), 5.0f, glm::vec3(1.0f, 0.0f, 1.0f));
-  // mMat = mMat * rotMat * tiltMat;
+  
+  std::cout << "-------------" << std::endl;
+  DLOG << "vMat manager" << vMat << std::endl;
+  DLOG << "manager " << *camera_manager << std::endl;
+  vMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+  DLOG << "vMat working" << vMat << std::endl;
+  std::cout << "-------------" << std::endl;
+
 
   mvMat = vMat * mMat;
-
-  DLOG << "mvmat " << mvMat << std::endl;
+  
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();

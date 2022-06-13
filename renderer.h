@@ -27,7 +27,7 @@ class Renderer {
   float aspect;
   glm::mat4 pMat, vMat, mMat, mvMat, rotMat, tiltMat;
 
-  glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, 0.0f);
+  glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, -8.0f);
 
   int roation_count = 0;
 
