@@ -79,14 +79,16 @@ void Renderer::render(double currentTime) {
 
   // std::cerr << "renderer.cc: vMat\n" << vMat << std::endl;
 
-  mMat = glm::translate(glm::mat4(1.0f), cube_loc);
+  mMat = glm::rotate(glm::mat4(1.0), 30.0f, glm::vec3(0, 1, 0));
+  mMat = glm::translate(glm::mat4(1.0f), cube_loc) * mMat;
   
-  std::cout << "-------------" << std::endl;
-  DLOG << "vMat manager" << vMat << std::endl;
-  DLOG << "manager " << *camera_manager << std::endl;
-  vMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-  DLOG << "vMat working" << vMat << std::endl;
-  std::cout << "-------------" << std::endl;
+
+  // std::cout << "-------------" << std::endl;
+  // DLOG << "vMat manager" << vMat << std::endl;
+  // DLOG << "manager " << *camera_manager << std::endl;
+  // vMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+  // DLOG << "vMat working" << vMat << std::endl;
+  // std::cout << "-------------" << std::endl;
 
 
   mvMat = vMat * mMat;

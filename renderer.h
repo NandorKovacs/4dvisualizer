@@ -25,11 +25,9 @@ class Renderer {
   GLuint mvLoc, projLoc;
   glm::ivec2 window_size;
   float aspect;
-  glm::mat4 pMat, vMat, mMat, mvMat, rotMat, tiltMat;
+  glm::mat4 pMat, vMat, mMat, mvMat;
 
   glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, -8.0f);
-
-  int roation_count = 0;
 
   CameraManager* camera_manager;
 };

@@ -43,26 +43,28 @@ void CameraManager::calculate_transform() {
   // DLOG << "rot2 " << rot2 << std::endl;
   // DLOG << "rot" << rot << std::endl;
 
-  transform = transform * rot;
+  // transform = transform * rot;
   // DLOG << "transform "<< transform << std::endl;
 }
 
 void CameraManager::move() {
   glm::vec3 move_vec = glm::normalize(move_directions) * speed;
-  glm::mat4 rot_mat = glm::rotate(
-      glm::mat4(1.0),
-      glm::acos(glm::dot(glm::vec3(1.0, 0.0, 0),
-                         glm::normalize(glm::vec3(angle.x, 0, angle.y)))),
-      glm::vec3(0, 1, 0));
-  glm::vec4 res_vec = glm::vec4(move_vec, 0) * rot_mat;
-  move_vec = glm::vec3(res_vec.x, res_vec.y, res_vec.z);
+  // glm::mat4 rot_mat = glm::rotate(
+  //     glm::mat4(1.0),
+  //     glm::acos(glm::dot(glm::vec3(1.0, 0.0, 0),
+  //                        glm::normalize(glm::vec3(angle.x, 0, angle.y)))),
+  //     glm::vec3(0, 1, 0));
+  // glm::vec4 res_vec = glm::vec4(move_vec, 0) * rot_mat;
+  // move_vec = glm::vec3(res_vec.x, res_vec.y, res_vec.z);
   loc += move_vec * speed;
 }
 
 void CameraManager::tick(double time) {
   // std::cerr << "camera_manager.cc: transform\n" << transform << std::endl;
+  
   if (move_directions != glm::vec3(0, 0, 0)) {
-    //move();
+    DLOG << "move_directions: " << move_directions << std::endl;
+    move();
   }
 
   calculate_transform();
