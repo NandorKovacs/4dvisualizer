@@ -27,26 +27,32 @@ void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
   if (action == GLFW_PRESS) {
     switch (key) {
       case GLFW_KEY_LEFT_SHIFT:
+        DLOG << "up" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, 1, move_direction.z));
         break;
       case GLFW_KEY_LEFT_CONTROL:
+        DLOG << "down" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, -1, move_direction.z));
         break;
       case GLFW_KEY_W:
+        DLOG << "forward" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(1, move_direction.y, move_direction.z));
         break;
       case GLFW_KEY_S:
+        DLOG << "backward" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(-1, move_direction.y, move_direction.z));
         break;
       case GLFW_KEY_A:
+        DLOG << "left" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, move_direction.y, 1));
         break;
       case GLFW_KEY_D:
+        DLOG << "right" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, move_direction.y, -1));
         break;
@@ -57,26 +63,32 @@ void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
   if (action == GLFW_RELEASE) {
     switch (key) {
       case GLFW_KEY_LEFT_SHIFT:
+        DLOG << "up_cancel" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, 0, move_direction.z));
         break;
       case GLFW_KEY_LEFT_CONTROL:
+        DLOG << "down_cancel" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, 0, move_direction.z));
         break;
       case GLFW_KEY_W:
+        DLOG << "forward_cancel" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(0, move_direction.y, move_direction.z));
         break;
       case GLFW_KEY_S:
+        DLOG << "backward_cancel" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(0, move_direction.y, move_direction.z));
         break;
       case GLFW_KEY_A:
+        DLOG << "left_cancel" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, move_direction.y, 0));
         break;
       case GLFW_KEY_D:
+        DLOG << "right_cancel" << std::endl;
         camera_manager->set_move_direction(
             glm::vec3(move_direction.x, move_direction.y, 0));
         break;

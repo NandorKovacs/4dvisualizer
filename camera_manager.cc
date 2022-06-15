@@ -63,7 +63,7 @@ void CameraManager::tick(double time) {
   // std::cerr << "camera_manager.cc: transform\n" << transform << std::endl;
   
   if (move_directions != glm::vec3(0, 0, 0)) {
-    DLOG << "move_directions: " << move_directions << std::endl;
+    // DLOG << "move_directions: " << move_directions << std::endl;
     move();
   }
 

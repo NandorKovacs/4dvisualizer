@@ -9,6 +9,7 @@
 #include <glm/vec4.hpp>
 #include <ostream>
 #include <string>
+#include <iostream>
 
 void print_shader_log(GLuint shader);
 void print_program_log(GLuint prog);
