@@ -34,7 +34,7 @@ class CameraManager {
   glm::vec3 move_directions;
   glm::mat4 transform;
 
-  const float speed = 0.1;
+  const float speed = 0.5;
 };
 
 inline std::ostream& operator<<(std::ostream& os, CameraManager m) {
