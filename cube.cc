@@ -43,6 +43,13 @@ int main(int argc, char** argv) {
     std::terminate();
   }
 
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  CHECK_GLFW("glfwSetInputMode");
+  if (glfwRawMouseMotionSupported()) {
+    glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+    CHECK_GLFW("glfwSetInputMode2");
+  }
+
   WindowSizeTracker window_size{window};
   CameraManager camera_manager;
   InputHandler input_handler(window, &camera_manager);
@@ -61,7 +68,7 @@ int main(int argc, char** argv) {
     CHECK_GLFW("poll events");
     double time_diff = time - prev_time;
     prev_time = time;
-    
+
     camera_manager.tick(time_diff);
 
     glfwSwapBuffers(window);
