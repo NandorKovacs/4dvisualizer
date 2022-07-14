@@ -1,0 +1,9 @@
+a class, called 4d_cube
+
+has a method, which takes a reference to a vertex array, and an int which specifies the coordinate of the fourth dimension
+this method places all the vertecies into the array
+
+it has a method which returns the model matrix
+
+it has the location of the cube, in the four dimensional space
+(it has the rotation of the cube, along all four axes)
