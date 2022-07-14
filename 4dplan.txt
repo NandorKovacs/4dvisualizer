@@ -7,3 +7,6 @@ it has a method which returns the model matrix
 
 it has the location of the cube, in the four dimensional space
 (it has the rotation of the cube, along all four axes)
+
+every rendered cube will need an instance of this class. There will be a vector with 4d_cubes. 
+During initiation, the model matrices get stored in an array. If the 4th coordinate of the camera changes, vertices will be refreshed.
