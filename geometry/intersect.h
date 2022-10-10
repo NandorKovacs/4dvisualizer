@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 namespace viz {
+namespace intersect {
 
 struct PointOnEdge {
   glm::vec4 coords;
@@ -19,15 +20,13 @@ struct Hyperplane {
 
 /**
  * @brief Intersects the -1 +1 4d cube with an arbitrary hyperplane.
- * 
+ *
  * @param res Points of intersection.
- * @param plane 
+ * @param plane
  * @return int The number of valid items in res.
  */
-int intersect(std::array<PointOnEdge, 32>& res, Hyperplane const& plane) {
+int intersect(std::array<PointOnEdge, 32>& res, Hyperplane const& plane);
 
-}
-
+}  // namespace intersect
 }  // namespace viz
-0
 #endif  // VIZ_INTERSECT_H
