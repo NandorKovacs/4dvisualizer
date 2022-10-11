@@ -43,12 +43,10 @@ void Renderer::setup_vertices() {
   CHECK_GL();
 }
 
-void Renderer::init(glm::ivec2 size, CameraManager* c_manager) {
-  camera_manager = c_manager;
+Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager) : camera_manager{camera_manager}, window_size{window_size} {
   prog = create_shader_program("vshader.glsl", "fshader.glsl");
 
   setup_vertices();
-  window_size = size;
 }
 
 void Renderer::render(double currentTime) {
@@ -75,7 +73,7 @@ void Renderer::render(double currentTime) {
   aspect = (float)window_size.x / (float)window_size.y;
   pMat = glm::perspective(1.04721f, aspect, 0.1f, 1000.0f);
 
-  vMat = camera_manager->get_transform();
+  vMat = camera_manager.get_transform();
 
   // std::cerr << "renderer.cc: vMat\n" << vMat << std::endl;
 

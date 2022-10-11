@@ -8,7 +8,7 @@
 
 class InputHandler {
  public:
-  InputHandler(GLFWwindow* window, CameraManager* camera_manager);
+  InputHandler(GLFWwindow* window, CameraManager& camera_manager);
 
   void on_key_action(GLFWwindow* window, int key, int scancode, int action,
                      int mods);
@@ -19,7 +19,7 @@ class InputHandler {
   glm::vec2 mouse_pos;
   bool initialized = false;
   GLFWwindow* window;
-  CameraManager* camera_manager;
+  CameraManager& camera_manager;
 };
 
 #endif  // VIZ_INPUT_HANDLER

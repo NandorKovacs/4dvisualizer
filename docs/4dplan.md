@@ -31,6 +31,14 @@ A c++ program is delivered, which
 
 The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
 
+## Design
+
+![4d cube rendering design](./4d_rendering_flow.svg)
+
+- hyperplane is movable along the normal with the F and R keys.
+- the hyperplanes normal is rotatable, by manually adjusting every component of it, 
+  using the Z, U, I, O keys to increment, and the H, J, K, L keys to decrement them.
+
 # Milestone 3: visibility effects
 
 ## Key Results
@@ -44,10 +52,6 @@ about various projection shapes of the 4d cube and use it as an experiment and d
 for subsequent milestones.
 
 With object shading and lighting the rendered picture will be more easily understood by the user. 
-
-## Design
-
-![4d cube rendering design](./4d_rendering_flow.svg)
 
 # Milestone 4: movable 4d cube
 

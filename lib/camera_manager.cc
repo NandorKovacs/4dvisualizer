@@ -14,17 +14,17 @@ CameraManager::CameraManager()
       loc{glm::vec3(0.0, 0.0, 0.0)},
       move_directions{glm::vec3(0.0, 0.0, 0.0)} {}
 
-void CameraManager::set_loc(glm::vec3 loc) { this->loc = loc; }
+// void CameraManager::set_loc(glm::vec3 loc) { this->loc = loc; }
 
-glm::vec3 CameraManager::get_loc() { return loc; }
+// glm::vec3 CameraManager::get_loc() { return loc; }
 
 void CameraManager::set_move_direction(glm::vec3 move_direction) {
   this->move_directions = move_direction;
 }
 
-void CameraManager::rotate(glm::vec2 movement) {
-  pitch += movement.y * turn_speed;
-  yaw += movement.x * turn_speed;
+void CameraManager::rotate(glm::vec2 rot_movement) {
+  pitch += rot_movement.y * turn_speed;
+  yaw += rot_movement.x * turn_speed;
 }
 
 glm::vec3 CameraManager::get_move_directions() { return move_directions; }

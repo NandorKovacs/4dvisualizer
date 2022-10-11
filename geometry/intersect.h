@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <functional>
 #include <glm/glm.hpp>
+#include "geometry.h"
 
 namespace viz {
 namespace intersect {
@@ -96,11 +97,6 @@ class Face {
 struct PointOnEdge {
   glm::vec4 coords;
   std::uint32_t faces = 0;
-};
-
-struct Hyperplane {
-  glm::vec4 normal;
-  glm::vec4 pos;
 };
 
 struct Triangle {

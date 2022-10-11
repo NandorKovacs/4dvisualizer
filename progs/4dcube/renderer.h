@@ -11,7 +11,8 @@
 
 class Renderer {
  public:
-  void init(glm::ivec2 size, CameraManager* camera_manager);
+  Renderer(glm::ivec2 window_size, CameraManager& camera_manager);
+
   void render(double currentTime);
   void set_size(glm::ivec2 size);
 
@@ -29,7 +30,7 @@ class Renderer {
 
   glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, -8.0f);
 
-  CameraManager* camera_manager;
+  CameraManager& camera_manager;
 };
 
 #endif  // VIZ_RENDERER_H

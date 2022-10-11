@@ -52,9 +52,8 @@ int main(int argc, char** argv) {
 
   WindowSizeTracker window_size{window};
   CameraManager camera_manager;
-  InputHandler input_handler(window, &camera_manager);
-  Renderer renderer;
-  renderer.init(window_size.get(), &camera_manager);
+  InputHandler input_handler(window, camera_manager);
+  Renderer renderer{window_size.get(), camera_manager};
 
   double prev_time = 0;
   while (!glfwWindowShouldClose(window)) {

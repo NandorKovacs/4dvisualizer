@@ -1,5 +1,5 @@
-#ifndef VIZ_CAMERA_MANAGER
-#define VIZ_CAMERA_MANAGER
+#ifndef VIZ_CAMERA_MANAGER_H
+#define VIZ_CAMERA_MANAGER_H
 
 #include "glm/glm.hpp"
 #include "errors.h"
@@ -8,7 +8,7 @@ class CameraManager {
  public:
   CameraManager();
 
-  void set_loc(glm::vec3 loc);
+  // void set_loc(glm::vec3 loc);
 
   void tick(double time);
 
@@ -25,7 +25,7 @@ class CameraManager {
   void move();
   void calculate_transform();
 
-  glm::vec3 get_loc();
+  // glm::vec3 get_loc();
   float pitch, yaw;
 
   glm::vec3 loc;
@@ -44,4 +44,4 @@ inline std::ostream& operator<<(std::ostream& os, CameraManager m) {
      << "\ntransform: " << m.transform << "\nspeed: " << m.speed << "\n}";
   return os;
 }
-#endif  // VIZ_CAMERA_MANAGER
+#endif  // VIZ_CAMERA_MANAGER_H
