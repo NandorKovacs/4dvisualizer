@@ -15,7 +15,11 @@ constexpr int max_neghbours = 24;
 
 struct Intersections {
   int count;
-  std::array<glm::vec4, max_intersections> pts;
+  
+  typedef std::array<glm::vec4, max_intersections> vec_t;
+  typedef vec_t::iterator iterator;
+  
+  vec_t pts;
 };
 
 struct FaceContentMap {
@@ -135,7 +139,46 @@ constexpr std::array<Edge, 32> make_edges() {
 }
 constexpr std::array<Edge, 32> edges = make_edges();
 
-int intersect(std::array<PointOnEdge, 32>& res, Hyperplane const& plane) {}
+inline float distance(glm::vec4 const& pt, Hyperplane const& plane) {
+  return glm::dot(pt - plane.pos, plane.normal);
+}
+
+int intersect_edge(Intersections::iterator it, Edge const& e, Hyperplane const& plane) {
+  float da = distance(e.a, plane);
+  float db = distance(e.b, plane);
+
+  int res = 0;
+
+  if (da * db > 0) {
+    return res;
+  }
+
+  if (da == 0) {
+    *it = e.a;
+    ++res;
+    ++it;
+  }
+  if (db == 0) {
+    *it = e.b;
+    ++res;
+    ++it;
+  }
+  if (res > 0) {
+    return res;
+  }
+  da = std::fabs(da);
+  db = std::fabs(db);
+
+  glm::vec4 x = e.a + (e.b - e.a) * (da / (da + db));
+  *it = x;
+  ++res;
+  ++it;
+  return res;
+}
+
+int intersect(std::array<PointOnEdge, 32>& res, Hyperplane const& plane) {
+  
+}
 
 }  // namespace intersect
 }  // namespace viz
