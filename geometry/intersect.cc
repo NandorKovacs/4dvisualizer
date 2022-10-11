@@ -1,12 +1,13 @@
 #include "intersect.h"
 
+#include <iostream>
 #include <cassert>
 
 namespace viz {
 namespace intersect {
 
-constexpr int Face::numerical_id() {
-  if (a == 0 && b == 0) {
+int Face::numerical_id() {
+  int res = [&](){if (a == 0 && b == 0) {
     return 2 * t(c) + t(d);
   } else if (a == 0 && c == 0) {
     return 4 + 2 * t(b) + t(d);
@@ -19,7 +20,9 @@ constexpr int Face::numerical_id() {
   } else if (c == 0 && d == 0) {
     return 20 + 2 * t(a) + t(b);
   }
-  return -1;
+  return -1;}();
+  // std::cerr << "a: " << a << " b: " << b << " c: " << c << " d: " << d << " res: " << res << std::endl;
+  std::cerr << a << " " << b << " " << c << " " << d << " res: " << res << std::endl;
 };
 
 constexpr void Edge::make_faces() {
@@ -33,19 +36,20 @@ constexpr void Edge::make_faces() {
   }();
 
   int idx = 0;
-
   for (int i = 0; i < 4; ++i) {
     if (i == first_zero) {
       continue;
     }
-    auto t = [&](int pos) { return i == pos || i == first_zero ? 0 : a[pos]; };
+    auto t = [&](int pos) { return (i == pos || pos == first_zero) ? 0 : a[pos]; };
+    std::cerr << i << " " << first_zero << std::endl;
+    
     Face f{t(0), t(1), t(2), t(3)};
     faces[idx] = f.numerical_id();
     ++idx;
   }
 }
 
-constexpr std::array<Edge, 32> make_edges() {
+std::array<Edge, 32> make_edges() {
   std::array<Edge, 32> res;
 
   int idx = 0;
@@ -82,7 +86,7 @@ constexpr std::array<Edge, 32> make_edges() {
 
   return res;
 }
-constexpr std::array<Edge, 32> edges = make_edges();
+std::array<Edge, 32> edges = make_edges();
 
 inline float distance(glm::vec4 const& pt, Hyperplane const& plane) {
   return glm::dot(pt - plane.pos, plane.normal);

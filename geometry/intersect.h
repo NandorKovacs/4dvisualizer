@@ -86,7 +86,7 @@ class Face {
    */
   constexpr Face(float a, float b, float c, float d) : a{a}, b{b}, c{c}, d{d} {}
 
-  constexpr int numerical_id();
+  int numerical_id();
 
  private:
   inline int t(int a) { return a == 1 ? a : 0; }
