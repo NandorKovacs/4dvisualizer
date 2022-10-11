@@ -45,6 +45,10 @@ for subsequent milestones.
 
 With object shading and lighting the rendered picture will be more easily understood by the user. 
 
+## Design
+
+![4d cube rendering design](./4d_rendering_flow.svg)
+
 # Milestone 4: movable 4d cube
 
 ## Key results
