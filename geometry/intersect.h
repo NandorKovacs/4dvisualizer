@@ -89,7 +89,7 @@ class Face {
   constexpr int numerical_id();
 
  private:
-  inline int t(int a) { return a == 1 ? a : 0; }
+  inline constexpr int t(int a) { return a == 1 ? a : 0; }
   float a, b, c, d;
 };
 

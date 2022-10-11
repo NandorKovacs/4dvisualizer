@@ -1,6 +1,7 @@
 #include "intersect.h"
 
 #include <cassert>
+#include <iostream>
 
 namespace viz {
 namespace intersect {
@@ -38,7 +39,9 @@ constexpr void Edge::make_faces() {
     if (i == first_zero) {
       continue;
     }
-    auto t = [&](int pos) { return i == pos || i == first_zero ? 0 : a[pos]; };
+    auto t = [&](int pos) {
+      return i == pos || pos == first_zero ? 0 : a[pos];
+    };
     Face f{t(0), t(1), t(2), t(3)};
     faces[idx] = f.numerical_id();
     ++idx;
@@ -130,7 +133,8 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
 
     for (int i = 0; i < n; ++i) {
       face_content_map.insert(e, intersections.count);
-
+      std::cerr << "id: " << intersections.count << " faces: " << e.faces[0]
+                << " " << e.faces[1] << " " << e.faces[2] << std::endl;
       ++intersections.count;
     }
   }
@@ -150,7 +154,7 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
 
 void FaceContentMap::insert(Edge const& e, int idx) {
   for (int face : e.faces) {
-    face_contents[face].add(face);
+    face_contents[face].add(idx);
   }
 }
 
@@ -161,6 +165,8 @@ void NeighboursMap::build(FaceContentMap const& face_content_map) {
     if (count < 2) {
       continue;
     }
+    std::cerr << "face_content_count " << face_content.count << " id0&1 "
+              << face_content.ids[0] << " " << face_content.ids[1] << std::endl;
     insert(face_content.ids[0], face_content.ids[1]);
     if (count == 2) {
       continue;
@@ -178,17 +184,13 @@ void NeighboursMap::build(FaceContentMap const& face_content_map) {
 
 void NeighboursMap::insert(int a, int b) {
   assert(a != b);
-
-  if (b > a) {
-    neighbours[a].add(b);
-    if (a > count) {
-      count = a;
-    }
-    return;
+  neighbours[a].add(b);
+  if (a+1 > count) {
+    count = a+1;
   }
   neighbours[b].add(a);
-  if (b > count) {
-    count = b;
+  if (b+1 > count) {
+    count = b+1;
   }
 }
 

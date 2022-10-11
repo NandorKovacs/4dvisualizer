@@ -21,7 +21,7 @@ TEST(IntersectTest, IntersectWithDefaultPlane) {
   },plane);
   
   
-  EXPECT_EQ(12, triangles.size());
+  EXPECT_EQ(24, triangles.size());
 }
 
 }  // namespace
