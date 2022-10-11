@@ -15,23 +15,21 @@ We bootstrapped the working environement and built an understanding of the core 
   - git repo: https://github.com/NandorKovacs/4dvisualizer
   - git commit: 985ab8f05dfe445aff72ad5c9819c02d87ca8a61
 
-
-# Milestone 2: 4d cube presented with navigation [In-progress]
+# Milestone 2: centered 4d unitcube with adjustable hyperplane position and camera [In-progress]
 
 ## Key results
 
-A c++ program is delivered, which 
+A c++ program is delivered, which
 
-- presents a 3d projection of a 4d cube
-- the user can adjust the rotation angle of the 4d cube via keys
-- the user can move the projection plane via keys
-- the user move the camera via keys
-- values of the parameters are displayed as a hud
-  - this is useful to allow storing of reproducible screenshots
+- computes the intersection of a 4d unitcube with an arbitrary hyperplane
+- renders this intersection as a three dimensional object
+- can alter the parameters of the hyperplane interactively
+- adjusts the rendered object in real time to the changes of the hyperplane
+- can still navigate in the three dimensional world like in the previous milestone
 
 ## Value
 
-We have a skeleton of the core of the code with end to end functionality.
+The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
 
 # Milestone 3: visibility effects
 
@@ -47,7 +45,27 @@ for subsequent milestones.
 
 With object shading and lighting the rendered picture will be more easily understood by the user. 
 
-# Milestone 4: World description
+# Milestone 4: movable 4d cube
+
+## Key results
+
+A c++ program is delivered, in which 
+
+- the user can adjust the rotation angle of the 4d cube via keys
+- the user can move the projection plane via keys
+- the user move the camera via keys
+- values of the parameters are displayed as a hud
+  - this is useful to allow storing of reproducible screenshots
+
+## Value
+
+We have a skeleton of the core of the code with end to end functionality.
+
+## Design
+
+![Movable 4d cube rendering design](./movable_4d_rendering_flow.svg)
+
+# Milestone 5: World description
 
 ## Key results
 
@@ -58,7 +76,7 @@ With object shading and lighting the rendered picture will be more easily unders
 
 We are ready to assemble the minimum project.
 
-# Milestone 5: Full world rendering
+# Milestone 6: Full world rendering
 
 ## Key results
 
