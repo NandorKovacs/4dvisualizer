@@ -6,7 +6,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "lib/errors.h"
+#include "errors.h"
 
 static std::unordered_map<GLFWwindow*, WindowSizeTracker*> trackers;
 

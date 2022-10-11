@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
-#include "camera_manager.h"
+#include "../../lib/camera_manager.h"
 
 #define NUM_VAOs 1
 #define NUM_VBOs 2

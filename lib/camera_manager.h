@@ -2,7 +2,7 @@
 #define VIZ_CAMERA_MANAGER
 
 #include "glm/glm.hpp"
-#include "lib/errors.h"
+#include "errors.h"
 
 class CameraManager {
  public:

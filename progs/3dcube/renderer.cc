@@ -6,9 +6,9 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
-#include "camera_manager.h"
-#include "lib/errors.h"
-#include "shader_loader.h"
+#include "../../lib/camera_manager.h"
+#include "../../lib/errors.h"
+#include "../../lib/shader_loader.h"
 
 void Renderer::setup_vertices() {
   float vertex_positions[108] = {

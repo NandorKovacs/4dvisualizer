@@ -5,11 +5,11 @@
 #include <exception>
 #include <iostream>
 
-#include "camera_manager.h"
+#include "../../lib/camera_manager.h"
 #include "input_handler.h"
-#include "lib/errors.h"
+#include "../../lib/errors.h"
 #include "renderer.h"
-#include "window_size.h"
+#include "../../lib/window_size.h"
 
 constexpr double frame_wait_time = 0.01;
 

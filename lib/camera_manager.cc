@@ -6,7 +6,7 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <iostream>
 
-#include "lib/errors.h"
+#include "errors.h"
 
 CameraManager::CameraManager()
     : pitch{0.0},

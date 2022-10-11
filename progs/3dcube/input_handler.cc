@@ -4,7 +4,7 @@
 
 #include <unordered_map>
 
-#include "lib/errors.h"
+#include "../../lib/errors.h"
 
 // The GLFW library calls our callbacks with a window pointer. We
 // use this map to find out which handler belongs to which window.

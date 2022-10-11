@@ -17,5 +17,12 @@ enable_testing()
 
 include(GoogleTest)
 
-add_subdirectory(geometry)
+set(GL_LIB 
+  -lglfw
+  -lGLEW
+  -lGL
+)
 
+add_subdirectory(geometry)
+add_subdirectory(lib)
+add_subdirectory(progs/3dcube)

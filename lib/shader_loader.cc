@@ -8,7 +8,7 @@
 #include <sstream>
 #include <exception>
 
-#include "lib/errors.h"
+#include "errors.h"
 
 std::string load_file(std::string file_name) {
   std::ifstream f;
