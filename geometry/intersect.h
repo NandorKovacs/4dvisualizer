@@ -36,7 +36,7 @@ struct Edge {
 };
 
 template <int N>
-void append_unique(std::array<int, N> const& a, int& count, int x) {
+void append_unique(std::array<int, N>& a, int& count, int x) {
   for (int i = 0; i < count; ++i) {
     if (a[i] == x) {
       return;
