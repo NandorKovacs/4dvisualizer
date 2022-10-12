@@ -6,6 +6,9 @@
 namespace viz {
 
 struct Hyperplane {
+  Hyperplane() = default;
+  Hyperplane(glm::vec4 normal, glm::vec4 pos) : pos{pos}, normal{normal} {}
+
   glm::vec4 normal;
   glm::vec4 pos;
 };

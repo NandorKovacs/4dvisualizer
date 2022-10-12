@@ -26,3 +26,4 @@ set(GL_LIB
 add_subdirectory(geometry)
 add_subdirectory(lib)
 add_subdirectory(progs/3dcube)
+add_subdirectory(progs/4dcube)

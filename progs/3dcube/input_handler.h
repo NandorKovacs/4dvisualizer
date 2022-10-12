@@ -4,7 +4,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <vector>
+
 #include "../../lib/camera_manager.h"
+#include "../../lib/key_manager.h"
+
+namespace viz {
 
 class InputHandler {
  public:
@@ -20,6 +25,9 @@ class InputHandler {
   bool initialized = false;
   GLFWwindow* window;
   CameraManager& camera_manager;
+
+  std::vector<key_manager::KeyManager> key_managers;
 };
 
+}  // namespace viz
 #endif  // VIZ_INPUT_HANDLER

@@ -12,17 +12,18 @@ class CameraManager {
 
   void tick(double time);
 
-  void set_move_direction(glm::vec3 move_direction);
+  void set_move_X(double x);
+  void set_move_Y(double y);
+  void set_move_Z(double z);
+
   void rotate(glm::vec2 movement);
 
   glm::mat4 get_transform();
 
-  glm::vec3 get_move_directions();
-
  private:
   friend std::ostream& operator<<(std::ostream& os, CameraManager m);
 
-  void move();
+  void move(double time);
   void calculate_transform();
 
   // glm::vec3 get_loc();
@@ -33,7 +34,7 @@ class CameraManager {
   glm::vec3 move_directions;
   glm::mat4 transform;
 
-  const float speed = 0.5;
+  const float speed = 3.5;
   const float turn_speed = 0.001;
 };
 

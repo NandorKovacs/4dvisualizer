@@ -49,7 +49,7 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager) : came
   setup_vertices();
 }
 
-void Renderer::render(double currentTime) {
+void Renderer::render() {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
   CHECK_GL();

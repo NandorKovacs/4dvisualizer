@@ -18,16 +18,21 @@ CameraManager::CameraManager()
 
 // glm::vec3 CameraManager::get_loc() { return loc; }
 
-void CameraManager::set_move_direction(glm::vec3 move_direction) {
-  this->move_directions = move_direction;
+
+void CameraManager::set_move_X(double x) {
+  move_directions.x = x;
+}
+void CameraManager::set_move_Y(double y) {
+  move_directions.y = y;
+}
+void CameraManager::set_move_Z(double z) {
+  move_directions.z = z;
 }
 
 void CameraManager::rotate(glm::vec2 rot_movement) {
   pitch += rot_movement.y * turn_speed;
   yaw += rot_movement.x * turn_speed;
 }
-
-glm::vec3 CameraManager::get_move_directions() { return move_directions; }
 
 glm::mat4 CameraManager::get_transform() { return transform; }
 
@@ -36,16 +41,16 @@ void CameraManager::calculate_transform() {
               glm::translate(glm::mat4(1.0), (loc * -1.0f));
 }
 
-void CameraManager::move() {
+void CameraManager::move(double time) {
   glm::vec3 move_vec =
       glm::rotate(glm::normalize(move_directions), yaw, glm::vec3(0, 1, 0)) *
       speed;
-  loc += -move_vec * speed;
+  loc += -move_vec * float(speed * time);
 }
 
 void CameraManager::tick(double time) {
   if (move_directions != glm::vec3(0, 0, 0)) {
-    move();
+    move(time);
   }
 
   calculate_transform();

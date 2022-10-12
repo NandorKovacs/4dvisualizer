@@ -6,28 +6,27 @@
 
 namespace viz {
 
-class HyperplaneManger {
+class HyperplaneManager {
  public:
-  HyperplaneManger();
+  HyperplaneManager();
 
   void tick(double time);
 
-  void set_move_direction(glm::vec3 move_direction);
+  void set_move_direction(float x);
 
-  // more complicated than this, needs thinking
-  void rotate(glm::vec2 movement);
-
-  glm::vec3 get_move_directions();
+  void set_rot_X(float x);
+  void set_rot_Y(float y);
+  void set_rot_Z(float z);
+  void set_rot_W(float w);
 
  private:
-  void move();
-
   Hyperplane hyperplane;
   
-  glm::vec4 normal_vector_speed;
-  int travel_direction; // can be 1, -1, and 0
+  glm::vec4 normal_vector_speed; // can all be -1 to 1
+  int move_direction; // can be -1 to 1
 
   const float speed = 0.5;
+  const float rot_speed = 0.5;
 };
 
 }  // namespace viz

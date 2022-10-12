@@ -6,10 +6,11 @@
 #include <iostream>
 
 #include "../../lib/camera_manager.h"
-#include "input_handler.h"
 #include "../../lib/errors.h"
-#include "renderer.h"
 #include "../../lib/window_size.h"
+#include "input_handler.h"
+#include "renderer.h"
+
 
 constexpr double frame_wait_time = 0.01;
 
@@ -52,7 +53,9 @@ int main(int argc, char** argv) {
 
   WindowSizeTracker window_size{window};
   CameraManager camera_manager;
-  InputHandler input_handler(window, camera_manager);
+
+
+  viz::InputHandler input_handler(window, camera_manager);
   Renderer renderer{window_size.get(), camera_manager};
 
   double prev_time = 0;
@@ -61,7 +64,7 @@ int main(int argc, char** argv) {
       renderer.set_size(window_size.get());
     }
     double time = glfwGetTime();
-    renderer.render(time);
+    renderer.render();
 
     glfwPollEvents();
     CHECK_GLFW("poll events");
@@ -76,3 +79,4 @@ int main(int argc, char** argv) {
   glfwDestroyWindow(window);
   return 0;
 }
+

@@ -13,7 +13,7 @@ class Renderer {
  public:
   Renderer(glm::ivec2 window_size, CameraManager& camera_manager);
 
-  void render(double currentTime);
+  void render();
   void set_size(glm::ivec2 size);
 
  private:
