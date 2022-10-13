@@ -18,7 +18,7 @@ class CameraManager {
 
   void rotate(glm::vec2 movement);
 
-  glm::mat4 get_transform();
+  glm::mat4& get_transform();
 
  private:
   friend std::ostream& operator<<(std::ostream& os, CameraManager m);

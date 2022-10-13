@@ -55,22 +55,23 @@ int main(int argc, char** argv) {
   viz::HyperplaneManager hyperplane_manager;
 
   viz::InputHandler input_handler(window, camera_manager, hyperplane_manager);
-  Renderer renderer{window_size.get(), camera_manager};
+  viz::Renderer renderer{window_size.get(), camera_manager, hyperplane_manager};
 
   double prev_time = 0;
   while (!glfwWindowShouldClose(window)) {
     if (window_size.should_update()) {
       renderer.set_size(window_size.get());
     }
-    double time = glfwGetTime();
     renderer.render();
-
     glfwPollEvents();
     CHECK_GLFW("poll events");
+    double time = glfwGetTime();
+    CHECK_GLFW("get time");
     double time_diff = time - prev_time;
     prev_time = time;
 
     camera_manager.tick(time_diff);
+    hyperplane_manager.tick(time_diff);
 
     glfwSwapBuffers(window);
     CHECK_GLFW("bufferswap");

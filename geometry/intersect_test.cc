@@ -13,7 +13,7 @@ TEST(IntersectTest, IntersectWithDefaultPlane) {
   Intersector intersector;
   Hyperplane plane;
   plane.pos = glm::vec4(0,0,0,0);
-  plane.normal = glm::vec4(0,0,0,1);
+  plane.normal() = glm::vec4(0,0,0,1);
   
   std::vector<Triangle> triangles;
   intersector.intersect([&](Triangle const& t){

@@ -88,7 +88,7 @@ constexpr std::array<Edge, 32> make_edges() {
 constexpr std::array<Edge, 32> edges = make_edges();
 
 inline float distance(glm::vec4 const& pt, Hyperplane const& plane) {
-  return glm::dot(pt - plane.pos, plane.normal);
+  return glm::dot(pt - plane.pos, plane.coord_system[3]);
 }
 
 int intersect_edge(Intersections::iterator it, Edge const& e,

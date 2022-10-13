@@ -83,8 +83,8 @@ InputHandler::InputHandler(GLFWwindow* window, CameraManager& camera_manager,
   });
 
   key_managers.push_back(key_manager::KeyManager{
-      {/*F*/ 41},
       {/*R*/ 27},
+      {/*F*/ 41},
       std::bind(&HyperplaneManager::set_move_direction, &hyperplane_manager,
                 _1),
       1.0f,
@@ -105,12 +105,6 @@ InputHandler::InputHandler(GLFWwindow* window, CameraManager& camera_manager,
       {/*ü*/ 34},
       {/*ä*/ 48},
       std::bind(&HyperplaneManager::set_rot_Z, &hyperplane_manager, _1),
-      1.0f,
-  });
-  key_managers.push_back(key_manager::KeyManager{
-      {/*¨*/ 35},
-      {/*$*/ 51},
-      std::bind(&HyperplaneManager::set_rot_W, &hyperplane_manager, _1),
       1.0f,
   });
 }

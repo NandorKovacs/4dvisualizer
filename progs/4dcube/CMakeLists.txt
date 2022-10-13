@@ -6,5 +6,6 @@ add_executable(4dcube
 
 target_link_libraries(4dcube
   4dvisualizer_lib
+  geometry
   ${GL_LIB}
 )

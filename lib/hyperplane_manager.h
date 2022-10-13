@@ -17,17 +17,26 @@ class HyperplaneManager {
   void set_rot_X(float x);
   void set_rot_Y(float y);
   void set_rot_Z(float z);
-  void set_rot_W(float w);
 
+  glm::mat4 get_transform();
+  glm::vec4& get_origin();
+
+  Hyperplane& get_hyperplane();
  private:
   Hyperplane hyperplane;
   
-  glm::vec4 normal_vector_speed; // can all be -1 to 1
-  int move_direction; // can be -1 to 1
+  glm::vec3 rot_direction;
+  void rotate(float rad);
+  void rotate_axis(float rad, glm::vec4& axis);
 
-  const float speed = 0.5;
+  int move_direction;
+
+  glm::mat4 transform;
+
+  const float speed = 3.5;
   const float rot_speed = 0.5;
 };
 
 }  // namespace viz
+
 #endif  // VIZ_HYPERPLANE_MANAGER_H

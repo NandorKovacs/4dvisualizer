@@ -34,7 +34,7 @@ void CameraManager::rotate(glm::vec2 rot_movement) {
   yaw += rot_movement.x * turn_speed;
 }
 
-glm::mat4 CameraManager::get_transform() { return transform; }
+glm::mat4& CameraManager::get_transform() { return transform; }
 
 void CameraManager::calculate_transform() {
   transform = glm::eulerAngleXY(-pitch, -yaw) *

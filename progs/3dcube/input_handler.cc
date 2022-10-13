@@ -34,8 +34,6 @@ static void mouse_event_callback(GLFWwindow* window, double x, double y) {
 
 void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
                                  int action, int mods) {
-  DLOG << scancode << std::endl;
-  
   for (key_manager::KeyManager& km : key_managers) {
     km.on_action(scancode, action);
   }
