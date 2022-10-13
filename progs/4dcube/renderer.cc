@@ -15,7 +15,17 @@ namespace viz {
 void Renderer::setup_vertices() {
   vertices.clear();
   auto handle_triangle = [&](intersect::Triangle const& t) {
-    for (glm::vec4 const& pt : t.pts) {
+    for (int i = 0; i < 3; ++i) {
+      glm::vec4 const& pt = t.pts[i];
+
+      vertices.push_back(pt.x);
+      vertices.push_back(pt.y);
+      vertices.push_back(pt.z);
+      vertices.push_back(pt.w);
+    }
+    for (int i = 0; i < 3; ++i) {
+      glm::vec4 const& pt = t.pts[3-i];
+
       vertices.push_back(pt.x);
       vertices.push_back(pt.y);
       vertices.push_back(pt.z);
