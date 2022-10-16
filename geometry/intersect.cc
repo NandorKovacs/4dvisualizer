@@ -133,9 +133,8 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
 
     for (int i = 0; i < n; ++i) {
       face_content_map.insert(e, intersections.count);
-      std::cerr << "id: " << intersections.count << " faces: " << e.faces[0]
-                << " " << e.faces[1] << " " << e.faces[2] << std::endl;
       ++intersections.count;
+      ++it;
     }
   }
   neighbours_map.build(face_content_map);
@@ -145,8 +144,8 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
 
     for (int j = 0; j < ns.count; ++j) {
       for (int k = j + 1; k < ns.count; ++k) {
-        emit(Triangle{{intersections.pts[i], intersections.pts[j],
-                       intersections.pts[k]}});
+        emit(Triangle{{intersections.pts[i], intersections.pts[ns.ids[j]],
+                       intersections.pts[ns.ids[k]]}});
       }
     }
   }
@@ -165,8 +164,6 @@ void NeighboursMap::build(FaceContentMap const& face_content_map) {
     if (count < 2) {
       continue;
     }
-    std::cerr << "face_content_count " << face_content.count << " id0&1 "
-              << face_content.ids[0] << " " << face_content.ids[1] << std::endl;
     insert(face_content.ids[0], face_content.ids[1]);
     if (count == 2) {
       continue;
@@ -185,12 +182,12 @@ void NeighboursMap::build(FaceContentMap const& face_content_map) {
 void NeighboursMap::insert(int a, int b) {
   assert(a != b);
   neighbours[a].add(b);
-  if (a+1 > count) {
-    count = a+1;
+  if (a + 1 > count) {
+    count = a + 1;
   }
   neighbours[b].add(a);
-  if (b+1 > count) {
-    count = b+1;
+  if (b + 1 > count) {
+    count = b + 1;
   }
 }
 

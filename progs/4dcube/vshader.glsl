@@ -14,5 +14,5 @@ void main(void){
   ld_position.w = 1.0;
 
   gl_Position = proj_matrix * mv_matrix * ld_position;
-  new_color =  0.5 + vec4(0.5, 0.5, 0.5, 0.5);
+  new_color = ld_position * 0.5 + vec4(0.5, 0.5, 0.5, 0.5);
 }

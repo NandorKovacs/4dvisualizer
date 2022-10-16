@@ -24,7 +24,7 @@ void Renderer::setup_vertices() {
       vertices.push_back(pt.w);
     }
     for (int i = 0; i < 3; ++i) {
-      glm::vec4 const& pt = t.pts[3-i];
+      glm::vec4 const& pt = t.pts[2-i];
 
       vertices.push_back(pt.x);
       vertices.push_back(pt.y);
@@ -47,7 +47,7 @@ void Renderer::send_vertices() {
                vertices.data(), GL_STATIC_DRAW);
   CHECK_GL();
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
   CHECK_GL();
   glEnableVertexAttribArray(0);
   CHECK_GL();
@@ -117,7 +117,7 @@ void Renderer::render() {
   CHECK_GL();
   glDepthFunc(GL_LEQUAL);
   CHECK_GL();
-  glDrawArrays(GL_TRIANGLES, 0, 36);
+  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
   CHECK_GL();
 }
 void Renderer::set_size(glm::ivec2 size) { window_size = size; }
