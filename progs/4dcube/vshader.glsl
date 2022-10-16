@@ -7,6 +7,8 @@ uniform mat4 dim_proj_matrix;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 
+uniform int is_wireframe;
+
 out vec4 new_color;
 
 void main(void){
@@ -15,4 +17,7 @@ void main(void){
 
   gl_Position = proj_matrix * mv_matrix * ld_position;
   new_color = ld_position * 0.5 + vec4(0.5, 0.5, 0.5, 0.5);
+  if (is_wireframe == 1) {
+    new_color = vec4(1, 1, 1, 1) - new_color;
+  }
 }

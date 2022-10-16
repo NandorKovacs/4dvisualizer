@@ -24,20 +24,23 @@ class Renderer {
 
  private:
   void setup_vertices();
-  void send_vertices();
+  void send_triangles();
+  void send_lines();
 
   GLuint vao[NUM_VAOs];
   GLuint vbo[NUM_VBOs];
   GLuint prog;
 
-  GLuint mvLoc, projLoc, dim_proj_loc, dim_proj_origin_loc;
+  GLuint mvLoc, projLoc, dim_proj_loc, dim_proj_origin_loc, is_wireframe_loc;
   glm::ivec2 window_size;
   float aspect;
   glm::mat4 pMat, mMat, mvMat, dim_proj_mat;
 
   glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, -8.0f);
 
-  std::vector<float> vertices;
+  std::vector<float> v_triangles;
+  
+  std::vector<float> v_lines;
 
   CameraManager& camera_manager;
   HyperplaneManager& hyperplane_manager;

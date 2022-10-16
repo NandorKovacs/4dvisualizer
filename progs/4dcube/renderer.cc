@@ -12,39 +12,74 @@
 #include "../../lib/shader_loader.h"
 
 namespace viz {
+namespace {
+void push_pt(std::vector<float>& f, glm::vec4 const& pt) {
+  f.push_back(pt.x);
+  f.push_back(pt.y);
+  f.push_back(pt.z);
+  f.push_back(pt.w);
+};
+}  // namespace
+
 void Renderer::setup_vertices() {
-  vertices.clear();
+  v_triangles.clear();
+  v_lines.clear();
   auto handle_triangle = [&](intersect::Triangle const& t) {
     for (int i = 0; i < 3; ++i) {
       glm::vec4 const& pt = t.pts[i];
 
-      vertices.push_back(pt.x);
-      vertices.push_back(pt.y);
-      vertices.push_back(pt.z);
-      vertices.push_back(pt.w);
+      push_pt(v_triangles, pt);
     }
     for (int i = 0; i < 3; ++i) {
-      glm::vec4 const& pt = t.pts[2-i];
+      glm::vec4 const& pt = t.pts[2 - i];
 
-      vertices.push_back(pt.x);
-      vertices.push_back(pt.y);
-      vertices.push_back(pt.z);
-      vertices.push_back(pt.w);
+      push_pt(v_triangles, pt);
     }
+  
+    push_pt(v_lines, t.pts[0]);
+    push_pt(v_lines, t.pts[1]);
+    push_pt(v_lines, t.pts[1]);
+    push_pt(v_lines, t.pts[2]);
+    push_pt(v_lines, t.pts[2]);
+    push_pt(v_lines, t.pts[0]);
   };
 
-  intersect::Intersector().intersect(handle_triangle, hyperplane_manager.get_hyperplane());
+  intersect::Intersector().intersect(handle_triangle,
+                                     hyperplane_manager.get_hyperplane());
 }
 
-void Renderer::send_vertices() {
+void Renderer::send_triangles() {
+  glUniform1i(is_wireframe_loc, 0);
+  CHECK_GL();
+
   glBindVertexArray(vao[0]);
   CHECK_GL();
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
   CHECK_GL();
 
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float),
-               vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, v_triangles.size() * sizeof(float),
+               v_triangles.data(), GL_STATIC_DRAW);
+  CHECK_GL();
+
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
+  CHECK_GL();
+  glEnableVertexAttribArray(0);
+  CHECK_GL();
+}
+
+void Renderer::send_lines() {
+  glUniform1i(is_wireframe_loc, 1);
+  CHECK_GL();
+
+  glBindVertexArray(vao[0]);
+  CHECK_GL();
+
+  glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+  CHECK_GL();
+
+  glBufferData(GL_ARRAY_BUFFER, v_lines.size() * sizeof(float), v_lines.data(),
+               GL_STATIC_DRAW);
   CHECK_GL();
 
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
@@ -83,6 +118,8 @@ void Renderer::render() {
   CHECK_GL();
   dim_proj_origin_loc = glGetUniformLocation(prog, "dim_proj_origin");
   CHECK_GL();
+  is_wireframe_loc = glGetUniformLocation(prog, "is_wireframe");
+  CHECK_GL();
 
   // glfwGetFramebufferSize(window, &width, &height);
   // CHECK_GLFW("get frame buffer size");
@@ -111,13 +148,17 @@ void Renderer::render() {
   CHECK_GL();
 
   setup_vertices();
-  send_vertices();
+  send_triangles();
 
   glEnable(GL_DEPTH_TEST);
   CHECK_GL();
   glDepthFunc(GL_LEQUAL);
   CHECK_GL();
-  glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+  glDrawArrays(GL_TRIANGLES, 0, v_triangles.size());
+  CHECK_GL();
+
+  send_lines();
+  glDrawArrays(GL_LINES, 0, v_lines.size());
   CHECK_GL();
 }
 void Renderer::set_size(glm::ivec2 size) { window_size = size; }
