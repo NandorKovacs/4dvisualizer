@@ -11,8 +11,8 @@ namespace intersect {
 std::ostream& operator<<(std::ostream& os, Triangle const& t) {
   os << "Triangle{";
   for (int i = 0; i < t.pts.size(); ++i) {
-    const glm::vec4& v = t.pts[i];
-    os << v.x << ", " << v.y << ", " << v.z << ", " << v.w;
+    const glm::vec3& v = t.pts[i];
+    os << v.x << ", " << v.y << ", " << v.z;
     if (i != t.pts.size() - 1) {
       os << "; ";
     }

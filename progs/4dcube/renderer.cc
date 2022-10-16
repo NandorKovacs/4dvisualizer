@@ -13,11 +13,10 @@
 
 namespace viz {
 namespace {
-void push_pt(std::vector<float>& f, glm::vec4 const& pt) {
+void push_pt(std::vector<float>& f, glm::vec3 const& pt) {
   f.push_back(pt.x);
   f.push_back(pt.y);
   f.push_back(pt.z);
-  f.push_back(pt.w);
 };
 }  // namespace
 
@@ -26,12 +25,12 @@ void Renderer::setup_vertices() {
   v_lines.clear();
   auto handle_triangle = [&](intersect::Triangle const& t) {
     for (int i = 0; i < 3; ++i) {
-      glm::vec4 const& pt = t.pts[i];
+      glm::vec3 const& pt = t.pts[i];
 
       push_pt(v_triangles, pt);
     }
     for (int i = 0; i < 3; ++i) {
-      glm::vec4 const& pt = t.pts[2 - i];
+      glm::vec3 const& pt = t.pts[2 - i];
 
       push_pt(v_triangles, pt);
     }
@@ -62,7 +61,7 @@ void Renderer::send_triangles() {
                v_triangles.data(), GL_STATIC_DRAW);
   CHECK_GL();
 
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 0, 0);
   CHECK_GL();
   glEnableVertexAttribArray(0);
   CHECK_GL();
@@ -82,7 +81,7 @@ void Renderer::send_lines() {
                GL_STATIC_DRAW);
   CHECK_GL();
 
-  glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 0, 0);
   CHECK_GL();
   glEnableVertexAttribArray(0);
   CHECK_GL();
@@ -114,10 +113,6 @@ void Renderer::render() {
   CHECK_GL();
   projLoc = glGetUniformLocation(prog, "proj_matrix");
   CHECK_GL();
-  dim_proj_loc = glGetUniformLocation(prog, "dim_proj_matrix");
-  CHECK_GL();
-  dim_proj_origin_loc = glGetUniformLocation(prog, "dim_proj_origin");
-  CHECK_GL();
   is_wireframe_loc = glGetUniformLocation(prog, "is_wireframe");
   CHECK_GL();
 
@@ -134,17 +129,11 @@ void Renderer::render() {
 
   mvMat = vMat * mMat;
 
-  dim_proj_mat = hyperplane_manager.get_transform();
-
   glm::vec4& origin = hyperplane_manager.get_origin();
 
   glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
   CHECK_GL();
   glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
-  CHECK_GL();
-  glUniformMatrix4fv(dim_proj_loc, 1, GL_FALSE, glm::value_ptr(dim_proj_mat));
-  CHECK_GL();
-  glUniform4fv(dim_proj_origin_loc, 1, glm::value_ptr(origin));
   CHECK_GL();
 
   setup_vertices();

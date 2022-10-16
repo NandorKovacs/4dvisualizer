@@ -1,10 +1,30 @@
 #include "intersect.h"
 
+#include <bitset>
 #include <cassert>
 #include <iostream>
 
 namespace viz {
 namespace intersect {
+
+void VisitedTriangles::set(int i, int j, int k) {
+  data[i + max_intersections * j + max_intersections * max_intersections * k] =
+      true;
+  data[i + max_intersections * k + max_intersections * max_intersections * j] =
+      true;
+  data[j + max_intersections * k + max_intersections * max_intersections * i] =
+      true;
+  data[j + max_intersections * i + max_intersections * max_intersections * k] =
+      true;
+  data[k + max_intersections * i + max_intersections * max_intersections * j] =
+      true;
+  data[k + max_intersections * j + max_intersections * max_intersections * i] =
+      true;
+}
+
+bool VisitedTriangles::get(int i, int j, int k) {
+  return data[i + max_intersections * j + max_intersections * max_intersections * k];
+}
 
 constexpr int Face::numerical_id() {
   if (a == 0 && b == 0) {
@@ -92,7 +112,7 @@ inline float distance(glm::vec4 const& pt, Hyperplane const& plane) {
 }
 
 int intersect_edge(Intersections::iterator it, Edge const& e,
-                   Hyperplane const& plane) {
+                   Hyperplane const& plane, glm::mat4x3 const& dim_transform) {
   float da = distance(e.a, plane);
   float db = distance(e.b, plane);
 
@@ -119,17 +139,86 @@ int intersect_edge(Intersections::iterator it, Edge const& e,
   db = std::fabs(db);
 
   glm::vec4 x = e.a + (e.b - e.a) * (da / (da + db));
-  *it = x;
+  *it = dim_transform * (x - plane.pos);
   ++res;
   ++it;
   return res;
 }
 
+glm::vec3 Intersector::triangle_normal(int i, int j, int k) {
+  return glm::normalize(glm::cross(ipt(j) - ipt(i), ipt(k) - ipt(i)));
+}
+
+void Intersector::sweep(int i, int j, int k,
+                        std::function<void(Triangle const&)> emit,
+                        VisitedTriangles& visited_triangles) {
+  std::bitset<max_intersections> visited;
+
+  if (visited_triangles.get(i, j, k)) {
+    // std::cerr << "abrakadabra " << i << " " << j << " " << k << std::endl;
+    return;
+  }
+
+  visited[i] = true;
+  visited[j] = true;
+  visited[k] = true;
+
+  glm::vec3 start_normal = triangle_normal(i, j, k);
+
+  int prev = i;
+  int c = j;
+  while (c != k) {
+    int best_n = -1;
+    float largest_proj;
+    bool could_close = false;
+    for (int n : neighbours_map.neighbours[c].ids) {
+      if (n == k) {
+        could_close = true;
+      }
+      if (visited[n]) {
+        continue;
+      }
+      float proj = glm::dot(start_normal, triangle_normal(prev, c, n));
+
+      if (proj < proj_equality_criteria) {
+        continue;
+      }
+
+      if (best_n == -1 || largest_proj > proj) {
+        best_n = n;
+        largest_proj = proj;
+        continue;
+      }
+    }
+
+    if (best_n == -1) {
+      if (!could_close) {
+        std::cerr << "sweep failed, couldnt find viable neighbours"
+                  << std::endl;
+      }
+      break;
+    }
+
+    // std::cerr << "1111 " << prev << " " << c << " " << best_n << std::endl;
+    visited_triangles.set(prev, c, best_n);
+    emit(Triangle{ipt(i), ipt(c), ipt(best_n)});
+    prev = c;
+    c = best_n;
+    visited[c] = true;
+  }
+
+  // std::cerr << "22222 " << i << " " << c << " " << k << std::endl;
+  visited_triangles.set(c, k, i);
+  emit(Triangle{ipt(c), ipt(k), ipt(i)});
+}
+
 void Intersector::intersect(std::function<void(Triangle const&)> emit,
                             Hyperplane const& plane) {
+  glm::mat4x3 dim_transform = glm::transpose(plane.coord_system);
+
   Intersections::iterator it = intersections.pts.begin();
   for (Edge const& e : edges) {
-    int n = intersect_edge(it, e, plane);
+    int n = intersect_edge(it, e, plane, dim_transform);
 
     for (int i = 0; i < n; ++i) {
       face_content_map.insert(e, intersections.count);
@@ -139,13 +228,13 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
   }
   neighbours_map.build(face_content_map);
 
+  VisitedTriangles visited_triangles;
   for (int i = 0; i < neighbours_map.count; ++i) {
     NeighboursMap::Neighbours const& ns = neighbours_map.neighbours[i];
 
     for (int j = 0; j < ns.count; ++j) {
       for (int k = j + 1; k < ns.count; ++k) {
-        emit(Triangle{{intersections.pts[i], intersections.pts[ns.ids[j]],
-                       intersections.pts[ns.ids[k]]}});
+        sweep(i, ns.ids[j], ns.ids[k], emit, visited_triangles);
       }
     }
   }

@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <functional>
 #include <glm/glm.hpp>
+#include <bitset>
+
 #include "geometry.h"
 
 namespace viz {
@@ -19,11 +21,12 @@ constexpr int max_intersections = 96;
 // Also a high estimate. One point can be on maximally 6 faces, all of which can
 // have a maximal number of 4 points of intersection on them -> 6*4
 constexpr int max_neghbours = 24;
+constexpr float proj_equality_criteria = 1-1e5;
 
 struct Intersections {
   int count = 0;
 
-  typedef std::array<glm::vec4, max_intersections> vec_t;
+  typedef std::array<glm::vec3, max_intersections> vec_t;
   typedef vec_t::iterator iterator;
 
   vec_t pts;
@@ -51,9 +54,7 @@ void append_unique(std::array<int, N>& a, int& count, int x) {
 struct FaceContentMap {
   struct FaceContent {
     int count = 0;
-    inline void add(int x) {
-      append_unique<4>(ids, count, x); 
-    }
+    inline void add(int x) { append_unique<4>(ids, count, x); }
     std::array<int, 4> ids;
   };
   void insert(Edge const& e, int idx);
@@ -65,9 +66,7 @@ struct NeighboursMap {
   int count = 0;
   struct Neighbours {
     int count = 0;
-    inline void add(int x) {
-      append_unique<max_neghbours>(ids, count, x);
-    }
+    inline void add(int x) { append_unique<max_neghbours>(ids, count, x); }
     std::array<int, max_neghbours> ids;
   };
   void build(FaceContentMap const& face_content_map);
@@ -100,7 +99,15 @@ struct PointOnEdge {
 };
 
 struct Triangle {
-  std::array<glm::vec4, 3> pts;
+  std::array<glm::vec3, 3> pts;
+};
+
+class VisitedTriangles {
+ public:
+  bool get(int i, int j, int k);
+  void set(int i, int j, int k); 
+  private:
+  std::bitset<max_intersections * max_intersections * max_intersections> data;
 };
 
 class Intersector {
@@ -116,6 +123,11 @@ class Intersector {
                  Hyperplane const& plane);
 
  private:
+  inline glm::vec3& ipt(int i) { return intersections.pts[i]; };
+
+  glm::vec3 triangle_normal(int i, int j, int k);
+
+  void sweep(int i, int j, int k, std::function<void(Triangle const&)> emit, VisitedTriangles& visited_triangles);
   Intersections intersections;
   FaceContentMap face_content_map;
   NeighboursMap neighbours_map;

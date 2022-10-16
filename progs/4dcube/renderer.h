@@ -31,10 +31,10 @@ class Renderer {
   GLuint vbo[NUM_VBOs];
   GLuint prog;
 
-  GLuint mvLoc, projLoc, dim_proj_loc, dim_proj_origin_loc, is_wireframe_loc;
+  GLuint mvLoc, projLoc, is_wireframe_loc;
   glm::ivec2 window_size;
   float aspect;
-  glm::mat4 pMat, mMat, mvMat, dim_proj_mat;
+  glm::mat4 pMat, mMat, mvMat;
 
   glm::vec3 cube_loc = glm::vec3(0.0f, 0.0f, -8.0f);
 
