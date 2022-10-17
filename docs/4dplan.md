@@ -15,7 +15,7 @@ We bootstrapped the working environement and built an understanding of the core 
   - git repo: https://github.com/NandorKovacs/4dvisualizer
   - git commit: 985ab8f05dfe445aff72ad5c9819c02d87ca8a61
 
-# Milestone 2: centered 4d unitcube with adjustable hyperplane position and camera [In-progress]
+# Milestone 2: centered 4d unitcube with adjustable hyperplane position and camera [Done]
 
 ## Key results
 
