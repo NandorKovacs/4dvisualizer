@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <glm/glm.hpp>
+#include <glm/gtx/color_space.hpp>
 #include <iostream>
 
 #include "../../geometry/intersect.h"
@@ -13,34 +14,39 @@
 
 namespace viz {
 namespace {
-void push_pt(std::vector<float>& f, glm::vec3 const& pt) {
+void push_pt(std::vector<float>& f, glm::vec3 const& pt, float color) {
   f.push_back(pt.x);
   f.push_back(pt.y);
   f.push_back(pt.z);
+  f.push_back(color);
 };
 }  // namespace
 
 void Renderer::setup_vertices() {
   v_triangles.clear();
   v_lines.clear();
+  int count = 0;
+  
   auto handle_triangle = [&](intersect::Triangle const& t) {
+    
     for (int i = 0; i < 3; ++i) {
       glm::vec3 const& pt = t.pts[i];
-
-      push_pt(v_triangles, pt);
+      push_pt(v_triangles, pt, count);
     }
     for (int i = 0; i < 3; ++i) {
       glm::vec3 const& pt = t.pts[2 - i];
 
-      push_pt(v_triangles, pt);
+      push_pt(v_triangles, pt, count);
     }
-  
-    push_pt(v_lines, t.pts[0]);
-    push_pt(v_lines, t.pts[1]);
-    push_pt(v_lines, t.pts[1]);
-    push_pt(v_lines, t.pts[2]);
-    push_pt(v_lines, t.pts[2]);
-    push_pt(v_lines, t.pts[0]);
+
+    push_pt(v_lines, t.pts[0],0);
+    push_pt(v_lines, t.pts[1],0);
+    push_pt(v_lines, t.pts[1],0);
+    push_pt(v_lines, t.pts[2],0);
+    push_pt(v_lines, t.pts[2],0);
+    push_pt(v_lines, t.pts[0],0);
+
+    ++count;
   };
 
   intersect::Intersector().intersect(handle_triangle,
@@ -61,7 +67,7 @@ void Renderer::send_triangles() {
                v_triangles.data(), GL_STATIC_DRAW);
   CHECK_GL();
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 0, 0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
   CHECK_GL();
   glEnableVertexAttribArray(0);
   CHECK_GL();
@@ -81,7 +87,7 @@ void Renderer::send_lines() {
                GL_STATIC_DRAW);
   CHECK_GL();
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 0, 0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 0, 0);
   CHECK_GL();
   glEnableVertexAttribArray(0);
   CHECK_GL();
@@ -143,6 +149,9 @@ void Renderer::render() {
   CHECK_GL();
   glDepthFunc(GL_LEQUAL);
   CHECK_GL();
+  // glEnable(GL_BLEND);
+  // CHECK_GL();
+
   glDrawArrays(GL_TRIANGLES, 0, v_triangles.size());
   CHECK_GL();
 

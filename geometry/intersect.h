@@ -2,11 +2,13 @@
 #define VIZ_INTERSECT_H
 
 #include <array>
+#include <bitset>
 #include <cstdint>
 #include <functional>
 #include <glm/glm.hpp>
-#include <bitset>
+#include <iostream>
 
+#include "../debug.h"
 #include "geometry.h"
 
 namespace viz {
@@ -21,7 +23,8 @@ constexpr int max_intersections = 96;
 // Also a high estimate. One point can be on maximally 6 faces, all of which can
 // have a maximal number of 4 points of intersection on them -> 6*4
 constexpr int max_neghbours = 24;
-constexpr float proj_equality_criteria = 1-1e5;
+constexpr float proj_equality_criteria = 1 - 1e-6;
+
 
 struct Intersections {
   int count = 0;
@@ -30,6 +33,14 @@ struct Intersections {
   typedef vec_t::iterator iterator;
 
   vec_t pts;
+
+  inline void dump() {
+    std::cerr << "-----intersections------" << std::endl;
+    for (int i = 0; i < count; ++i) {
+      std::cerr << i << ": " << pts[i] << std::endl;
+    }
+    std::cerr << "------------------------" << std::endl;
+  }
 };
 
 struct Edge {
@@ -73,6 +84,18 @@ struct NeighboursMap {
   void insert(int a, int b);
 
   std::array<Neighbours, max_intersections> neighbours;
+
+  inline void dump() {
+    std::cerr << "-----neighbours_map------" << std::endl;
+    for (int i = 0; i < count; ++i) {
+      std::cerr << i << ": ";
+      for (int j = 0; j < neighbours[i].count; ++j) {
+        std::cerr << "j: " << neighbours[i].ids[j] << " ";
+      }
+      std::cerr << std::endl;
+    }
+    std::cerr << "------------------------" << std::endl;
+  }
 };
 
 class Face {
@@ -105,8 +128,9 @@ struct Triangle {
 class VisitedTriangles {
  public:
   bool get(int i, int j, int k);
-  void set(int i, int j, int k); 
-  private:
+  void set(int i, int j, int k);
+
+ private:
   std::bitset<max_intersections * max_intersections * max_intersections> data;
 };
 
@@ -127,7 +151,8 @@ class Intersector {
 
   glm::vec3 triangle_normal(int i, int j, int k);
 
-  void sweep(int i, int j, int k, std::function<void(Triangle const&)> emit, VisitedTriangles& visited_triangles);
+  void sweep(int i, int j, int k, std::function<void(Triangle const&)> emit,
+             VisitedTriangles& visited_triangles);
   Intersections intersections;
   FaceContentMap face_content_map;
   NeighboursMap neighbours_map;
@@ -135,4 +160,5 @@ class Intersector {
 
 }  // namespace intersect
 }  // namespace viz
+
 #endif  // VIZ_INTERSECT_H

@@ -2,7 +2,10 @@
 
 #include <bitset>
 #include <cassert>
+#include <cmath>
 #include <iostream>
+
+#include "../debug.h"
 
 namespace viz {
 namespace intersect {
@@ -23,7 +26,8 @@ void VisitedTriangles::set(int i, int j, int k) {
 }
 
 bool VisitedTriangles::get(int i, int j, int k) {
-  return data[i + max_intersections * j + max_intersections * max_intersections * k];
+  return data[i + max_intersections * j +
+              max_intersections * max_intersections * k];
 }
 
 constexpr int Face::numerical_id() {
@@ -155,7 +159,6 @@ void Intersector::sweep(int i, int j, int k,
   std::bitset<max_intersections> visited;
 
   if (visited_triangles.get(i, j, k)) {
-    // std::cerr << "abrakadabra " << i << " " << j << " " << k << std::endl;
     return;
   }
 
@@ -167,24 +170,27 @@ void Intersector::sweep(int i, int j, int k,
 
   int prev = i;
   int c = j;
-  while (c != k) {
+  while (true) {
     int best_n = -1;
     float largest_proj;
     bool could_close = false;
-    for (int n : neighbours_map.neighbours[c].ids) {
+    for (int ii = 0; ii < neighbours_map.neighbours[c].count; ++ii) {
+      int n = neighbours_map.neighbours[c].ids[ii];
+
       if (n == k) {
         could_close = true;
       }
       if (visited[n]) {
         continue;
       }
-      float proj = glm::dot(start_normal, triangle_normal(prev, c, n));
+      float proj =
+          std::fabs(glm::dot(start_normal, triangle_normal(prev, c, n)));
 
-      if (proj < proj_equality_criteria) {
+      if (proj <= proj_equality_criteria) {
         continue;
       }
 
-      if (best_n == -1 || largest_proj > proj) {
+      if (best_n == -1 || largest_proj < proj) {
         best_n = n;
         largest_proj = proj;
         continue;
@@ -199,7 +205,6 @@ void Intersector::sweep(int i, int j, int k,
       break;
     }
 
-    // std::cerr << "1111 " << prev << " " << c << " " << best_n << std::endl;
     visited_triangles.set(prev, c, best_n);
     emit(Triangle{ipt(i), ipt(c), ipt(best_n)});
     prev = c;
@@ -207,7 +212,7 @@ void Intersector::sweep(int i, int j, int k,
     visited[c] = true;
   }
 
-  // std::cerr << "22222 " << i << " " << c << " " << k << std::endl;
+  visited_triangles.set(prev, c, k);
   visited_triangles.set(c, k, i);
   emit(Triangle{ipt(c), ipt(k), ipt(i)});
 }
@@ -229,6 +234,7 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
   neighbours_map.build(face_content_map);
 
   VisitedTriangles visited_triangles;
+
   for (int i = 0; i < neighbours_map.count; ++i) {
     NeighboursMap::Neighbours const& ns = neighbours_map.neighbours[i];
 
