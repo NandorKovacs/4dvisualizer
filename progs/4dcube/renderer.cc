@@ -89,7 +89,8 @@ void Renderer::setup_vertices() {
     push_pt(v_lines, t.pts[2], 0);
     push_pt(v_lines, t.pts[2], 0);
     push_pt(v_lines, t.pts[0], 0);
-
+    push_pt(v_lines, (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f, 0);
+    push_pt(v_lines, glm::cross(t.pts[0] - t.pts[1], t.pts[2] - t.pts[1]) + (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f, 0);
     ++count;
   };
 

@@ -27,7 +27,7 @@ uniform mat4 normal_matrix_transform;
 // out vec4 new_color;
 
 out vec3 transformed_normal_vector;
-// out vec3 light_vector;
+out vec3 light_vector;
 out vec3 view_vector;
 
 // vec3 hsv2rgb(vec3 c)
@@ -55,7 +55,7 @@ void main(void){
 //  float c = position.w;
 
   view_vector = (mv_matrix * vec4(pos, 1)).xyz;
-//  light_vector = directional.direction;
+  light_vector = directional_light.direction;
   transformed_normal_vector = (normal_matrix_transform * vec4(normal, 1)).xyz;
 
   gl_Position = proj_matrix * mv_matrix * vec4(pos, 1);

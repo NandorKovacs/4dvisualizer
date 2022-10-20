@@ -61,9 +61,9 @@ class Renderer {
   glm::vec4 global_ambient{0.6f, 0.6f, 0.6f, 1.0f};
 
   DirectionalLight directional_light{{
-                                         glm::vec4{1.0f, 1.0f, 1.0f, 1.0f},
-                                         glm::vec4{1.0f, 1.0f, 1.0f, 1.0f},
-                                         glm::vec4{1.0f, 1.0f, 1.0f, 1.0},
+                                         glm::vec4{0.5f, 0.5f, 0.5f, 1.0f},
+                                         glm::vec4{0.5f, 0.5f, 0.5f, 1.0f},
+                                         glm::vec4{0.5f, 0.5f, 0.5f, 1.0},
                                      },
                                      {0.3f, 1.0f, 0.0f}};
 
