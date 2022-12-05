@@ -5,6 +5,9 @@ project(4dvisualizer LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 
 include(FetchContent)
+
+# GoogleTest --------
+
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
@@ -16,6 +19,17 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 include(GoogleTest)
+
+# CMRC --------------
+
+FetchContent_Declare(
+  cmrc
+  GIT_REPOSITORY https://github.com/vector-of-bool/cmrc.git
+  GIT_TAG 2.0.1
+)
+FetchContent_MakeAvailable(cmrc)
+
+# ------------------------------
 
 set(GL_LIB 
   -lglfw

@@ -5,10 +5,13 @@
 #include <cmath>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <cmrc/cmrc.hpp>
 
 #include "../../lib/camera_manager.h"
 #include "../../lib/errors.h"
 #include "../../lib/shader_loader.h"
+
+CMRC_DECLARE(viz_3dcube_glsl);
 
 void Renderer::setup_vertices() {
   float vertex_positions[108] = {
@@ -44,7 +47,13 @@ void Renderer::setup_vertices() {
 }
 
 Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager) : camera_manager{camera_manager}, window_size{window_size} {
-  prog = create_shader_program("vshader.glsl", "fshader.glsl");
+  cmrc::embedded_filesystem fs = cmrc::viz_3dcube_glsl::get_filesystem();
+  cmrc::file vshader = fs.open("vshader.glsl");
+  cmrc::file fshader = fs.open("fshader.glsl");
+
+  prog = create_shader_program(
+    std::string{vshader.begin(), vshader.end()},
+    std::string{fshader.begin(), fshader.end()});
 
   setup_vertices();
 }

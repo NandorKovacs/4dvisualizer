@@ -25,7 +25,6 @@ constexpr int max_intersections = 96;
 constexpr int max_neghbours = 24;
 constexpr float proj_equality_criteria = 1 - 1e-6;
 
-
 struct Intersections {
   int count = 0;
 
@@ -143,16 +142,18 @@ class Intersector {
    * @param plane
    * @return int The number of valid items in res.
    */
-  void intersect(std::function<void(Triangle const&)> emit,
-                 Hyperplane const& plane);
+  void intersect(
+      std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
+      Hyperplane const& plane);
 
  private:
   inline glm::vec3& ipt(int i) { return intersections.pts[i]; };
 
   glm::vec3 triangle_normal(int i, int j, int k);
 
-  void sweep(int i, int j, int k, std::function<void(Triangle const&)> emit,
-             VisitedTriangles& visited_triangles);
+  void sweep(int i, int j, int k,
+             std::function<void(Triangle const&, glm::vec3 const& normal)>,
+             VisitedTriangles& visited_triangles, glm::vec3 const& center);
   Intersections intersections;
   FaceContentMap face_content_map;
   NeighboursMap neighbours_map;

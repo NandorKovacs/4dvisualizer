@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 
 #include <cmath>
+#include <cmrc/cmrc.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/color_space.hpp>
 #include <iostream>
@@ -12,6 +13,8 @@
 #include "../../lib/errors.h"
 #include "../../lib/shader_loader.h"
 
+CMRC_DECLARE(viz_4dcube_glsl);
+
 namespace viz {
 
 Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
@@ -19,9 +22,18 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
     : camera_manager{camera_manager},
       window_size{window_size},
       hyperplane_manager{hyperplane_manager} {
-  prog = create_shader_program("vshader.glsl", "fshader.glsl");
-  wireframe_prog =
-      create_shader_program("wireframe_vshader.glsl", "wireframe_fshader.glsl");
+  cmrc::embedded_filesystem fs = cmrc::viz_4dcube_glsl::get_filesystem();
+
+  cmrc::file vshader = fs.open("vshader.glsl");
+  cmrc::file fshader = fs.open("fshader.glsl");
+  prog = create_shader_program(std::string{vshader.begin(), vshader.end()},
+                               std::string{fshader.begin(), fshader.end()});
+
+  cmrc::file wireframe_vshader = fs.open("wireframe_vshader.glsl");
+  cmrc::file wireframe_fshader = fs.open("wireframe_fshader.glsl");
+  wireframe_prog = create_shader_program(
+      std::string{wireframe_vshader.begin(), wireframe_vshader.end()},
+      std::string{wireframe_fshader.begin(), wireframe_fshader.end()});
 
   glGenVertexArrays(1, vao);
   CHECK_GL();
@@ -55,7 +67,7 @@ void Renderer::setup_aspect_ratio(GLuint const& program) {
 }
 
 namespace {
-void push_pt(std::vector<float>& f, glm::vec3 const& pt, float color) {
+void push_pt(std::vector<float>& f, glm::vec3 const& pt) {
   f.push_back(pt.x);
   f.push_back(pt.y);
   f.push_back(pt.z);
@@ -69,28 +81,24 @@ void Renderer::setup_vertices() {
   v_lines.clear();
   int count = 0;
 
-  auto handle_triangle = [&](intersect::Triangle const& t) {
-    push_pt(triangle_normals,
-            glm::cross(t.pts[0] - t.pts[1], t.pts[2] - t.pts[1]), 0);
-
+  auto handle_triangle = [&](intersect::Triangle const& t,
+                             glm::vec3 const& normal) {
     for (int i = 0; i < 3; ++i) {
       glm::vec3 const& pt = t.pts[i];
-      push_pt(triangle_vertices, pt, count);
+      push_pt(triangle_vertices, pt);
     }
-    // for (int i = 0; i < 3; ++i) {
-    //   glm::vec3 const& pt = t.pts[2 - i];
+    push_pt(triangle_normals, normal);
 
-    //   push_pt(triangle_vertices, pt, count);
-    // }
-
-    push_pt(v_lines, t.pts[0], 0);
-    push_pt(v_lines, t.pts[1], 0);
-    push_pt(v_lines, t.pts[1], 0);
-    push_pt(v_lines, t.pts[2], 0);
-    push_pt(v_lines, t.pts[2], 0);
-    push_pt(v_lines, t.pts[0], 0);
-    push_pt(v_lines, (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f, 0);
-    push_pt(v_lines, glm::cross(t.pts[0] - t.pts[1], t.pts[2] - t.pts[1]) + (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f, 0);
+    push_pt(v_lines, t.pts[0]);
+    push_pt(v_lines, t.pts[1]);
+    push_pt(v_lines, t.pts[1]);
+    push_pt(v_lines, t.pts[2]);
+    push_pt(v_lines, t.pts[2]);
+    push_pt(v_lines, t.pts[0]);
+    
+    push_pt(v_lines, (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f);
+    push_pt(v_lines, normal + (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f);
+    
     ++count;
   };
 
@@ -187,7 +195,7 @@ void Renderer::setup_light() {
   glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
   CHECK_GL();
   glBufferData(GL_ARRAY_BUFFER, triangle_normals.size() * sizeof(float),
-               triangle_normals.data(), GL_STATIC_DRAW);
+               triangle_normals.data(), GL_STREAM_DRAW);
   CHECK_GL();
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
   CHECK_GL();

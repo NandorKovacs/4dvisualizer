@@ -1,6 +1,6 @@
 #version 430
 
-layout (location=0) in vec3 position;
+layout (location=0) in vec3 pos;
 layout (location=1) in vec3 normal;
 
 uniform mat4 mv_matrix;
@@ -51,8 +51,8 @@ out vec3 view_vector;
 // }
 
 void main(void){
-  vec3 pos = position.xyz;
-//  float c = position.w;
+// vec3 pos = position.xyz;
+// float c = position.w;
 
   view_vector = (mv_matrix * vec4(pos, 1)).xyz;
   light_vector = directional_light.direction;

@@ -3,37 +3,12 @@
 #include <GL/glew.h>
 
 #include <string>
-#include <fstream>
 #include <iostream>
-#include <sstream>
 #include <exception>
 
 #include "errors.h"
 
-std::string load_file(std::string file_name) {
-  std::ifstream f;
-  f.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-  try {
-    f.open(file_name);
-  } catch (std::ios_base::failure& e) {
-    std::cerr << "Error opening " << file_name << ": " << e.what() << std::endl;
-    std::abort();
-  }
-
-  std::ostringstream buffer;
-  try {
-    buffer << f.rdbuf();
-  } catch (std::ios_base::failure& e) {
-    std::cerr << "Error reading " << file_name << ": " << e.what() << std::endl;
-    std::abort();
-  }
-  return buffer.str();
-}
-
-GLuint create_shader_program(std::string vshader_file, std::string fshader_file) {
-  std::string vshader_content = load_file(vshader_file);
-  std::string fshader_content = load_file(fshader_file);
-
+GLuint create_shader_program(std::string vshader_content, std::string fshader_content) {
   GLuint vshader = glCreateShader(GL_VERTEX_SHADER);
   CHECK_GL();
   GLuint fshader = glCreateShader(GL_FRAGMENT_SHADER);

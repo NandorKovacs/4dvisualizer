@@ -6,5 +6,11 @@ add_executable(3dcube
 
 target_link_libraries(3dcube
   4dvisualizer_lib
+  viz_3dcube_glsl
   ${GL_LIB}
+)
+
+cmrc_add_resource_library(viz_3dcube_glsl
+  vshader.glsl
+  fshader.glsl
 )

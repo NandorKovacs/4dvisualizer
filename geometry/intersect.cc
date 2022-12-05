@@ -154,8 +154,18 @@ glm::vec3 Intersector::triangle_normal(int i, int j, int k) {
 }
 
 void Intersector::sweep(int i, int j, int k,
-                        std::function<void(Triangle const&)> emit,
-                        VisitedTriangles& visited_triangles) {
+                        std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
+                        VisitedTriangles& visited_triangles, glm::vec3 const& center) {
+  auto emit_with_normal = [&](Triangle const& t){
+    glm::vec3 normal = {glm::cross(t.pts[0] - t.pts[1], t.pts[2] - t.pts[1])};
+    glm::vec3 t_center = (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f;
+
+    if (glm::dot(center - t_center, normal) > 0) {
+      normal = normal * -1.0f;
+    }
+    emit(t, normal);
+  };
+  
   std::bitset<max_intersections> visited;
 
   if (visited_triangles.get(i, j, k)) {
@@ -206,7 +216,7 @@ void Intersector::sweep(int i, int j, int k,
     }
 
     visited_triangles.set(prev, c, best_n);
-    emit(Triangle{ipt(i), ipt(c), ipt(best_n)});
+    emit_with_normal(Triangle{ipt(i), ipt(c), ipt(best_n)});
     prev = c;
     c = best_n;
     visited[c] = true;
@@ -214,23 +224,29 @@ void Intersector::sweep(int i, int j, int k,
 
   visited_triangles.set(prev, c, k);
   visited_triangles.set(c, k, i);
-  emit(Triangle{ipt(c), ipt(k), ipt(i)});
+  emit_with_normal(Triangle{ipt(c), ipt(k), ipt(i)});
 }
 
-void Intersector::intersect(std::function<void(Triangle const&)> emit,
-                            Hyperplane const& plane) {
+void Intersector::intersect(
+    std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
+    Hyperplane const& plane) {
   glm::mat4x3 dim_transform = glm::transpose(plane.coord_system);
 
   Intersections::iterator it = intersections.pts.begin();
+  glm::vec3 center{0.0f, 0.0f, 0.0f};
   for (Edge const& e : edges) {
     int n = intersect_edge(it, e, plane, dim_transform);
 
     for (int i = 0; i < n; ++i) {
       face_content_map.insert(e, intersections.count);
       ++intersections.count;
+
+      center += *it;
       ++it;
     }
   }
+  center = center / float(intersections.count);
+
   neighbours_map.build(face_content_map);
 
   VisitedTriangles visited_triangles;
@@ -240,7 +256,7 @@ void Intersector::intersect(std::function<void(Triangle const&)> emit,
 
     for (int j = 0; j < ns.count; ++j) {
       for (int k = j + 1; k < ns.count; ++k) {
-        sweep(i, ns.ids[j], ns.ids[k], emit, visited_triangles);
+        sweep(i, ns.ids[j], ns.ids[k], emit, visited_triangles, center);
       }
     }
   }
