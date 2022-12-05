@@ -24,8 +24,8 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
       hyperplane_manager{hyperplane_manager} {
   cmrc::embedded_filesystem fs = cmrc::viz_4dcube_glsl::get_filesystem();
 
-  cmrc::file vshader = fs.open("vshader.glsl");
-  cmrc::file fshader = fs.open("fshader.glsl");
+  cmrc::file vshader = fs.open("light_vshader.glsl");
+  cmrc::file fshader = fs.open("light_fshader.glsl");
   prog = create_shader_program(std::string{vshader.begin(), vshader.end()},
                                std::string{fshader.begin(), fshader.end()});
 

@@ -27,8 +27,8 @@ in vec3 light_vector;
 in vec3 view_vector;
 
 void main(void) {
-  vec3 N = normalize(transformed_normal_vector);
   vec3 L = normalize(light_vector);
+  vec3 N = normalize(transformed_normal_vector);
   vec3 V = normalize(-view_vector);
 
   vec3 R = normalize(reflect(-L, N));

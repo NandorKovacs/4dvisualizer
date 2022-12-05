@@ -15,6 +15,6 @@ PUBLIC
 cmrc_add_resource_library(viz_4dcube_glsl
   wireframe_vshader.glsl
   wireframe_fshader.glsl
-  vshader.glsl
-  fshader.glsl
+  light_vshader.glsl
+  light_fshader.glsl
 )
