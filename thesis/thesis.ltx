@@ -8,6 +8,9 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{xcolor}
+\definecolor{dark-green}{rgb}{0.0, 0.4, 0.0}
+\newcommand{\code}[1]{{\color{dark-green}\texttt{\textbf{#1}}}}
 \newtheorem{lemma}{Lemma}
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 
@@ -345,51 +348,275 @@ Raumes parallel ist, befinden.
 %   - funcitonal requirements
 %   - non functional requirements
 
+\subsection{User journeys}
 
+\begin{enumerate}
+  \item Die dargestellte Welt verändern indem man den input file bearbeitet.
+  \item Das Programm starten mit einem spezifischen input file.
+  \item Die aktuelle 3d Hyperebene kennen.
+  \item Die aktuelle Kameraposition und Winkel im 3d resultierenden Schnitt
+  kennen.
+  \item Die Kamera drehen und bewegen im resultierenden 3d Schnitt.
+  \item Die 3d Hyperebene drehen und bewegen.
+\end{enumerate}
+
+\subsection{Functional requirements}
+
+\begin{enumerate}
+  \item Die Kamera kann bewegt und gedreht werden mit den standard
+  Tastenbelegung für dreidimensionale Spiele und der Maus.
+  \item Die Hyperebene kann senkrecht zu sich selber bewegt werden, und ist
+  drehbar entlang den drei Dimensionsachsen seines momentanen Referenzrahmen.
+  \item Die Parameter der Hyperebene, und die Position und Richtung der Kamera
+  werden auf dem Bildschirm angezeigt.
+\end{enumerate}
 
 \section{Design}
 
-% - mocks
-% - user control options
-% - configuration format
+\subsection{Modell}
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3]{mock.png}
+	\caption{Skizze der Applikation.}
+	\label{fig:mock}
+\end{figure}
+
+Figure~\ref{fig:mock} zeigt wie die Applikation aussehen wird. In der Mitte
+sehen wir den Schnitt des Würfels und der Hyperebene. In der unteren rechten
+Ecke sehen wir eine Bildschrimanzeige, das die Position und Orientation der
+Hyperebene und der Kamera anzeigt.
+
+\subsection{Steuerungsmöglichkeiten}
+
+\begin{itemize}
+	\item Steuerung der Kamera
+	      \begin{itemize}
+		      \item Bewegen mit der Tastatur (left, right, forward, backward, up, down).
+		      \item Drehen mit der Maus (left, right, up, down).
+	      \end{itemize}
+	\item Steuerung der Hyperebene:
+	\item Vorwärts und Rückwerts entlang des Normalvektors verschieben.
+	\item Drehen entlang den Dimensionsachsen des Referenzrahmens.
+\end{itemize}
+
+\subsection{Konfigurations Format}
+
+\begin{itemize}
+  \item Eine einfache textbasierende konfigurations Format.
+  \item Beinhaltet eine Spezifikation einer Hyperebene, und eine beliebige
+  Anzahl von Spezifikationen für Würfel.
+  \item Alle Spezifikationen sehen folgendermassen aus: <Was> <Zahlen>
+  \item Leerzeichen, einschliesslich der Leertaste und Zeilenumbrüche können
+  beliebig verwendet werden.
+  \item Hyperebenen Spezifikation: HYPERPLANE <Ursprung> <3 orthogonale
+  Vektore>\newline
+  Die erste 4 Zahlen zeigen zum Ursprung, die verbleibenden 3x4 Zahlen sind die
+  drei Einheitsvektoren. Sie müssen orthogonal sein damit das Programm richtig
+  funktioniert.
+  \item Würfelspezifikation: CUBE <Grösse> <Ursprung> <4 orhtogonal
+  vectors>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
+  vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3x4
+  Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelkantnen.
+\end{itemize}
 
 \section{User Manual}
 
-% - installation 
-% - starting with chosen configuration
-% - controls
+\subsection{Installation}
+
+\begin{itemize}
+  \item Für Linux, lade den Quellcode herunter, installiere die
+  dev dependencies, kompiliere es.
+  % explain compilation process or include a zip file too
+  \item Für Windows, lade den Zip-File von der Github release page herunter.
+\end{itemize}
+
+\subsection{Den Programm mit einer gegebenen Konfiguration starten}
+
+\begin{itemize}
+  \item Finde den installierten \code{configs} Ordner.
+  \item Finde die installierte Binärdatei.
+  \item Lasse die Binärdateil von einem Command-Terminal laufen, und gebe den
+  konfigurations File als einzigen Parameter an.
+\end{itemize}
+
+\subsection{Das Programm steuern}
+
+\begin{itemize}
+	\item Die Kamera bewegen: A - links, D - rechts, W: forwärts, S: rückwärts, Shift: Hoch, Ctrl: Runter
+	\item Die Kamera drehen: Maus
+	\item Die Hyperebene auf seinem Normalvektor verschieben: R - positive Richtung, F - negative Richtung
+	\item Die Hyperebene drehen: I, O, P, [ und K, L, ö, ä. (Auf einer
+	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Charaktere
+	funktionieren, wo auf dem Platz von ö oder ä sind)
+\end{itemize}
 
 \section{Development}
 
 \subsection{Tools, Frameworks}
 
-\subsection{Milestones}
-\subsubsection{dot with opengl}
-\subsubsection{3d cube}
-\subsubsection{movable camera}
-\subsubsection{}
+\begin{itemize}
+	\item Cross-platform windowing library with OpenGL support: GLFW.
+	\item Drawing: OpenGL
+	\item OpenGL loader: GLEW
+	\item Programming language: C++
+	\item Build system: CMake
+\end{itemize}
 
-\subsection{Modules}
+
+
+\subsection{Milestones}
+
+\subsubsection*{Milestone 1: Ein 3d Würfel dargestellt, mit Navigation}
+
+\paragraph{Key results}
+
+\begin{itemize}
+	\item Der 3d Würfel ist gerendert.
+	\item Das Bewegen des Kameras ist möglich mit der Tastatur und der Maus.
+\end{itemize}
+
+\paragraph{Value}
+
+Wir haben eine Arbetisumgebung aufgebaut, und haben ein Verständniss für die
+Frameworks und Libraries erarbeitet.
+
+% We bootstrapped the working environement and built an understanding of the core
+% frameworks and libraries.
+
+\subsubsection*{Milestone 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
+
+\paragraph{Key results}
+
+Ein C++ Programm, dass
+
+\begin{itemize}
+  \item den Schnitt eines zentrierten, kanonischen 4d Wüfel mit einer arbiträren Hyperebene berechnet.
+  \item diesen Schnitt als dreidimensionales Objekt rendert.
+  \item die Parameter der Hyperebene interaktiv ändern kann.
+  \item den gerenderten Schnitt bei Änderungen der Hyperebene in Echtzeit anpasst.
+  \item weiterhin im dreidimenionalen Raum navigieren kann wie im vorherigen Milestone.
+
+	% \item computes the intersection of a 4d unitcube with an arbitrary hyperplane
+	% \item renders this intersection as a three dimensional object
+	% \item can alter the parameters of the hyperplane interactively
+	% \item adjusts the rendered object in real time to the changes of the hyperplane
+	% \item can still navigate in the three dimensional world like in the previous milestone
+\end{itemize}
+
+\paragraph{Value}
+
+Es zeigt sich dass die Theorie für die Berechnung des Schnittes korrekt ist. Wir
+erhalten einen ersten Eindruck vom 4d Würfel.
+
+% The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
+
+\subsubsection*{Milestone 3: visibility effects}
+
+\paragraph{Key Results}
+
+Object shading and lighting will be implemented.
+
+\paragraph{Value}
+
+The program allows us to experiment with parameters, form a visual idea about
+various projection shapes of the 4d cube and use it as an experiment and
+development platform for subsequent milestones.
+
+With object shading and lighting the rendered picture will be more easily understood by the user.
+
+\subsubsection*{Milestone 4: movable 4d cube}
+
+\paragraph{Key results}
+
+A c++ program is delivered, in which
+
+\begin{itemize}
+	\item the user can adjust the rotation angle of the 4d cube via keys
+	\item the user can move the projection plane via keys
+	\item the user move the camera via keys
+	\item values of the parameters are displayed as a hud
+	\item this is useful to allow storing of reproducible screenshots
+\end{itemize}
+
+\paragraph{Value}
+
+We have a skeleton of the core of the code with end to end functionality.
+
+\subsubsection*{Milestone 5: World description}
+
+\paragraph{Key results}
+
+\begin{itemize}
+	\item File format is defined to describe 4d objects
+	\item parser is written
+\end{itemize}
+
+\paragraph{Value}
+
+We are ready to assemble the minimum project.
+
+\subsubsection*{Milestone 6: Full world rendering}
+
+\paragraph{Key results}
+
+Program that can render a World described a config file, allows moving the
+projection plane as well as the camera in the 3d world. Provides feedback of
+projection and camera position in a HUD.
+
+\paragraph{Value}
+
+This is a minimum viable solution of the original project description.
+
+\subsection{Key modules}
 
 \subsubsection{Intersection of canonical unit cube with 3d hyperplane}
 
+\begin{itemize}
+	\item uses precomputed face neigbourhood maps
+	\item uses a single face can have maximum 2 intersections
+	\item intersection points form a graph
+	\item walking the graph along face neigborhood map
+	\item use face normal to find planar subsets in the graph
+\end{itemize}
+
 \subsubsection{Rotation}
 
+\begin{itemize}
+	\item use transformation matrix combinations
+\end{itemize}
 
+\subsubsection{Camera manager}
 
-\part*{Literaturverzeichnis}
+\begin{itemize}
+	\item maintain \code{loc} (location), \code{pitch}, \code{yaw}
+	\item maintain current pan and rotation speeds
+	\item on tic, recalculate \code{transform} matrix
+\end{itemize}
+
+\subsubsection{Hyperplane manager}
+
+\begin{itemize}
+	\item maintain a hyperplane
+	\item maintain current rotation and move speeds
+	\item on tic, recalculate the hyperplane
+\end{itemize}
+
+\subsubsection{Renderer}
+
+\begin{itemize}
+	\item use the Intesection, and the Rotation modules to compute coordinates
+	\item use OpenGL to display the given bodies
+\end{itemize}
+
+% \part{Literaturverzeichnis}
 
 % Die in der Arbeit erwähnten Quellen (Texte und Abbildungen) werden alphabetisch
 % nach Autoren aufgelistet. Für Internetquellen wird eine gesonderte Liste
 % erstellt.
 
-\part*{Anhang}
+% \part{Anhang}
 
-Hier erscheinen --- wenn sinnvoll --- Rohdaten und Beilagen.
-
-\bibliographystyle{abbrv}
-\bibliography{main}
+% Hier erscheinen --- wenn sinnvoll --- Rohdaten und Beilagen.
 
 \end{document}
-This is never printed

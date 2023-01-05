@@ -1,6 +1,8 @@
 #ifndef VIZ_STATE_DEBUG_H
 #define VIZ_STATE_DEBUG_H
 
+#include <ostream>
+
 #include "camera_manager.h"
 #include "hyperplane_manager.h"
 
@@ -19,7 +21,7 @@ class StateDebug {
   void write(std::ostream& os);
  private:
   CameraManager& camera_manager;
-  HyperplaneManager& hyperplane_manager
+  HyperplaneManager& hyperplane_manager;
 };
 
 }  // namespace viz

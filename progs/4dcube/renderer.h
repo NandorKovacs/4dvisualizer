@@ -26,7 +26,7 @@ class Renderer {
 
  private:
   void setup_vertices();
-  void setup_aspect_ratio(GLuint const& program);
+  void setup_basic_projection(GLuint const mv_loc, GLuint const proj_loc);
   void setup_light();
 
   void send_triangles();
@@ -34,9 +34,8 @@ class Renderer {
 
   GLuint vao[NUM_VAOs];
   GLuint vbo[NUM_VBOs];
-  GLuint prog, wireframe_prog;
+  GLuint light_prog, wireframe_prog;
 
-  GLuint mvLoc, projLoc;
   glm::ivec2 window_size;
   float aspect;
   glm::mat4 pMat, mMat, mvMat;
@@ -45,20 +44,25 @@ class Renderer {
 
   std::vector<float> triangle_vertices;
   std::vector<float> triangle_normals;
-
   std::vector<float> v_lines;
 
   CameraManager& camera_manager;
   HyperplaneManager& hyperplane_manager;
+
+
+  // ----- wireframe program locations
+  struct WireframeLoc {
+    GLuint mv, proj;
+  };
+  WireframeLoc wireframe_loc;
+
 
   // ----- lighting stuff
 
   Material gold_material{{glm::vec4{0.2473f, 0.1995f, 0.0745f, 1},
                           glm::vec4{0.7516f, 0.6065f, 0.2265f, 1},
                           glm::vec4{0.6283f, 0.5558f, 0.3661f, 1}},
-                         51.2f};
-
-  glm::vec4 global_ambient{0.2f, 0.2f, 0.2f, 1.0f};
+                         /* TODO: restore: 51.2f */ 51.2f};
 
   DirectionalLight directional_light{{
                                          glm::vec4{0.5f, 0.5f, 0.5f, 1.0f},
@@ -67,11 +71,18 @@ class Renderer {
                                      },
                                      {0.3f, 1.0f, 0.0f}};
 
+  glm::vec4 global_ambient{0.2f, 0.2f, 0.2f, 1.0f};
+
   glm::mat4 normal_matrix_transform;
 
-  GLuint material_mat_loc, material_shine_loc, global_ambient_loc,
-      directional_mat_loc, directional_direction_loc,
-      normal_matrix_transform_loc;
+  struct LightLoc {
+    GLuint mv, proj;
+
+    GLuint material_mat, material_shine, global_ambient,
+        directional_mat, directional_direction,
+        normal_matrix_transform;
+  };
+  LightLoc light_loc;
   // --------------------
 };
 

@@ -10,10 +10,5 @@ void StateDebug::dump() {
 
 void StateDebug::load() {}
 
-void StateDebug::
+void StateDebug::write(std::ostream& os) {}
 }  // namespace viz
-
-/*
-C 
-
-*/

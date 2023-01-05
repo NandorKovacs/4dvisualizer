@@ -1,3 +1,6 @@
+/// @file
+/// Tests for the intersection logic.
+
 #include "intersect.h"
 
 #include <gtest/gtest.h>
@@ -14,6 +17,8 @@ namespace viz {
 namespace intersect {
 namespace {
 
+/// @brief Smoke test, intersecting the canonical unit cube with the
+///      plane in the origin, orthogonal to the 4th unit vector.
 TEST(IntersectTest, IntersectWithDefaultPlane) {
   Intersector intersector;
   Hyperplane plane{glm::vec4(0, 0, 0, 0),
@@ -22,7 +27,7 @@ TEST(IntersectTest, IntersectWithDefaultPlane) {
 
   std::vector<Triangle> triangles;
   intersector.intersect(
-      [&](Triangle const& t) {
+      [&](Triangle const& t, glm::vec3 const& normal) {
         triangles.push_back(t);
         // std::cerr << t << std::endl;
       },

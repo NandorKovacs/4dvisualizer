@@ -20,8 +20,6 @@ uniform DirectionalLight directional_light;
 
 uniform vec4 global_ambient;
 
-uniform mat4 normal_matrix_transform;
-
 in vec3 transformed_normal_vector;
 in vec3 light_vector;
 in vec3 view_vector;

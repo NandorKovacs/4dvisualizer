@@ -7,6 +7,13 @@
 #include <glm/vec4.hpp>
 #include <ostream>
 
+#define DLOG std::cerr << __FILE__ << ", line " << __LINE__ << ": "
+
+// The operator<< templates need to be in the namespace of either of
+// their parameters, which is std or glm. See
+// https://en.cppreference.com/w/cpp/language/adl . 
+namespace glm {
+
 template <typename T, glm::qualifier Q>
 std::ostream& operator<<(std::ostream& os, glm::vec<4, T, Q> const& v) {
   os << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
@@ -39,6 +46,6 @@ std::ostream& operator<<(std::ostream& os, glm::mat<4, 4, T, Q> const& m) {
   return os;
 }
 
-#define DLOG std::cerr << __FILE__ << ", line " << __LINE__ << ": "
+}  // namespace glm
 
 #endif  // VIZ_DEBUG_H
