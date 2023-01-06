@@ -353,7 +353,7 @@ Raumes parallel ist, befinden.
 \begin{enumerate}
   \item Die dargestellte Welt verändern indem man den input file bearbeitet.
   \item Das Programm starten mit einem spezifischen input file.
-  \item Die aktuelle 3d Hyperebene kennen.
+  \item Die aktuelle Parameter der 3d Hyperebene kennen.
   \item Die aktuelle Kameraposition und Winkel im 3d resultierenden Schnitt
   kennen.
   \item Die Kamera drehen und bewegen im resultierenden 3d Schnitt.
@@ -375,7 +375,7 @@ Raumes parallel ist, befinden.
 
 \subsection{Modell}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.3]{mock.png}
 	\caption{Skizze der Applikation.}
@@ -415,12 +415,12 @@ Hyperebene und der Kamera anzeigt.
   drei Einheitsvektoren. Sie müssen orthogonal sein damit das Programm richtig
   funktioniert.
   \item Würfelspezifikation: CUBE <Grösse> <Ursprung> <4 orhtogonal
-  vectors>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
+  vectore>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
   vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3x4
-  Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelkantnen.
+  Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
 \end{itemize}
 
-\section{User Manual}
+\section{Bedienungsanleitung}
 
 \subsection{Installation}
 
@@ -446,24 +446,55 @@ Hyperebene und der Kamera anzeigt.
 	\item Die Kamera bewegen: A - links, D - rechts, W: forwärts, S: rückwärts, Shift: Hoch, Ctrl: Runter
 	\item Die Kamera drehen: Maus
 	\item Die Hyperebene auf seinem Normalvektor verschieben: R - positive Richtung, F - negative Richtung
-	\item Die Hyperebene drehen: I, O, P, [ und K, L, ö, ä. (Auf einer
+	\item Die Hyperebene drehen: O, P, [ und L, ö, ä. (Auf einer
 	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Charaktere
 	funktionieren, wo auf dem Platz von ö oder ä sind)
 \end{itemize}
 
-\section{Development}
+\section{Entwicklung}
 
 \subsection{Tools, Frameworks}
 
 \begin{itemize}
+  \item Programming language: C++
 	\item Cross-platform windowing library with OpenGL support: GLFW.
 	\item Drawing: OpenGL
 	\item OpenGL loader: GLEW
-	\item Programming language: C++
 	\item Build system: CMake
 \end{itemize}
 
+\subsubsection{C++}
+C++ ist meine präferierte Computersprache. Alles Programmcode das ich
+geschrieben habe ist in dieser Sprache, mit ausnahme der Shaderprogramme, die in
+glsl geschrieben werden müssen.
 
+
+
+\subsubsection{GFLW}
+GLFW ist eine Library die Anwendungsfenster und Eingabe über Maus und Tastatur
+verwaltet. Mithilfe von GLFW ist es möglich für uns einen Fenster zu öffnen mit
+dem Programm, um eine Oberfläche zum Zeichnen zu erhalten.
+
+\subsubsection{OpenGL}
+OpenGL ist im Prinzip was uns erlaubt mit der Graphikkarte zu komunizieren. Wir
+rufen OpenGL Funktionen, und schicken damit unsere Punkte an die Grafikkarte.
+Wir schicken ausserdem unser Schattierungsprogramme an die Grafikkarte. Die
+Grafikkarte benutzt diese Programme dann in der richtigen Reihenfolge um zu
+berechnen welche Pixel auf dem Bildschirm genau welche Farbe haben sollen.
+
+\subsubsection{GLEW}
+OpenGL hat eine API (Das heisst Funktionen, die man benutzen kann im eigenen
+Code) die Öffentlich ist. Aber je nach Graphikkarten Hersteller und
+Operationssystem sind diese Funktionen anderst implementiert. Ausserdem gibt es
+viele OpenGL Versionen, und manchmal möchte man dass ein Programm auf mehreren
+Versionen funktioniert. Im Normalfall werden die Funktionen einer API während
+der Compilation in das eigene Programm compiliert. Mit OpenGL aber wird nur eine
+sehr kleine Anzahl der Funktionen direkt reincompiliert, sondern viele der
+Funktionen müssen abgefragt werden. Somit kann man nach einer Funktion `Zeichnen'
+fragen, und falls diese auf mehreren OpenGL Versionen existiert, funktioniert
+das Programm auf alle diesen Versionen. Damit man dieses Abfragen nicht selber
+machen muss, exisitert GLEW. GLEW erledigt dies ganz automatisch, man muss nur
+einige Parameter angeben, und dann Funktioniert es von alleine.
 
 \subsection{Milestones}
 
@@ -511,62 +542,74 @@ erhalten einen ersten Eindruck vom 4d Würfel.
 
 % The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
 
-\subsubsection*{Milestone 3: visibility effects}
+\subsubsection*{Milestone 3: Sichtbarkeitseffekte}
 
 \paragraph{Key Results}
 
-Object shading and lighting will be implemented.
+Objektschattierung und Beleuchtung wird implementiert.
 
 \paragraph{Value}
 
-The program allows us to experiment with parameters, form a visual idea about
-various projection shapes of the 4d cube and use it as an experiment and
-development platform for subsequent milestones.
+Der Programm erlaubt uns mit Parametern zu experimentieren, und verschiedene
+Formen und Gestalten von Schnitten des 4d Würfels kennen zu lernen.
 
-With object shading and lighting the rendered picture will be more easily understood by the user.
+Mit den Lichteffekten und der Schattierung wird das gerenderte Bild einfacher zu
+sehen und zu verstehen für den Benutzer. Jetzt erst sind die Kanten und Ecken
+sichtbar. Ohne Schattierung konnte man nur die Umrisse sehen, und die Kanten und
+Ecken durch Bewegung erahnen.
+
+% The program allows us to experiment with parameters, form a visual idea about
+% various projection shapes of the 4d cube and use it as an experiment and
+% development platform for subsequent milestones.
+
+% With object shading and lighting the rendered picture will be more easily understood by the user.
 
 \subsubsection*{Milestone 4: movable 4d cube}
 
 \paragraph{Key results}
 
-A c++ program is delivered, in which
+Der Würfel ist nicht mehr zwingend zentriert beim Ursprung. Er kann sich jetzt
+an einem arbiträren Ort im 4d Raum, mit einer arbiträren Drehung befinden. Dies
+ist hier aber erst nur im code beeinflussbar, man kann den Würfel nicht bewegen.
 
-\begin{itemize}
-	\item the user can adjust the rotation angle of the 4d cube via keys
-	\item the user can move the projection plane via keys
-	\item the user move the camera via keys
-	\item values of the parameters are displayed as a hud
-	\item this is useful to allow storing of reproducible screenshots
-\end{itemize}
 
 \paragraph{Value}
 
-We have a skeleton of the core of the code with end to end functionality.
+Wir haben ein Skelett vom Kern des Programms.
 
-\subsubsection*{Milestone 5: World description}
+% We have a skeleton of the core of the code with end to end functionality.
+
+\subsubsection*{Milestone 5: Ein Format, dass den Aufbau einer Welt beschreibt}
 
 \paragraph{Key results}
 
 \begin{itemize}
-	\item File format is defined to describe 4d objects
-	\item parser is written
+  \item Ein Fileformat wird definiert, dass 4d Objekte im Raum beschreibt.
+  \item Ein Parser ist implementiert.
 \end{itemize}
 
 \paragraph{Value}
 
-We are ready to assemble the minimum project.
+Wir sind bereit das Endprodukt zusammenzustellen.
 
-\subsubsection*{Milestone 6: Full world rendering}
+\subsubsection*{Milestone 6: Die Renderung einer Welt}
 
 \paragraph{Key results}
 
-Program that can render a World described a config file, allows moving the
-projection plane as well as the camera in the 3d world. Provides feedback of
-projection and camera position in a HUD.
+Das Programm can eine Welt, definiert durch einen configurations File, rendern.
+Die Schnitt-Hyperebene und Kamera sind weiterhin dreh und bewegbar. Auf einer
+HUD (Heads-Up Display) werden die Parametern der Hyperebene und der Kamera
+präsentiert.
+
+% Program that can render a World described a config file, allows moving the
+% projection plane as well as the camera in the 3d world. Provides feedback of
+% projection and camera position in a HUD.
 
 \paragraph{Value}
 
-This is a minimum viable solution of the original project description.
+Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
+
+% This is a minimum viable solution of the original project description.
 
 \subsection{Key modules}
 
