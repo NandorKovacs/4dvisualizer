@@ -31,7 +31,6 @@
 \begin{document}
 \maketitle
 
-
 \begin{abstract}
 	Ziel dieser Arbeit ist, vierdimensionale Würfel im
 	vierdimensionalen Raum darzustellen.  Die Projektionsmethode, um den
@@ -48,14 +47,14 @@
 	auf dem Bildschirm visualisiert.
 \end{abstract}
 
-\part*{Inhaltsverzeichnis}
-
+% \section{Inhaltsverzeichnis}
+\tableofcontents
 % Überblick über den Aufbau: Gliederung in Kapitel und Unterkapitel. Vorwort
 % (nicht obligatorisch): Das Vorwort enthält Dinge, die nicht in die Arbeit
 % selbst gehören, z.B. Beweggründe, die zur Wahl des Themas geführt haben. Die
 % unterstützenden Personen und Institutionen werden genannt.
 
-\part*{Vorwort}
+\section{Vorwort}
 
 \begin{displayquote}
 	\itshape{}
@@ -111,12 +110,12 @@ Arbeit zu betreuen, nachdem meine vorherige Begleitperson die Schule verlassen
 hat und mich nicht weiter betreuen konnte.
 
 
-\part*{Einleitung}
+\section{Einleitung}
 
 % Hier wird die Projektidee beschrieben und die Problemstellung erläutert.
 % Wichtig ist auch die Eingrenzung des Projekts.
 
-\section{Zielsetzung}
+\subsection{Zielsetzung}
 
 Die zweidimensionale Schnitte von dreidimensionalen Körpern kennen wir gut.
 Schauen wir beispielsweise den Einheitswürfel an. Viele seiner Schnitte sind
@@ -133,7 +132,7 @@ bewegbar, und verständlich gefärbt dargestellt werden.
 % Auch ein wichtiges Ziel war, dass das Programm als internetseite erreichbar ist
 
 
-\part*{Hauptteil}
+\section{Hauptteil}
 
 % Dieser Teil der Arbeit enthält die reflektierende Auseinandersetzung mit der
 % eigenen Arbeit. Er wird in einzelne Kapitel und Unterkapitel eingeteilt. Hier
@@ -141,9 +140,9 @@ bewegbar, und verständlich gefärbt dargestellt werden.
 % Dokumentation konkret erfolgen wird (separates Skizzenbuch, Arbeitsmappe etc.),
 % ist zu Beginn des Prozesses mit der Betreuungsperson zu vereinbaren.
 
-\section{Theorie}
+\subsection{Theorie}
 
-\subsection{Wie stellen wir uns einen vierdimensionalen Würfel vor? Was ist ein vierdimensionaler Würfel?}
+\subsubsection{Wie stellen wir uns einen vierdimensionalen Würfel vor? Was ist ein vierdimensionaler Würfel?}
 
 Um zu definieren, wie ein vierdimensionaler Würfel aufgebaut ist, werfe ich
 einen Blick auf den Unterschied zwischen einem dreidimensionalen Würfel und einem
@@ -170,7 +169,7 @@ mit Seitenlänge 1, auf der Hyperebene $F(x, y, z) = 0$. Ich nehme einen zweiten
 Würfel und verschiebe ihn entlang der $w$-Achse um $1$. Nun verbinde ich alle Ecken
 dieser Würfel. Dieses Objekt nenne ich einen vierdimensionalen Würfel.
 
-\subsection{Die definition eines vierdimensionalen Würfels}
+\subsubsection{Die definition eines vierdimensionalen Würfels}
 
 Um einen vierdimensionalen Würfel zu definieren, müssen wir zuerst den
 vierdimensionalen Raum definieren. Dies definieren wir ähnlich zu den zwei- und
@@ -239,7 +238,7 @@ Dimension. Die dreidimenionalen Seiten sind alles reguläre Würfel. Es hat
 $4\times 2 = 8$ davon.
 
 
-\subsection{Schnittkörper eines 4d Würfels mit einer 3d Hyperebene}
+\subsubsection{Schnittkörper eines 4d Würfels mit einer 3d Hyperebene}
 
 
 Der Schnittkörper eines 4d Würfels und einer 3d Hyperebene ist ein maximal
@@ -318,7 +317,7 @@ Würfel und einer 3d Hyperebene eine Union von 2d Flächen sein wird, welches wi
 bekommen indem wir die 3d Seiten mit der 3d Hypereben schneiden, und das ist was
 wir beweisen wollten.
 
-\subsection{Rechenalgorithmus}
+\subsubsection{Rechenalgorithmus}
 
 Um einen praktischen Algorithmus implementieren zu können, müssen wir eine
 Repräsentation von einem 4d Würfel im 4d Raum finden, dass wir verstehen und
@@ -341,14 +340,14 @@ implementieren, dass es einfach zum folgen ist, da alle Schnittpunkte von den
 Kanten mit der Hyperebene sich auf einer Linie, die mit den Einheitsvektoren des
 Raumes parallel ist, befinden.
 
-\section{Spezifikation}
+\subsection{Spezifikation}
 
 % - user journeys
 % - requriement specification
 %   - funcitonal requirements
 %   - non functional requirements
 
-\subsection{User journeys}
+\subsubsection{User journeys}
 
 \begin{enumerate}
   \item Die dargestellte Welt verändern indem man den input file bearbeitet.
@@ -360,7 +359,7 @@ Raumes parallel ist, befinden.
   \item Die 3d Hyperebene drehen und bewegen.
 \end{enumerate}
 
-\subsection{Functional requirements}
+\subsubsection{Functional requirements}
 
 \begin{enumerate}
   \item Die Kamera kann bewegt und gedreht werden mit den standard
@@ -371,9 +370,9 @@ Raumes parallel ist, befinden.
   werden auf dem Bildschirm angezeigt.
 \end{enumerate}
 
-\section{Design}
+\subsection{Design}
 
-\subsection{Modell}
+\subsubsection{Modell}
 
 \begin{figure}[h]
 	\centering
@@ -387,7 +386,7 @@ sehen wir den Schnitt des Würfels und der Hyperebene. In der unteren rechten
 Ecke sehen wir eine Bildschrimanzeige, das die Position und Orientation der
 Hyperebene und der Kamera anzeigt.
 
-\subsection{Steuerungsmöglichkeiten}
+\subsubsection{Steuerungsmöglichkeiten}
 
 \begin{itemize}
 	\item Steuerung der Kamera
@@ -400,7 +399,7 @@ Hyperebene und der Kamera anzeigt.
 	\item Drehen entlang den Dimensionsachsen des Referenzrahmens.
 \end{itemize}
 
-\subsection{Konfigurations Format}
+\subsubsection{Konfigurations Format}
 
 \begin{itemize}
   \item Eine einfache textbasierende konfigurations Format.
@@ -420,9 +419,9 @@ Hyperebene und der Kamera anzeigt.
   Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
 \end{itemize}
 
-\section{Bedienungsanleitung}
+\subsection{Bedienungsanleitung}
 
-\subsection{Installation}
+\subsubsection{Installation}
 
 \begin{itemize}
   \item Für Linux, lade den Quellcode herunter, installiere die
@@ -431,7 +430,7 @@ Hyperebene und der Kamera anzeigt.
   \item Für Windows, lade den Zip-File von der Github release page herunter.
 \end{itemize}
 
-\subsection{Den Programm mit einer gegebenen Konfiguration starten}
+\subsubsection{Den Programm mit einer gegebenen Konfiguration starten}
 
 \begin{itemize}
   \item Finde den installierten \code{configs} Ordner.
@@ -440,7 +439,7 @@ Hyperebene und der Kamera anzeigt.
   konfigurations File als einzigen Parameter an.
 \end{itemize}
 
-\subsection{Das Programm steuern}
+\subsubsection{Das Programm steuern}
 
 \begin{itemize}
 	\item Die Kamera bewegen: A - links, D - rechts, W: forwärts, S: rückwärts, Shift: Hoch, Ctrl: Runter
@@ -451,38 +450,40 @@ Hyperebene und der Kamera anzeigt.
 	funktionieren, wo auf dem Platz von ö oder ä sind)
 \end{itemize}
 
-\section{Entwicklung}
+\subsection{Entwicklung}
 
-\subsection{Tools, Frameworks}
+\subsubsection{Tools, Frameworks}
 
 \begin{itemize}
-  \item Programming language: C++
+  \item Programming language: \code
+{C++}
 	\item Cross-platform windowing library with OpenGL support: GLFW.
 	\item Drawing: OpenGL
 	\item OpenGL loader: GLEW
 	\item Build system: CMake
 \end{itemize}
 
-\subsubsection{C++}
-C++ ist meine präferierte Computersprache. Alles Programmcode das ich
+\paragraph{C++}
+\code
+{C++} ist meine präferierte Computersprache. Alles Programmcode das ich
 geschrieben habe ist in dieser Sprache, mit ausnahme der Shaderprogramme, die in
 glsl geschrieben werden müssen.
 
 
 
-\subsubsection{GFLW}
+\paragraph{GFLW}
 GLFW ist eine Library die Anwendungsfenster und Eingabe über Maus und Tastatur
 verwaltet. Mithilfe von GLFW ist es möglich für uns einen Fenster zu öffnen mit
 dem Programm, um eine Oberfläche zum Zeichnen zu erhalten.
 
-\subsubsection{OpenGL}
+\paragraph{OpenGL}
 OpenGL ist im Prinzip was uns erlaubt mit der Graphikkarte zu komunizieren. Wir
 rufen OpenGL Funktionen, und schicken damit unsere Punkte an die Grafikkarte.
 Wir schicken ausserdem unser Schattierungsprogramme an die Grafikkarte. Die
 Grafikkarte benutzt diese Programme dann in der richtigen Reihenfolge um zu
 berechnen welche Pixel auf dem Bildschirm genau welche Farbe haben sollen.
 
-\subsubsection{GLEW}
+\paragraph{GLEW}
 OpenGL hat eine API (Das heisst Funktionen, die man benutzen kann im eigenen
 Code) die Öffentlich ist. Aber je nach Graphikkarten Hersteller und
 Operationssystem sind diese Funktionen anderst implementiert. Ausserdem gibt es
@@ -496,26 +497,70 @@ das Programm auf alle diesen Versionen. Damit man dieses Abfragen nicht selber
 machen muss, exisitert GLEW. GLEW erledigt dies ganz automatisch, man muss nur
 einige Parameter angeben, und dann Funktioniert es von alleine.
 
-\subsection{Die Funktionsweise und das Zusammenspiel der Libraries, der Graphikkarte und das Operationssystems}
+\subsubsection{Die Funktionsweise und das Zusammenspiel der Libraries, der Graphikkarte und das Operationssystems}
 % WIP, dont review
 
 Ich habe die Libraries die ich benutzt habe oben beschrieben. Hier erläutere ich
 wie genau sie Funktionieren. Mit einem Programm ein Applikationsfenster zu
 öffnen und benutzen ist ganz einfach mit Libraries die im Hintergrund alles
-komplizierte automatisch 
+komplizierte automatisch lösen für dich. Aber diese haben immer sehr viele
+Einschränkungen. Wenn man wirklich frei sein will zu tun und zu lassen was man
+will, muss man ganz vieles selber lernen und machen.
 
-\subsection{Meilensteine}
+Aus diesem Grund habe ich mich dafür entschieden zu lernen wie man mit OpenGL
+umgeht. OpenGL ist eines der meistverbreiteteten API's für zwei- und
+dreidimenionale Vektorgraphiken, und ich war mir sicher es macht Sinn das zu
+lernen.
 
-\subsubsection*{Meilenstein 1: Ein 3d Würfel dargestellt, mit Navigation}
+OpenGL selber ist aber nur ein Werkzeug um mit der Grafikkarte zu komunizieren.
+Um ein Fenster zu öffnen und Tastendrücke zu erkennen und verwenden im Programm
+brauche ich auch eine Schnittstelle mit dem Operationssystem. Dafür verwende ich
+GLFW. GLFW (Graphics Library Framework) hilft bei der Kommunikation mit dem
+Operationssystem. Mithilfe von GLFW kann ich das Applikationsfenster erstellen
+und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 
-\paragraph{Key results}
+Mit OpenGL lädt man Daten auf die Grafikkarte. GLEW dient dabei wie ein
+Übersetzer; es macht eigentich nichts anderes wie unsere Funktionsaufrufe and
+die richtigen Funktion zu binden. In unserem Fall lädt man eine Menge von
+Punkten in einem 3d Raum (repräsentiert durch Vektoren) auf die Grafikkarte.
+Ausserdem lädt man die Schattierungsprogramme auf die Grafikkarte. Alles andere,
+also die Berechnungen und die Verwaltung des Bildschirms, geschieht `von
+alleine'. Es wird von der Grafikkarte übernommen, und ist nicht unsere
+Verantwortung. Die Schattierungsprogramme, sofern wir sie in den richtigen Ort
+gelanden haben, verändern und interprätieren unsere Daten, sodass aus Punkten
+und Farben und Vektoren eine Menge von Pixel entstehen. 
+
+Was noch nicht ganz klar ist, ist wie die Grafikkarte weiss wo genau die
+berechnetten Pixel hingehören. Dies ist so gelöst, dass wir durch GLFW einen
+sogenannten Context erhalten beim Erstellen des Fensters. Wenn wir die Daten und Programme an die
+Grafikkarte schicken, schicken wir auch die Information, welchen Context wir
+benutzen.
+
+Je nach Operationssystem bekommt GLFW so einen Context auf unterschiedlicher
+Weise für uns. Auf Windows werden die Fenster vom Operationssystem verwalten.
+Das heisst, das GLFW mithilfe des Operationssystems ein Fenster erstellt, was
+widerum auf der Grafikkarte einen Context erstellt, und an GLFW die Nummer des
+Contextes auf der Karte mitteilt. Auf Linux, zumindest auf der Distribution die
+ich benutze, gibt es einen sogenannten Compositor. Der sorgt dafür das alle
+Fenster richtig Funktionieren, macht das man bei transparenten Fenster das was
+unter dem Fenster ist sichtbar ist, und so weiter. Somit spricht GLFW nicht nur
+mit dem Operationsystem, sondern auch mit dem Compositor, das durch OpenGL einen
+Context erstellt, und dann aber auch die Nummer des Contextes an GLFW
+zurückgibt.
+
+
+\subsubsection{Meilensteine}
+
+\paragraph*{Meilenstein 1: Ein 3d Würfel dargestellt, mit Navigation}
+
+\subparagraph{Key results}
 
 \begin{itemize}
 	\item Der 3d Würfel ist gerendert.
 	\item Das Bewegen des Kameras ist möglich mit der Tastatur und der Maus.
 \end{itemize}
 
-\paragraph{Value}
+\subparagraph{Value}
 
 Wir haben eine Arbetisumgebung aufgebaut, und haben ein Verständniss für die
 Frameworks und Libraries erarbeitet.
@@ -523,7 +568,7 @@ Frameworks und Libraries erarbeitet.
 % We bootstrapped the working environement and built an understanding of the core
 % frameworks and libraries.
 
-\paragraph{Prozess}
+\subparagraph{Prozess}
 Dieser Meilenstein sieht nicht sehr schwierig aus, aber war eines der
 zeitaufwändigsten Teile des Projekts. Ich habe zuerst aus einem Buch und dem
 Internet gelernt, wie OpenGL funktioniert, und was man für Libraries braucht.
@@ -534,11 +579,11 @@ darzustellen. Hier war die grösste Schwiereigkeit den Code richtig zu
 strukturieren. Ich habe mir hier überlegt was für Datenstrukturen ich brauchen
 werde, und was ich in Klassen abstrahieren möchte. 
 
-\subsubsection*{Meilenstein 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
+\paragraph*{Meilenstein 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
 
-\paragraph{Key results}
+\subparagraph{Key results}
 
-Ein C++ Programm, dass
+Ein \code{C++} Programm, dass
 
 \begin{itemize}
   \item den Schnitt eines zentrierten, kanonischen 4d Wüfel mit einer arbiträren Hyperebene berechnet.
@@ -554,14 +599,14 @@ Ein C++ Programm, dass
 	% \item can still navigate in the three dimensional world like in the previous milestone
 \end{itemize}
 
-\paragraph{Value}
+\subparagraph{Value}
 
 Es zeigt sich dass die Theorie für die Berechnung des Schnittes korrekt ist. Wir
 erhalten einen ersten Eindruck vom 4d Würfel.
 
 % The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
 
-\paragraph{Prozess}
+\subparagraph{Prozess}
 Hier habe ich zuerst lange nichts programmiert, sondern habe mir mit Papier und
 Stift überlegt wie das funktionieren soll. Ich habe beschlossen das ich die
 Hyperebene mit zwei vierdimensionalen Vektoren zu repräsentieren. Eins ist ein
@@ -580,13 +625,13 @@ Information ausnutzt, auf welcher 2d Seite sich ein Schnittpunkt befindet, um zu
 bestimmen welche Punkte benachbart sein können. Der genaue Algorithmus wie die
 Dreiecke zusammengestellt werden folgt später.
 
-\subsubsection*{Meilenstein 3: Sichtbarkeitseffekte}
+\paragraph*{Meilenstein 3: Sichtbarkeitseffekte}
 
-\paragraph{Key Results}
+\subparagraph{Key Results}
 
 Objektschattierung und Beleuchtung wird implementiert.
 
-\paragraph{Value}
+\subparagraph{Value}
 
 Der Programm erlaubt uns mit Parametern zu experimentieren, und verschiedene
 Formen und Gestalten von Schnitten des 4d Würfels kennen zu lernen.
@@ -602,7 +647,7 @@ Ecken durch Bewegung erahnen.
 
 % With object shading and lighting the rendered picture will be more easily understood by the user.
 
-\paragraph{Prozess}
+\subparagraph{Prozess}
 Damit man überhaupt einen Punkt erscheinen lassen kann, bracht man sogenannte
 Schattierungsprogramme. OpenGL funktioniert so, dass jeder Punkt eine sogenannte
 Rendering Pipeline durchläuft. Vereinfacht sieht das so aus, dass zuerst jeder
@@ -626,37 +671,37 @@ Materialeigenschaften, Lichtintensität und Farbe, und weiteres an die Shader
 schicken kann, und mit Formeln so die richtige Schattierung für jeden Pixel
 ausrechnen kann.
 
-\subsubsection*{Meilenstein 4: movable 4d cube}
+\paragraph*{Meilenstein 4: movable 4d cube}
 
-\paragraph{Key results}
+\subparagraph{Key results}
 
 Der Würfel ist nicht mehr zwingend zentriert beim Ursprung. Er kann sich jetzt
 an einem arbiträren Ort im 4d Raum, mit einer arbiträren Drehung befinden. Dies
 ist hier aber erst nur im code beeinflussbar, man kann den Würfel nicht bewegen.
 
 
-\paragraph{Value}
+\subparagraph{Value}
 
 Wir haben ein Skelett vom Kern des Programms.
 
 % We have a skeleton of the core of the code with end to end functionality.
 
-\subsubsection*{Meilenstein 5: Ein Format, dass den Aufbau einer Welt beschreibt}
+\paragraph*{Meilenstein 5: Ein Format, dass den Aufbau einer Welt beschreibt}
 
-\paragraph{Key results}
+\subparagraph{Key results}
 
 \begin{itemize}
   \item Ein Fileformat wird definiert, dass 4d Objekte im Raum beschreibt.
   \item Ein Parser ist implementiert.
 \end{itemize}
 
-\paragraph{Value}
+\subparagraph{Value}
 
 Wir sind bereit das Endprodukt zusammenzustellen.
 
-\subsubsection*{Meilenstein 6: Die Renderung einer Welt}
+\paragraph*{Meilenstein 6: Die Renderung einer Welt}
 
-\paragraph{Key results}
+\subparagraph{Key results}
 
 Das Programm can eine Welt, definiert durch einen configurations File, rendern.
 Die Schnitt-Hyperebene und Kamera sind weiterhin dreh und bewegbar. Auf einer
@@ -667,15 +712,15 @@ präsentiert.
 % projection plane as well as the camera in the 3d world. Provides feedback of
 % projection and camera position in a HUD.
 
-\paragraph{Value}
+\subparagraph{Value}
 
 Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 
 % This is a minimum viable solution of the original project description.
 
-\subsection{Key modules}
+\subsubsection{Key modules}
 
-\subsubsection{Intersection of canonical unit cube with 3d hyperplane}
+\paragraph{Intersection of canonical unit cube with 3d hyperplane}
 
 \begin{itemize}
 	\item uses precomputed face neigbourhood maps
@@ -685,13 +730,13 @@ Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 	\item use face normal to find planar subsets in the graph
 \end{itemize}
 
-\subsubsection{Rotation}
+\paragraph{Rotation}
 
 \begin{itemize}
 	\item use transformation matrix combinations
 \end{itemize}
 
-\subsubsection{Camera manager}
+\paragraph{Camera manager}
 
 \begin{itemize}
 	\item maintain \code{loc} (location), \code{pitch}, \code{yaw}
@@ -699,7 +744,7 @@ Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 	\item on tic, recalculate \code{transform} matrix
 \end{itemize}
 
-\subsubsection{Hyperplane manager}
+\paragraph{Hyperplane manager}
 
 \begin{itemize}
 	\item maintain a hyperplane
@@ -707,20 +752,20 @@ Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 	\item on tic, recalculate the hyperplane
 \end{itemize}
 
-\subsubsection{Renderer}
+\paragraph{Renderer}
 
 \begin{itemize}
 	\item use the Intesection, and the Rotation modules to compute coordinates
 	\item use OpenGL to display the given bodies
 \end{itemize}
 
-% \part{Literaturverzeichnis}
+% \section{Literaturverzeichnis}
 
 % Die in der Arbeit erwähnten Quellen (Texte und Abbildungen) werden alphabetisch
 % nach Autoren aufgelistet. Für Internetquellen wird eine gesonderte Liste
 % erstellt.
 
-% \part{Anhang}
+% \section{Anhang}
 
 % Hier erscheinen --- wenn sinnvoll --- Rohdaten und Beilagen.
 
