@@ -322,9 +322,9 @@ wir beweisen wollten.
 
 Um einen praktischen Algorithmus implementieren zu können, müssen wir eine
 Repräsentation von einem 4d Würfel im 4d Raum finden, dass wir verstehen und
-folgen können. Beachten wir, dass schon die Aufzählung der 2d Seiten nicht trivial ist.
+nachvollziehen können. Beachten wir, dass schon die Aufzählung der 2d Seiten nicht trivial ist.
 
-Um mit der komplexität umzugehen, implementieren wir folgenden Algorithmus um
+Um mit der Komplexität umzugehen, implementieren wir folgenden Algorithmus um
 den Schnitt von einem 4d Würfel und einer 3d Hyperbene zu bestimmen:
 
 \begin{enumerate}
@@ -446,8 +446,8 @@ Hyperebene und der Kamera anzeigt.
 	\item Die Kamera bewegen: A - links, D - rechts, W: forwärts, S: rückwärts, Shift: Hoch, Ctrl: Runter
 	\item Die Kamera drehen: Maus
 	\item Die Hyperebene auf seinem Normalvektor verschieben: R - positive Richtung, F - negative Richtung
-	\item Die Hyperebene drehen: O, P, [ und L, ö, ä. (Auf einer
-	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Charaktere
+	\item Die Hyperebene drehen: O, P, [\ und L, ö, ä. (Auf einer
+	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Tasten
 	funktionieren, wo auf dem Platz von ö oder ä sind)
 \end{itemize}
 
@@ -496,9 +496,17 @@ das Programm auf alle diesen Versionen. Damit man dieses Abfragen nicht selber
 machen muss, exisitert GLEW. GLEW erledigt dies ganz automatisch, man muss nur
 einige Parameter angeben, und dann Funktioniert es von alleine.
 
-\subsection{Milestones}
+\subsection{Die Funktionsweise und das Zusammenspiel der Libraries, der Graphikkarte und das Operationssystems}
+% WIP, dont review
 
-\subsubsection*{Milestone 1: Ein 3d Würfel dargestellt, mit Navigation}
+Ich habe die Libraries die ich benutzt habe oben beschrieben. Hier erläutere ich
+wie genau sie Funktionieren. Mit einem Programm ein Applikationsfenster zu
+öffnen und benutzen ist ganz einfach mit Libraries die im Hintergrund alles
+komplizierte automatisch 
+
+\subsection{Meilensteine}
+
+\subsubsection*{Meilenstein 1: Ein 3d Würfel dargestellt, mit Navigation}
 
 \paragraph{Key results}
 
@@ -515,7 +523,18 @@ Frameworks und Libraries erarbeitet.
 % We bootstrapped the working environement and built an understanding of the core
 % frameworks and libraries.
 
-\subsubsection*{Milestone 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
+\paragraph{Prozess}
+Dieser Meilenstein sieht nicht sehr schwierig aus, aber war eines der
+zeitaufwändigsten Teile des Projekts. Ich habe zuerst aus einem Buch und dem
+Internet gelernt, wie OpenGL funktioniert, und was man für Libraries braucht.
+Ich musste zuerst lernen wie diese zusammenspielen, und konnte sie erst dann
+richtig anwenden. Erst dann konnte ich einen einzelnen blauen Punkt auf dem
+Bildschirm erscheinen lassen. Dann konnte ich anfangen einen Würfel
+darzustellen. Hier war die grösste Schwiereigkeit den Code richtig zu
+strukturieren. Ich habe mir hier überlegt was für Datenstrukturen ich brauchen
+werde, und was ich in Klassen abstrahieren möchte. 
+
+\subsubsection*{Meilenstein 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
 
 \paragraph{Key results}
 
@@ -526,7 +545,7 @@ Ein C++ Programm, dass
   \item diesen Schnitt als dreidimensionales Objekt rendert.
   \item die Parameter der Hyperebene interaktiv ändern kann.
   \item den gerenderten Schnitt bei Änderungen der Hyperebene in Echtzeit anpasst.
-  \item weiterhin im dreidimenionalen Raum navigieren kann wie im vorherigen Milestone.
+  \item weiterhin im dreidimenionalen Raum navigieren kann wie im vorherigen Meilenstein.
 
 	% \item computes the intersection of a 4d unitcube with an arbitrary hyperplane
 	% \item renders this intersection as a three dimensional object
@@ -542,7 +561,26 @@ erhalten einen ersten Eindruck vom 4d Würfel.
 
 % The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
 
-\subsubsection*{Milestone 3: Sichtbarkeitseffekte}
+\paragraph{Prozess}
+Hier habe ich zuerst lange nichts programmiert, sondern habe mir mit Papier und
+Stift überlegt wie das funktionieren soll. Ich habe beschlossen das ich die
+Hyperebene mit zwei vierdimensionalen Vektoren zu repräsentieren. Eins ist ein
+Normalvektor, und eins beschreibt die Verschiebung der Hyperebene vom Ursprung.
+Hier habe ich mir auch ausgedacht wie der Algorithmus funktionieren soll, sodass
+ich einen 3d Schnittkörper erhalte. Ich habe schnell den oben beschriebenen
+Algorithmus ausgedacht um die Eckpunkte des Schnittkörpers zu finden, aber das
+hat noch lange nicht alles gelöst. Um einen Körper mit OpenGL darzustellen muss
+man es nämlich in Dreiecke zersetzen, und dann diese Dreiecke an OpenGL
+schicken. Dafür musste ich wissen welche der Ecken benachbart sind. Dies war
+keine triviale Aufgabe. Ich dachte zuerst daran einem klassischen Algorithmus
+für dreidimensionale konvexe Hüllen zu implementieren. Dies wäre aber recht
+komplex und zeitaufwändig gewesen. Darum habe ich mir lieber eine einfacher
+implementierbare Methode überlegt, die beim Schneiden des Würfels die
+Information ausnutzt, auf welcher 2d Seite sich ein Schnittpunkt befindet, um zu
+bestimmen welche Punkte benachbart sein können. Der genaue Algorithmus wie die
+Dreiecke zusammengestellt werden folgt später.
+
+\subsubsection*{Meilenstein 3: Sichtbarkeitseffekte}
 
 \paragraph{Key Results}
 
@@ -564,7 +602,31 @@ Ecken durch Bewegung erahnen.
 
 % With object shading and lighting the rendered picture will be more easily understood by the user.
 
-\subsubsection*{Milestone 4: movable 4d cube}
+\paragraph{Prozess}
+Damit man überhaupt einen Punkt erscheinen lassen kann, bracht man sogenannte
+Schattierungsprogramme. OpenGL funktioniert so, dass jeder Punkt eine sogenannte
+Rendering Pipeline durchläuft. Vereinfacht sieht das so aus, dass zuerst jeder
+Punkt durch den Vertex Shader geht, dann alle Primitive (in unserem Fall
+Dreiecke, aber es könnten auch Linien sein) durch den Tesselation Shader und dem
+Geometry Shader gehen, dann wird geschieht die Rasterization, das heisst das
+jetzt die einzelnen Pixel auf dem Bildschirm berechnet werden, und
+schlussendlich geht jeder Pixel noch durch den sogenannten Fragment Shader. Uns
+interessiert nur der Vertex Shader und der Fragment Shader. Für dieses Projekt
+ist es nicht nötig die anderen zu benutzen. 
+
+Wie man solche Shattierungsprogramme (Shader) schreibt, habe ich schon im
+Verlauf des Arbeitsprozesses gelernt. Doch erst in diesem Schritt habe ich genau
+lernen und verstehen müssen wie man sie am besten benutzt, was es für tricks
+gibt. Bis zu diesem Moment habe ich nur primitive Shader gehabt (Beispielsweise
+habe ich nur jedem Punkt eine Farbe gegeben, und darauf vertraut dass während
+dem Rasterizationsverfahren durch Interpolation ein Farbverlauf entstehen wird
+auf dem Würfel). Jetzt habe ich aus dem OpenGL Buch gelernt wie man Lichteffekte
+haben kann, indem man Informationen wie den Ursprung des Lichtes,
+Materialeigenschaften, Lichtintensität und Farbe, und weiteres an die Shader
+schicken kann, und mit Formeln so die richtige Schattierung für jeden Pixel
+ausrechnen kann.
+
+\subsubsection*{Meilenstein 4: movable 4d cube}
 
 \paragraph{Key results}
 
@@ -579,7 +641,7 @@ Wir haben ein Skelett vom Kern des Programms.
 
 % We have a skeleton of the core of the code with end to end functionality.
 
-\subsubsection*{Milestone 5: Ein Format, dass den Aufbau einer Welt beschreibt}
+\subsubsection*{Meilenstein 5: Ein Format, dass den Aufbau einer Welt beschreibt}
 
 \paragraph{Key results}
 
@@ -592,7 +654,7 @@ Wir haben ein Skelett vom Kern des Programms.
 
 Wir sind bereit das Endprodukt zusammenzustellen.
 
-\subsubsection*{Milestone 6: Die Renderung einer Welt}
+\subsubsection*{Meilenstein 6: Die Renderung einer Welt}
 
 \paragraph{Key results}
 
