@@ -14,6 +14,9 @@
 \newtheorem{lemma}{Lemma}
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
 \title{4d visualisierungs Engine mit einer 3d Benutzeroberfläche als Hilfestellung beim Lernen und Experimentieren}
 % \author{
 %         Vitaly Surazhsky \\
@@ -47,8 +50,10 @@
 	auf dem Bildschirm visualisiert.
 \end{abstract}
 
-% \section{Inhaltsverzeichnis}
+\newpage
 \tableofcontents
+
+% \section{Inhaltsverzeichnis}
 % Überblick über den Aufbau: Gliederung in Kapitel und Unterkapitel. Vorwort
 % (nicht obligatorisch): Das Vorwort enthält Dinge, die nicht in die Arbeit
 % selbst gehören, z.B. Beweggründe, die zur Wahl des Themas geführt haben. Die
@@ -410,12 +415,12 @@ Hyperebene und der Kamera anzeigt.
   beliebig verwendet werden.
   \item Hyperebenen Spezifikation: HYPERPLANE <Ursprung> <3 orthogonale
   Vektore>\newline
-  Die erste 4 Zahlen zeigen zum Ursprung, die verbleibenden 3x4 Zahlen sind die
+  Die erste 4 Zahlen zeigen zum Ursprung, die verbleibenden 3$\times$4 Zahlen sind die
   drei Einheitsvektoren. Sie müssen orthogonal sein damit das Programm richtig
   funktioniert.
   \item Würfelspezifikation: CUBE <Grösse> <Ursprung> <4 orhtogonal
   vectore>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
-  vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3x4
+  vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3$\times$4
   Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
 \end{itemize}
 
@@ -442,10 +447,10 @@ Hyperebene und der Kamera anzeigt.
 \subsubsection{Das Programm steuern}
 
 \begin{itemize}
-	\item Die Kamera bewegen: A - links, D - rechts, W: forwärts, S: rückwärts, Shift: Hoch, Ctrl: Runter
+	\item Die Kamera bewegen: A --- links, D --- rechts, W --- forwärts, S --- rückwärts, Shift --- Hoch, Ctrl --- Runter
 	\item Die Kamera drehen: Maus
-	\item Die Hyperebene auf seinem Normalvektor verschieben: R - positive Richtung, F - negative Richtung
-	\item Die Hyperebene drehen: O, P, [\ und L, ö, ä. (Auf einer
+	\item Die Hyperebene auf seinem Normalvektor verschieben: R --- positive Richtung, F --- negative Richtung
+	\item Die Hyperebene drehen: O, P, \lbrack und L, ö, ä. (Auf einer
 	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Tasten
 	funktionieren, wo auf dem Platz von ö oder ä sind)
 \end{itemize}
@@ -455,17 +460,15 @@ Hyperebene und der Kamera anzeigt.
 \subsubsection{Tools, Frameworks}
 
 \begin{itemize}
-  \item Programming language: \code
-{C++}
-	\item Cross-platform windowing library with OpenGL support: GLFW.
+  \item Programming language: \code{C++}
+	\item Cross-platform windowing library with OpenGL support: GLFW\@.
 	\item Drawing: OpenGL
 	\item OpenGL loader: GLEW
 	\item Build system: CMake
 \end{itemize}
 
 \paragraph{C++}
-\code
-{C++} ist meine präferierte Computersprache. Alles Programmcode das ich
+\code{C++} ist meine präferierte Computersprache. Alles Programmcode das ich
 geschrieben habe ist in dieser Sprache, mit ausnahme der Shaderprogramme, die in
 glsl geschrieben werden müssen.
 
@@ -494,7 +497,7 @@ sehr kleine Anzahl der Funktionen direkt reincompiliert, sondern viele der
 Funktionen müssen abgefragt werden. Somit kann man nach einer Funktion `Zeichnen'
 fragen, und falls diese auf mehreren OpenGL Versionen existiert, funktioniert
 das Programm auf alle diesen Versionen. Damit man dieses Abfragen nicht selber
-machen muss, exisitert GLEW. GLEW erledigt dies ganz automatisch, man muss nur
+machen muss, exisitert GLEW\@. GLEW erledigt dies ganz automatisch, man muss nur
 einige Parameter angeben, und dann Funktioniert es von alleine.
 
 \subsubsection{Die Funktionsweise und das Zusammenspiel der Libraries, der Graphikkarte und das Operationssystems}
@@ -515,7 +518,7 @@ lernen.
 OpenGL selber ist aber nur ein Werkzeug um mit der Grafikkarte zu komunizieren.
 Um ein Fenster zu öffnen und Tastendrücke zu erkennen und verwenden im Programm
 brauche ich auch eine Schnittstelle mit dem Operationssystem. Dafür verwende ich
-GLFW. GLFW (Graphics Library Framework) hilft bei der Kommunikation mit dem
+GLFW\@. GLFW (Graphics Library Framework) hilft bei der Kommunikation mit dem
 Operationssystem. Mithilfe von GLFW kann ich das Applikationsfenster erstellen
 und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 
@@ -551,7 +554,7 @@ zurückgibt.
 
 \subsubsection{Meilensteine}
 
-\paragraph*{Meilenstein 1: Ein 3d Würfel dargestellt, mit Navigation}
+\paragraph{Meilenstein 1: Ein 3d Würfel dargestellt, mit Navigation}
 
 \subparagraph{Key results}
 
@@ -579,7 +582,7 @@ darzustellen. Hier war die grösste Schwiereigkeit den Code richtig zu
 strukturieren. Ich habe mir hier überlegt was für Datenstrukturen ich brauchen
 werde, und was ich in Klassen abstrahieren möchte. 
 
-\paragraph*{Meilenstein 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
+\paragraph{Meilenstein 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
 
 \subparagraph{Key results}
 
@@ -625,7 +628,7 @@ Information ausnutzt, auf welcher 2d Seite sich ein Schnittpunkt befindet, um zu
 bestimmen welche Punkte benachbart sein können. Der genaue Algorithmus wie die
 Dreiecke zusammengestellt werden folgt später.
 
-\paragraph*{Meilenstein 3: Sichtbarkeitseffekte}
+\paragraph{Meilenstein 3: Sichtbarkeitseffekte}
 
 \subparagraph{Key Results}
 
@@ -671,7 +674,7 @@ Materialeigenschaften, Lichtintensität und Farbe, und weiteres an die Shader
 schicken kann, und mit Formeln so die richtige Schattierung für jeden Pixel
 ausrechnen kann.
 
-\paragraph*{Meilenstein 4: movable 4d cube}
+\paragraph{Meilenstein 4: movable 4d cube}
 
 \subparagraph{Key results}
 
@@ -686,7 +689,7 @@ Wir haben ein Skelett vom Kern des Programms.
 
 % We have a skeleton of the core of the code with end to end functionality.
 
-\paragraph*{Meilenstein 5: Ein Format, dass den Aufbau einer Welt beschreibt}
+\paragraph{Meilenstein 5: Ein Format, dass den Aufbau einer Welt beschreibt}
 
 \subparagraph{Key results}
 
@@ -699,7 +702,7 @@ Wir haben ein Skelett vom Kern des Programms.
 
 Wir sind bereit das Endprodukt zusammenzustellen.
 
-\paragraph*{Meilenstein 6: Die Renderung einer Welt}
+\paragraph{Meilenstein 6: Die Renderung einer Welt}
 
 \subparagraph{Key results}
 
@@ -718,7 +721,7 @@ Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 
 % This is a minimum viable solution of the original project description.
 
-\subsubsection{Key modules}
+\subsubsection{Module im Programm}
 
 \paragraph{Intersection of canonical unit cube with 3d hyperplane}
 
