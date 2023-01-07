@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc} % this is needed for umlauts
-\usepackage[ngerman]{babel} % this is needed for umlauts
+\usepackage[ngerman, english]{babel} % this is needed for umlauts
 \usepackage[T1]{fontenc}    % this is needed for correct output of umlauts in pdf
 \usepackage{csquotes}
 \usepackage{amsmath,systeme}
@@ -9,6 +9,8 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage{hyperref}
+
 \definecolor{dark-green}{rgb}{0.0, 0.4, 0.0}
 \newcommand{\code}[1]{{\color{dark-green}\texttt{\textbf{#1}}}}
 \newtheorem{lemma}{Lemma}
@@ -33,7 +35,7 @@
 
 \begin{document}
 \maketitle
-
+\selectlanguage{english}
 \begin{abstract}
 	Ziel dieser Arbeit ist, vierdimensionale Würfel im
 	vierdimensionalen Raum darzustellen.  Die Projektionsmethode, um den
@@ -49,10 +51,10 @@
 	Hyperebene befinden, werden mit Hilfe des Koordinatensystems des Schnittraumes
 	auf dem Bildschirm visualisiert.
 \end{abstract}
-
+\selectlanguage{ngerman}
 \newpage
 \tableofcontents
-
+\pagebreak
 % \section{Inhaltsverzeichnis}
 % Überblick über den Aufbau: Gliederung in Kapitel und Unterkapitel. Vorwort
 % (nicht obligatorisch): Das Vorwort enthält Dinge, die nicht in die Arbeit
@@ -204,16 +206,16 @@ dreidimensionalen Hyperebenen des vierdimensionalen Raumes.
 
 
 Definieren wir nun Würfel in verschiedenen Dimensionen:
+\begin{itemize}
+  \item Der eindimensionale Einheitswürfel: $\{x\in\R\ |\ 0\leq x\leq 1\}$
 
-Der eindimensionale Einheitswürfel: $\{x\in\R\ |\ 0\leq x\leq 1\}$
+  \item Der zweidimensionale Einheitswürfel:
 
-Der zweidimensionale Einheitswürfel:
+  \item Der dreidimensionale Einheitswürfel:
 
-Der dreidimensionale Einheitswürfel:
-
-der vierdimensionale Einheitswürfel:  $\{(x, y, z, w)\ |\ \textrm{mindegyik eleme R, és}\ 0 \leq x,y,z,w \leq 1\}$
+  \item der vierdimensionale Einheitswürfel:  $\{(x, y, z, w)\ |\ \textrm{mindegyik eleme R, és}\ 0 \leq x,y,z,w \leq 1\}$
 % Correction: what are those words in the previous line
-
+\end{itemize}
 Wir merken, dass im Fall des dreidimenionalen Würfels die Ecken genau die Punkte
 sind, wo bei allen drei Koordinaten die eine Ungleichung gleich ist. Das heisst,
 dass die Koordinaten $0$ oder $1$ sind. Solche tripel hat es $2^3 = 8$, genau so
@@ -500,9 +502,7 @@ das Programm auf alle diesen Versionen. Damit man dieses Abfragen nicht selber
 machen muss, exisitert GLEW\@. GLEW erledigt dies ganz automatisch, man muss nur
 einige Parameter angeben, und dann Funktioniert es von alleine.
 
-\subsubsection{Die Funktionsweise und das Zusammenspiel der Libraries, der Graphikkarte und das Operationssystems}
-% WIP, dont review
-
+\subsubsection{Die Funktionsweise und das Zusammenspiel der Libraries, der Graphikkarte und das Operationssystems}\label{sssec:libraries}
 Ich habe die Libraries die ich benutzt habe oben beschrieben. Hier erläutere ich
 wie genau sie Funktionieren. Mit einem Programm ein Applikationsfenster zu
 öffnen und benutzen ist ganz einfach mit Libraries die im Hintergrund alles
@@ -723,15 +723,151 @@ Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 
 \subsubsection{Module im Programm}
 
-\paragraph{Intersection of canonical unit cube with 3d hyperplane}
+\paragraph{Intersector}
+Die Aufgabe des Intersectors ist das Schneiden von einem kanonischen Würfel mit
+einer 3d Hyperebene.
 
+4d Würfel haben 3d und 2d Seiten. In diesem Abschnitt werde ich mit einer Seite
+immer eine 2d Seite meinen.
+
+\subparagraph{Die Nachbarschaftsverhältnisse der Seiten}
+Jede Kante im Würfel ist Teil von 3 Seiten. Diese 3 Seiten nennen wir
+benachbart. Zuerst erstellen wir manuell eine Liste der Kanten. Für die Kanten
+rechnen wir dann alle Seiten aus, die diese Kante beinhalten. Dies geschieht nur
+ganz am Anfang vom Programm, bevor das erste Bild erscheint. Die Kanten sind
+repräsentiert von zwei Vektoren, wo jeweils die zwei Endpunkte der Kanten
+beschreiben. Bei der Vorberechnung geben wir jeder Seite eine
+Identifikationszahl. Wir müssen nur wissen, welche Seite zu welcher Kante
+gehört, aber brauchen für den Algorithmus keine weitere angaben einer Seite.
+
+\subparagraph{Das Schneiden der Kanten}
+Nun schneiden wir alle Kanten mit der Hyperebene. Dabei erhalten wir entweder
+null, ein oder zwei Ergebnisse. Keine Ergebnisse, wenn die Kante ganz ausserhalb
+der Hyperebene liegt, ein Ergebniss falls die Kante die Hyperebene kreuzt, und
+zwei Ergebnisse, falls die Kante mit der Hypereben in einer Ebene liegt. In
+diesem letzten Fall würde es eigentlich unendlich viele Resultate geben, aber
+wir nehmen statt dem die zwei Enden der Kanten, da wir schlussendlich nur die
+Punkte brauchen, die die konvexe Hülle des Volumens ausmachen. Das schneiden ist
+trivial; Wir nehmen den gegebenen Transformationsmatrix der Hyperebene, und
+transformieren sie. Dann schauen wir die Distanz $d(A)$ zwischen Punkt A und der
+Hyperebene, und die Distanz $d(B)$ zwischen Punkt B und der Hyperebene an. Falls $d(A)
+\cdot d(B) > 0$ dann sind beide auf der gleichen Seite der Hyperebene, und es
+gibt keinen Schnittpunkt. Falls $d = 0$ für eines der Punkte, wird dieser Punkt
+als Schnittpunkt akzeptiert. Falls $d(A) = 0 \land d(B) = 0$ muss die Kante auf
+der Hyperebene liegen, somit geben wir beide Endpunkte A und B zurück. Ansonsten
+berechnen wir aus dem Verhältniss der beiden Distanzen wo auf der Kante der
+Schnittpunkt ist, und geben das zurück. So bauen wir eine Liste mit allen
+Schnittpunkten auf. Gleichzeitig bauen wir eine Datenstruktur auf, die für jede
+Seite eine Liste von Schnittpunkten beinhaltet auf. Dies ist ganz einfach, da
+wir vom Schnittpunkt den wir gerade gefunden haben immer wissen zu welcher Kante
+es gehört, und wir schon im Voraus berechnet haben welche Seiten welche Kanten
+beinhalten. Sobald ein Schnittpunkt gefunden wird, wird es bei allen 3 Seiten
+die dessen Kante beinhalten abgespeichert als Schnittpunkt auf der Oberfläche
+der Seite.
+
+Während diesem Prozess rechne ich auch den Durchschnitt aller Schnittpunkte aus.
+Dies wird sich innerhalb des Lösungskörpers befinden, und wird sich als
+Hilfreich erweisen um Normalvektore zu finden die gegen Aussen zeigen.
+
+% explain why
+Zwei Schnittpunkte die sich auf der gleiche Würfelseite befinden, werden im
+entstehenden Schnittvolumen immer eine gemeinsame Kante haben. Aus diesem Grund
+können wir eine Liste von Nachbarpunkten für jeden Schnittpunkt aufbauen aus der
+Datenstruktur die für jede Seite die Punkte auf dessen Oberfläche beinhaltet.
+
+\subparagraph{Die Zusammensetzung der konvexen Hülle aus Dreiecken}
+Wir könnten mit einer einfachen Tiefensuche alle Dreiecke finden, wo zwei Kanten
+auch Kanten des Schnittvolumens sind. Wir machen eine Tiefensuche auf dem
+Nachbarschaftsgraph, behalten immer die vorherigen zwei Punkte im Kopf, und
+immer wenn wir zu einem Punkt gelangen zeichnen wir das Dreieck mit den
+vorherigen 2 Ecken. Das habe ich zuerst auch getan. Es treten zwei Probleme auf:
+
+\begin{description}
+  % insert hexagon with hole
+  \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4 Ecken,
+  und die Dreiecke auf dieser Weise zeichnet, gibt es einen Loch in der Mitte.
+  Das ist einfach zu sehen. Die Fläche kann nicht durch Dreiecke abgedeckt sein,
+  wo nur Punkte beinhalten die benachbart sind. Es braucht auch Dreiecke, die
+  aus einem Punk, und zwei Punkten wo auf der gegenüberliegenen Seite sind
+  bestehen.
+  \item[Z-Fighting] Wenn zwei Objekte und die Kamera in einer Linie sind,
+  verdeckt das eine Objekt das andere mindestens zum Teil. OpenGL geht damit so
+  um, dass im Verlauf des im Abschnitt~\ref{sssec:libraries} beschriebenen Rendering
+  Pipelines OpenGL doppelte Pixel aussortiert, und immer die näher zu der Kamera
+  behält. Da OpenGL aber mit Gleitkommazahlen arbeitet, die eine kleine aber
+  existente ungenauigkeit aufweisen, kommt es so das fallst zwei Flächen sehr
+  genau aufeinanderliegen, es sehr zufällig ist welches der Flächen behalten,
+  und welches weggeworfen wird. Dies führt zu einem vibrierenden Effekt: Wenn
+  sich das Bild bewegt, ist bei jedem der etlichen Bilder pro Sekunde ganz
+  zufällig eines der Flächen oben.
+
+  Wenn wir so wie beschrieben die Dreiecke zeichnen, dann wird wie man in der
+  Abbildung sieht, ein gewisser Teil immer überlappen. Dies führt zu unschönem
+  Z-Fighting.
+\end{description}
+
+Um vorläufig eines der Probleme zu beheben, habe ich einfach alle mögliche
+kombinationen mit drei Schnittpunkten genommen, und sie als Dreieck gerendert.
+Das löste natürlich das Problem von den Löchern. Es gab aber noch viel mehr
+Z-Fighting, da noch viel mehr Flächen überlappten.
+
+Ab hier nenne ich die gefundenen Schnittpunke Ecken oder Eckpunkte. Sie sind
+nämlich die Ecken des Lösungsobjekts.
+
+Zuerst dachte ich daran, einen Algorithmus für dreidimenionale konvexe Hüllen zu
+implementieren. Diese sind aber sehr komplex, und ich habe gedacht das ich mir
+sicher etwas einfacheres überlegen kann. So bin ich auf folgenden Algorithmus
+gestossen:
+
+Wenn ich ein Dreieck auf einer Fläche vom Lösungsobjekt habe, wo zwei der drei
+Kanten auch Kanten des Lösungsobjekts sind, kann ich diese ganze Fläche des
+Lösungsobjekts mit Dreiecken belegen, ohne Überlappen oder Löcher. Das
+Funktioniert folgendermassen: Ich merke mir den Normalvektor des Dreiecks, das
+ausserhalb des Lösungsobjekts zeigt. Um dies zu berechnen benutze ich den
+Durchschnitt aller Ecken des Lösungskörpers, wo ich schon berechnet habe als ich
+alle Ecken berechnet habe. Ich nehme eines der Punkte wo nicht in der Mitte ist
+als Ausgangspunkt. Der mittlere Punkt ist der Punkt, wo beide andere Punkte als
+Nachbar hat. Falls alle drei Punkte diese Eigenschaft besitzen, ist die ganze
+Fläche nur ein Dreieck, da die drei Punkte durch drei Kanten des Lösungsobjekts
+verbunden sind. Dann bricht der Algorithmus ab. Ansonten habe ich jetzt einen
+Ausgangspunkt, einen mittleren Punkt, und einen Endpunkt. Ich gehe jetzt alle
+Nachbarn vom Endpunkt durch. Ich kontrolliere immer, ob das Dreieck, das durch
+den Augangspunkt, dem Endpunkt, und dem neuen Punkt gebildet wird, den gleichen
+Normalvektor gegen Aussen hat wie das ursprüngliche Dreieck. Falls ja liegt es
+auf der gleichen Ebene, ist also Teil der gleichen Fläche. Diesen Dreieck zeiche
+ich. Der vorherige Endpunkt wird jetzt zum mittleren Punkt, und der neue Punkt
+zum Endpunkt. Ich widerhole diesen Prozess, bis der Endpunkt und der
+Augangspunkt der gleiche Punkt sind. Dann breche ich ab. Jedesmal dass ich ein
+Dreieck einzeichne, merke ich mir das es eingezeichnet wurde. Ich speichere auch
+jedesmal ab, dass das Dreieck gebildet durch den mittleren Punkt, dem Endpunkt,
+und dem richtigen neuen Punkt schon gezeichnet ist. Zwar ist dies nicht direkt
+schon gezeichnet, aber dessen Fläche wird nach dem Ende des Algorithmusses schon
+eingefüllt sein.
+
+Jetzt mache ich die Tiefensuche, die ich Oben beschrieben habe. Ich suche jedes
+Dreieck, wo zwei Kanten auch Kanten des Lösungsobjekts sind. Falls dieses
+Dreieck noch nicht ausgefüllt ist, lasse ich den Algorithmus laufen.
+
+Warum das immer eine richtige Lösung geben wird: 
 \begin{itemize}
-	\item uses precomputed face neigbourhood maps
-	\item uses a single face can have maximum 2 intersections
-	\item intersection points form a graph
-	\item walking the graph along face neigborhood map
-	\item use face normal to find planar subsets in the graph
+  \item Jede Fläche wird Dreiecke enthalten mit so einem Startdreieck, wo zwei
+  Kanten Teil des Lösungsobjekts sind.
+  \item Wenn von einem solchen Startdreieck der Algorithmus gestartet wird, wird
+  die ganze Fläche ausgefüllt, ohne überlappende Dreiecke.
+  \item Es wird nie zweimal die gleiche Fläche ausgefüllt, da alle mögliche
+  Startdreiecke während dem Ausfüllen einer Fläche als ausgefüllt markiert werden.
 \end{itemize}
+
+
+% \begin{itemize} Bild
+%   %\item DieNachbarschaftsverhältnisse von den Seiten werden vorberechnet und abgespeichert.
+
+% 	\item uses precomputed face neigbourhood maps
+% 	\item uses a single face can have maximum 2 intersections
+% 	\item intersection points form a graph
+% 	\item walking the graph along face neigborhood map
+% 	\item use face normal to find planar subsets in the graph
+% \end{itemize}
 
 \paragraph{Rotation}
 

@@ -153,10 +153,11 @@ glm::vec3 Intersector::triangle_normal(int i, int j, int k) {
   return glm::normalize(glm::cross(ipt(j) - ipt(i), ipt(k) - ipt(i)));
 }
 
-void Intersector::sweep(int i, int j, int k,
-                        std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
-                        VisitedTriangles& visited_triangles, glm::vec3 const& center) {
-  auto emit_with_normal = [&](Triangle const& t){
+void Intersector::sweep(
+    int i, int j, int k,
+    std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
+    VisitedTriangles& visited_triangles, glm::vec3 const& center) {
+  auto emit_with_normal = [&](Triangle const& t) {
     glm::vec3 normal = {glm::cross(t.pts[0] - t.pts[1], t.pts[2] - t.pts[1])};
     glm::vec3 t_center = (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f;
 
@@ -165,7 +166,7 @@ void Intersector::sweep(int i, int j, int k,
     }
     emit(t, normal);
   };
-  
+
   std::bitset<max_intersections> visited;
 
   if (visited_triangles.get(i, j, k)) {
