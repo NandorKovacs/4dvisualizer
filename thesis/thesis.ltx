@@ -782,29 +782,35 @@ Nachbarschaftsgraph, behalten immer die vorherigen zwei Punkte im Kopf, und
 immer wenn wir zu einem Punkt gelangen zeichnen wir das Dreieck mit den
 vorherigen 2 Ecken. Das habe ich zuerst auch getan. Es treten zwei Probleme auf:
 
-\begin{description}
+\begin{itemize}
   % insert hexagon with hole
-  \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4 Ecken,
-  und die Dreiecke auf dieser Weise zeichnet, gibt es einen Loch in der Mitte.
-  Das ist einfach zu sehen. Die Fläche kann nicht durch Dreiecke abgedeckt sein,
-  wo nur Punkte beinhalten die benachbart sind. Es braucht auch Dreiecke, die
-  aus einem Punk, und zwei Punkten wo auf der gegenüberliegenen Seite sind
-  bestehen.
-  \item[Z-Fighting] Wenn zwei Objekte und die Kamera in einer Linie sind,
-  verdeckt das eine Objekt das andere mindestens zum Teil. OpenGL geht damit so
-  um, dass im Verlauf des im Abschnitt~\ref{sssec:libraries} beschriebenen Rendering
-  Pipelines OpenGL doppelte Pixel aussortiert, und immer die näher zu der Kamera
-  behält. Da OpenGL aber mit Gleitkommazahlen arbeitet, die eine kleine aber
-  existente ungenauigkeit aufweisen, kommt es so das fallst zwei Flächen sehr
-  genau aufeinanderliegen, es sehr zufällig ist welches der Flächen behalten,
-  und welches weggeworfen wird. Dies führt zu einem vibrierenden Effekt: Wenn
-  sich das Bild bewegt, ist bei jedem der etlichen Bilder pro Sekunde ganz
-  zufällig eines der Flächen oben.
+  \item
+  \begin{description}
+    \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4 Ecken,
+    und die Dreiecke auf dieser Weise zeichnet, gibt es einen Loch in der Mitte.
+    Das ist einfach zu sehen. Die Fläche kann nicht durch Dreiecke abgedeckt sein,
+    wo nur Punkte beinhalten die benachbart sind. Es braucht auch Dreiecke, die
+    aus einem Punk, und zwei Punkten wo auf der gegenüberliegenen Seite sind
+    bestehen.
+    \end{description}
+  \item
+  \begin{description}
+    \item[Z-Fighting] Wenn zwei Objekte und die Kamera in einer Linie sind,
+    verdeckt das eine Objekt das andere mindestens zum Teil. OpenGL geht damit so
+    um, dass im Verlauf des im Abschnitt~\ref{sssec:libraries} beschriebenen Rendering
+    Pipelines OpenGL doppelte Pixel aussortiert, und immer die näher zu der Kamera
+    behält. Da OpenGL aber mit Gleitkommazahlen arbeitet, die eine kleine aber
+    existente ungenauigkeit aufweisen, kommt es so das fallst zwei Flächen sehr
+    genau aufeinanderliegen, es sehr zufällig ist welches der Flächen behalten,
+    und welches weggeworfen wird. Dies führt zu einem vibrierenden Effekt: Wenn
+    sich das Bild bewegt, ist bei jedem der etlichen Bilder pro Sekunde ganz
+    zufällig eines der Flächen oben.
 
-  Wenn wir so wie beschrieben die Dreiecke zeichnen, dann wird wie man in der
-  Abbildung sieht, ein gewisser Teil immer überlappen. Dies führt zu unschönem
-  Z-Fighting.
-\end{description}
+    Wenn wir so wie beschrieben die Dreiecke zeichnen, dann wird wie man in der
+    Abbildung sieht, ein gewisser Teil immer überlappen. Dies führt zu unschönem
+    Z-Fighting.
+  \end{description}
+\end{itemize}
 
 Um vorläufig eines der Probleme zu beheben, habe ich einfach alle mögliche
 kombinationen mit drei Schnittpunkten genommen, und sie als Dreieck gerendert.
@@ -852,7 +858,10 @@ Warum das immer eine richtige Lösung geben wird:
 \begin{itemize}
   \item Jede Fläche wird Dreiecke enthalten mit so einem Startdreieck, wo zwei
   Kanten Teil des Lösungsobjekts sind.
-  \item Wenn von einem solchen Startdreieck der Algorithmus gestartet wird, wird
+  \item Es wird von jedem Dreieck, das aufgebaut ist wie ein Startdreieck,
+  versucht den Algorithmus zu starten. Nur wenn das Dreieck schon als ausgefüllt
+  markiert ist wird der Algorithmus doch nicht laufen gelassen.
+  \item Wenn von einem Startdreieck der Algorithmus gestartet wird, wird
   die ganze Fläche ausgefüllt, ohne überlappende Dreiecke.
   \item Es wird nie zweimal die gleiche Fläche ausgefüllt, da alle mögliche
   Startdreiecke während dem Ausfüllen einer Fläche als ausgefüllt markiert werden.
