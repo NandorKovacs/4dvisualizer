@@ -133,6 +133,12 @@ auch fünf, und sechseckige Schnitte bekommen können. Wie sehen wohl verschiede
 vierdimensionale Schnitte aus? Diese Arbeit beschäftigt sich genau damit:
 mithilfe einer Computersimulation werden solche Schnitte dargestellt.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.2]{ma_diagrams/hexagon_intersection.png}
+	\caption{Ein sechseckiger Schnitt eines Würfels}
+	\label{fig:hex_intersect}
+\end{figure}
 
 Ein wichtiges Ziel ist, dass man die dreidimensionalen Resultate der Schnitte
 gut von allen Seiten begutachten kann. Dass heisst, dass sie drehbar und
@@ -505,41 +511,41 @@ muss, exisitert GLEW\@. GLEW erledigt dies ganz automatisch, man muss nur einige
 Parameter angeben und dann funktioniert es von alleine.
 
 \subsubsection{Die Funktionsweise und das Zusammenspiel der Libraries, der
-Graphikkarte und des Operationssystems}\label{sssec:libraries} Ich habe die
-Libraries, die ich benutzt habe, oben beschrieben. Hier erläutere ich, wie genau
-sie funktionieren. Mit einem Programm ein Applikationsfenster zu öffnen und zu
+Graphikkarte und des Operationssystems}\label{sssec:libraries} Die Libraries,
+die ich benutzt habe, wurden oben beschrieben. Hier erläutere ich, wie sie genau
+funktionieren. Mit einem Programm ein Applikationsfenster zu öffnen und zu
 benutzen ist ganz einfach mit Libraries, die im Hintergrund alles komplizierte
-automatisch lösen. Aber diese haben immer sehr viele Einschränkungen. Wenn man
-wirklich frei sein will zu tun und zu lassen was man will, muss man ganz vieles
-selber lernen und machen.
+automatisch lösen. Dafür haben diese immer sehr viele Einschränkungen. Will man
+wirklich frei sein, zu tun und zu lassen was man will, muss man ganz vieles
+selbst lernen und umsetzen.
 
-Aus diesem Grund habe ich mich dafür entschieden zu lernen, wie man mit OpenGL
+Aus diesem Grund habe ich mich dazu entschieden zu lernen, wie man mit OpenGL
 umgeht. OpenGL ist eines der meistverbreiteteten API's für zwei- und
-dreidimensionale Vektorgraphiken, und ich war mir sicher, es macht Sinn das zu
-lernen.
+dreidimensionale Vektorgraphiken, daher war mir sicher, dass es Sinn macht dies
+zu lernen.
 
 Mit OpenGL lädt man Daten auf die Grafikkarte. GLEW dient dabei wie ein
-Übersetzer; es macht eigentich nichts anderes wie unsere Funktionsaufrufe and
-die richtigen Funktion zu binden. In unserem Fall lädt man eine Menge von
-Punkten in einem 3d Raum (repräsentiert durch Vektoren) auf die Grafikkarte.
-Ausserdem lädt man die Schattierungsprogramme auf die Grafikkarte. Alles andere,
-also die Berechnungen und die Verwaltung des Bildschirms, geschieht `von
-alleine'. Es wird von der Grafikkarte übernommen, und ist nicht unsere
-Verantwortung. Die Schattierungsprogramme, sofern wir sie in den richtigen Ort
-geladen haben, verändern und interprätieren unsere Daten, sodass aus Punkten und
-Farben und Vektoren eine Menge von Pixel entstehen. 
+Übersetzer; es macht eigentich nichts anderes, als unsere Funktionsaufrufe an
+die richtige Funktionen zu binden. In unserem Fall lädt man eine Menge von
+Punkten in einem 3d Raum (repräsentiert durch Vektoren) sowie die
+Schattierungsprogramme auf die Grafikkarte. Alles andere, also die Berechnungen
+und die Verwaltung des Bildschirms, geschieht `von alleine'. Es wird von der
+Grafikkarte übernommen, und ist nicht unsere Verantwortung. Die
+Schattierungsprogramme, sofern wir sie in den richtigen Ort geladen haben,
+verändern und interpretieren unsere Daten, sodass aus Punkten, Farben und
+Vektoren eine Menge Pixel entstehen. 
 
-OpenGL selber ist aber nur ein Werkzeug um mit der Grafikkarte zu komunizieren.
-Um ein Fenster zu öffnen und Tastendrücke zu erkennen und verwenden im Programm
+OpenGL selber ist aber nur ein Werkzeug, um mit der Grafikkarte zu komunizieren.
+Um ein Fenster zu öffnen und Tastendrücke zu erkennen und verwenden im Programm,
 brauche ich auch eine Schnittstelle mit dem Operationssystem. Dafür verwende ich
 GLFW\@. GLFW (Graphics Library Framework) hilft bei der Kommunikation mit dem
 Operationssystem. Mithilfe von GLFW kann ich das Applikationsfenster erstellen
 und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 
-Was noch nicht ganz klar ist, wie die Grafikkarte weiss, wo genau die
+Was noch nicht ganz klar ist, ist wie die Grafikkarte weiss, wo genau die
 berechneten Pixel hingehören. Dies ist so gelöst, dass wir durch GLFW einen
 sogenannten Context beim Erstellen des Fensters erhalten. Wenn wir die Daten und
-Programme an die Grafikkarte schicken, schicken wir auch die Information,
+Programme an die Grafikkarte schicken, schicken wir zudem die Information
 welchen Context wir benutzen.
 
 Je nach Operationssystem bekommt GLFW so einen Context auf unterschiedlicher
@@ -547,9 +553,9 @@ Weise für uns. Auf Windows werden die Fenster vom Operationssystem verwalten.
 Das heisst, das GLFW mithilfe des Operationssystems ein Fenster erstellt, was
 widerum auf der Grafikkarte einen Context erstellt, und an GLFW die Nummer des
 Contextes auf der Karte mitteilt. Auf Linux, zumindest auf der Distribution die
-ich benutze, gibt es einen sogenannten Compositor. Der sorgt dafür, dass alle
+ich benutze, gibt es einen sogenannten Compositor. Dieser sorgt dafür, dass alle
 Fenster richtig funktionieren, macht das man bei transparenten Fenster das
-sieht, was unter dem Fenster ist, und verwaltet allgemeint alles was Fenster
+sieht, was unter dem Fenster ist und verwaltet allgemeint alles, was Fenster
 angeht. Somit spricht GLFW nicht nur mit dem Operationsystem, sondern auch mit
 dem Compositor. Der Compositor erstellt durch OpenGL einen Context und gibt dann
 auch die Nummer des Contextes an GLFW zurück.
@@ -563,33 +569,30 @@ auch die Nummer des Contextes an GLFW zurück.
 
 \begin{itemize}
 	\item Der 3d Würfel ist gerendert.
-	\item Das Bewegen des Kameras ist möglich mit der Tastatur und der Maus.
+	\item Das Bewegen des Kameras ist möglich sowohl mit der Tastatur, als auch mit der Maus.
 \end{itemize}
 
 \subparagraph{Value}
 
-Wir haben eine Arbetisumgebung aufgebaut, und haben ein Verständniss für die
+Wir haben eine Arbetisumgebung aufgebaut, und haben ein Verständnis für die
 Frameworks und Libraries erarbeitet.
 
-% We bootstrapped the working environement and built an understanding of the core
-% frameworks and libraries.
-
 \subparagraph{Prozess}
-Dieser Meilenstein sieht nicht sehr schwierig aus, aber war eines der
+Dieser Meilenstein sieht nicht sehr schwierig aus, war aber einer der
 zeitaufwändigsten Teile des Projekts. Ich habe zuerst aus einem Buch und dem
-Internet gelernt, wie OpenGL funktioniert, und was man für Libraries braucht.
-Ich musste zuerst lernen, wie diese zusammenspielen. Erst dann konnte ich einen
+Internet gelernt, wie OpenGL funktioniert, und was man für Libraries braucht und
+musste zuerst lernen, wie diese zusammenspielen. Erst dann konnte ich einen
 einzelnen blauen Punkt auf dem Bildschirm erscheinen lassen. Dann konnte ich
 anfangen einen Würfel darzustellen. Hier war die grösste Schwiereigkeit den Code
-richtig zu strukturieren. Ich habe mir hier überlegt, was für Datenstrukturen ich
-brauchen werde, und was ich in Klassen abstrahieren möchte. 
+richtig zu strukturieren. Ich habe mir hier überlegt, was für Datenstrukturen
+ich brauchen werde, und was ich in Klassen abstrahieren möchte. 
 
 \paragraph{Meilenstein 2: Der Schnitt eines zentrierten, kanonischen 4d Würfels
 mit einer verstellbaren und beweglichen Hyperebene wird dargestellt.}
 
 \subparagraph{Key results}
 
-Ein C++ Programm, dass
+Ein C++ Programm, dass:
 
 \begin{itemize}
   \item den Schnitt eines zentrierten, kanonischen 4d Wüfel mit einer arbiträren
@@ -598,39 +601,32 @@ Ein C++ Programm, dass
   \item die Parameter der Hyperebene interaktiv ändern kann.
   \item den gerenderten Schnitt bei Änderungen der Hyperebene in Echtzeit anpasst.
   \item weiterhin im dreidimensionalen Raum navigieren kann wie im vorherigen Meilenstein.
-
-	% \item computes the intersection of a 4d unitcube with an arbitrary hyperplane
-	% \item renders this intersection as a three dimensional object
-	% \item can alter the parameters of the hyperplane interactively
-	% \item adjusts the rendered object in real time to the changes of the hyperplane
-	% \item can still navigate in the three dimensional world like in the previous milestone
 \end{itemize}
 
 \subparagraph{Value}
 
-Es zeigt sich dass die Theorie für die Berechnung des Schnittes korrekt ist. Wir
+Es zeigt sich, dass die Theorie für die Berechnung des Schnittes korrekt ist. Wir
 erhalten einen ersten Eindruck vom 4d Würfel.
-
-% The theory for the intersection is prooven to work. First impressions of the 4d cube can be aquired.
 
 \subparagraph{Prozess}
 Hier habe ich zuerst lange nichts programmiert, sondern habe mir mit Papier und
 Stift überlegt, wie das funktionieren soll. Ich habe beschlossen, dass ich die
+% maybe add figure
 Hyperebene mit zwei vierdimensionalen Vektoren repräsentiere. Eins ist ein
 Normalvektor, und der Andere beschreibt die Verschiebung der Hyperebene vom
 Ursprung. Hier habe ich mir auch ausgedacht, wie der Algorithmus funktionieren
 soll, sodass ich einen 3d Schnittkörper erhalte. Ich habe schnell einen
 Algorithmus erfunden, um die Eckpunkte des Schnittkörpers zu finden, aber das
-hat noch lange nicht alles gelöst. Um einen Körper mit OpenGL darzustellen muss
-man es nämlich in Dreiecke zersetzen, und dann diese Dreiecke an OpenGL
+hat noch lange nicht alles gelöst. Um einen Körper mit OpenGL darzustellen, muss
+man diesen in Dreiecke zersetzen und anschliessend an OpenGL
 schicken. Dafür musste ich wissen welche der Ecken benachbart sind. Dies war
-keine triviale Aufgabe. Ich dachte zuerst daran einem klassischen Algorithmus
+keine triviale Aufgabe. Ich dachte zuerst daran einen klassischen Algorithmus
 für dreidimensionale konvexe Hüllen zu implementieren. Dies wäre aber recht
 komplex und zeitaufwändig gewesen. Darum habe ich mir lieber eine einfacher
 implementierbare Methode überlegt, die beim Schneiden des Würfels die
 Information ausnutzt, auf welcher 2d Seite sich ein Schnittpunkt befindet, um zu
-bestimmen welche Punkte benachbart sein können. Der genaue Algorithmus, wie die
-Dreiecke zusammengestellt werden, folgt später.
+bestimmen, welche Punkte benachbart sein können. Der genaue Algorithmus, wie die
+Dreiecke zusammengestellt werden, folg später im Teil~\ref{spar:convex}.
 
 \paragraph{Meilenstein 3: Sichtbarkeitseffekte}
 
@@ -640,7 +636,7 @@ Objektschattierung und Beleuchtung wird implementiert.
 
 \subparagraph{Value}
 
-Der Programm erlaubt uns mit Parametern zu experimentieren, und verschiedene
+Das Programm erlaubt uns mit Parametern zu experimentieren, und verschiedene
 Formen und Gestalten von Schnitten des 4d Würfels kennen zu lernen.
 
 Mit den Lichteffekten und der Schattierung wird das gerenderte Bild einfacher zu
@@ -655,9 +651,9 @@ Ecken durch Bewegung erahnen.
 % With object shading and lighting the rendered picture will be more easily understood by the user.
 
 \subparagraph{Prozess}
-Damit man überhaupt einen Punkt erscheinen lassen kann, bracht man sogenannte
+Damit man überhaupt einen Punkt erscheinen lassen kann, benötigt man sogenannte
 Schattierungsprogramme. OpenGL funktioniert so, dass jeder Punkt eine sogenannte
-Rendering Pipeline durchläuft. Vereinfacht sieht das so aus, dass zuerst jeder
+Rendering-Pipeline durchläuft. Vereinfacht sieht das so aus, dass zuerst jeder
 Punkt durch den Vertex Shader geht, dann alle Primitive (in unserem Fall
 Dreiecke, aber es könnten auch Linien sein) durch den Tesselation Shader und dem
 Geometry Shader gehen. Dann geschieht die Rasterization, das heisst, dass jetzt
@@ -668,14 +664,14 @@ anderen zu benutzen.
 
 Wie man solche Shattierungsprogramme (Shader) schreibt, habe ich schon im
 Verlauf des Arbeitsprozesses gelernt. Doch erst in diesem Schritt habe ich genau
-lernen und verstehen müssen, wie man sie am besten benutzt, was es für tricks
+lernen und verstehen müssen, wie man sie am besten benutzt und was es für Tricks
 gibt. Bis zu diesem Moment habe ich nur primitive Shader gehabt (Beispielsweise
 habe ich nur jedem Punkt eine Farbe gegeben, und darauf vertraut, dass während
 dem Rasterizationsverfahren durch Interpolation ein Farbverlauf entstehen wird
 auf dem Würfel). Jetzt habe ich aus dem OpenGL Buch gelernt, wie man Lichteffekte
 haben kann, indem man Informationen wie den Ursprung des Lichtes,
-Materialeigenschaften, Lichtintensität und Farbe, und weiteres an die Shader
-schicken kann, und mit Formeln so die richtige Schattierung für jeden Pixel
+Materialeigenschaften, Lichtintensität und Farbe und weiteres an die Shader
+schicken kann und mit Formeln so die richtige Schattierung für jeden Pixel
 ausrechnen kann.
 
 \paragraph{Meilenstein 4: Der Schnitt eines arbiträren 4d Würfels}
@@ -710,49 +706,43 @@ Wir sind bereit das Endprodukt zusammenzustellen.
 
 \subparagraph{Key results}
 
-Das Programm can eine Welt, definiert durch einen configurations File, rendern.
+Das Programm kann eine Welt, definiert durch ein configurations File, rendern.
 Die Schnitt-Hyperebene und Kamera sind weiterhin dreh und bewegbar. Auf einer
-HUD (Heads-Up Display) werden die Parametern der Hyperebene und der Kamera
+HUD (Heads-Up Display) werden die Parameter der Hyperebene und der Kamera
 präsentiert.
-
-% Program that can render a World described a config file, allows moving the
-% projection plane as well as the camera in the 3d world. Provides feedback of
-% projection and camera position in a HUD.
 
 \subparagraph{Value}
 
-Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
-
-% This is a minimum viable solution of the original project description.
+Dies ist das erwartete Endprodukt von der ursprünglichen Projektbeschreibung.
 
 \subsubsection{Die wichtigste Module im Programm}
-\paragraph{Die \code{main()} Funktion} Die \code{main()} Funktion ist die
-Funktion die gestartet wird wenn das Programm startet. Es stellt die
-Ausgangswerte aller Module ein und startet GLEW und GLFW\@. Nacher geht es in
+\paragraph{Die main() Funktion} Die \code{main()} Funktion ist die
+Funktion die gestartet wird, wenn das Programm startet. Es stellt die
+Ausgangswerte aller Module ein und startet GLEW und GLFW\@. Danach geht es in
 eine unendliche Schleife bis das Fenster geschlossen wird. Ein Zyklus in dieser
-Schleife nennen wir einen Tick. In deinem Tick geschieht folgendes:
+Schleife nennen wir einen Tick. In einem Tick geschieht folgendes:
 \begin{itemize}
   \item Falls sich die Fenstergrösse verändert hat, wird dies im Renderer
   angepasst.
   \item Der Renderer rendert ein Bild.
-  \item Alle Tastatur- und Mausevente werden abgefragt, und vom Inputmodul
+  \item Alle Tastatur- und Mausevente werden abgefragt und vom Inputmodul
   gehandhabt.
-  \item Es wird ausgerechnet wie viel Zeit verstrichen ist seit dem letzen Tick.
+  \item Es wird ausgerechnet wie viel Zeit seit dem letzen Tick verstrichen ist.
   \item Die \code{tick()} Funktion vom Kameramanager wird gerufen.
   \item Die \code{tick()} Funktion vom Hyperebenmanager wird gerufen.
 \end{itemize}
 
 Die zwei \code{tick()} Funktionen erhalten die verstrichene Zeit als
-Parameter, damit sie ausrechnen können was sich wie viel bewegen muss. Sonst
-kann es vorkommen, das die Kamera schneller ist falls der Computer schneller
+Parameter, damit sie ausrechnen können, was sich wie viel bewegen muss. Sonst
+kann es vorkommen, das die Kamera schneller ist, sofern der Computer schneller
 ist, da mehr Ticks pro Sekunde gemacht werden können.
 
 \paragraph{Der Intersektor}
 Die Aufgabe des Intersektors ist das Schneiden von einem kanonischen Würfel mit
 einer 3d Hyperebene.
 
-4d Würfel haben 3d und 2d Seiten. In diesem Abschnitt werde ich mit einer Seite
-immer eine 2d Seite meinen.
+4d Würfel haben 3d und 2d Seiten. Im folgenden Abschnitt ist mit einer Seite
+immer eine 2d Seite gemeint.
 
 \subparagraph{Die Nachbarschaftsverhältnisse der Seiten}
 Jede Kante im Würfel ist Teil von drei Seiten. Diese drei Seiten nennen wir
@@ -770,13 +760,13 @@ benachbart.
 	\caption{Drei benachbarte Seiten}
 	\label{fig:neigh2}
 \end{figure}
-Zuerst erstellen wir manuell eine Liste der Kanten. Für die Kanten
-rechnen wir dann alle Seiten aus, die diese Kante beinhalten. Dies geschieht nur
-ganz am Anfang vom Programm, bevor das erste Bild erscheint. Die Kanten sind
-repräsentiert von zwei Vektoren, wo jeweils die zwei Endpunkte der Kanten
-beschreiben. Bei der Vorberechnung geben wir jeder Seite eine
-Identifikationszahl. Wir müssen nur wissen, welche Seite zu welcher Kante
-gehört, aber brauchen für den Algorithmus keine weitere angaben einer Seite.
+Zuerst erstellen wir manuell eine Liste der Kanten. Für die Kanten rechnen wir
+dann alle Seiten aus, die diese Kante beinhalten. Dies geschieht nur ganz am
+Anfang vom Programm, bevor das erste Bild erscheint. Die Kanten werden von zwei
+Vektoren repräsentiert, die jeweils die zwei Endpunkte der Kanten beschreiben.
+Bei der Vorberechnung geben wir jeder Seite eine Identifikationszahl. Wir müssen
+nur wissen, welche Seite zu welcher Kante gehört und brauchen für den
+Algorithmus keine weiteren Angaben einer Seite.
 
 \subparagraph{Das Schneiden der Kanten}
 Nun schneiden wir alle Kanten mit der Hyperebene. Dabei erhalten wir entweder
@@ -785,50 +775,52 @@ der Hyperebene liegt, ein Ergebniss falls die Kante die Hyperebene kreuzt, und
 zwei Ergebnisse, falls die Kante mit der Hypereben in einer Ebene liegt. In
 diesem letzten Fall würde es eigentlich unendlich viele Resultate geben, aber
 wir nehmen statt dem die zwei Enden der Kanten, da wir schlussendlich nur die
-Punkte brauchen, die die konvexe Hülle des Volumens ausmachen. Das schneiden ist
-trivial; Wir schauen wir die Distanz $d(A)$ zwischen Punkt A und der Hyperebene, und
-die Distanz $d(B)$ zwischen Punkt B und der Hyperebene an. Falls $d(A)
-\cdot d(B) > 0$ dann sind beide auf der gleichen Seite der Hyperebene,
-und es gibt keinen Schnittpunkt. Falls $d = 0$ für eines der Punkte, wird dieser
-Punkt als Schnittpunkt akzeptiert. Falls $d(A) = 0 \land d(B) = 0$ muss die
-Kante auf der Hyperebene liegen, somit geben wir beide Endpunkte A und B
-zurück. Ansonsten berechnen wir aus dem Verhältniss der beiden Distanzen wo auf
-der Kante der Schnittpunkt ist, und geben das zurück. So bauen wir eine Liste
-mit allen Schnittpunkten auf. Gleichzeitig bauen wir eine Datenstruktur auf, die
-für jede Seite eine Liste von Schnittpunkten beinhaltet auf. Dies ist ganz
-einfach, da wir vom Schnittpunkt den wir gerade gefunden haben immer wissen zu
-welcher Kante es gehört, und wir schon im Voraus berechnet haben welche Seiten
-welche Kanten beinhalten. Sobald ein Schnittpunkt gefunden wird, wird es bei
-allen 3 Seiten die dessen Kante beinhalten abgespeichert als Schnittpunkt auf
-der Oberfläche der Seite.
+Punkte brauchen, die die konvexe Hülle des Volumens ausmachen. Das Schneiden ist
+trivial; Wir betrachten die Distanz $d(A)$ zwischen Punkt A und der Hyperebene,
+und die Distanz $d(B)$ zwischen Punkt B und der Hyperebene. Falls $d(A) \cdot
+d(B) > 0$ dann sind beide auf der gleichen Seite der Hyperebene, und es gibt
+keinen Schnittpunkt. Falls $d = 0$ für eine der Punkte, wird dieser Punkt als
+Schnittpunkt akzeptiert. Falls $d(A) = 0 \land d(B) = 0$ muss die Kante auf der
+Hyperebene liegen. Somit geben wir beide Endpunkte A und B zurück. Ansonsten
+berechnen wir aus dem Verhältniss der beiden Distanzen wo auf der Kante der
+Schnittpunkt liegt und geben das zurück. So erarbeiten wir eine Liste mit allen
+Schnittpunkten. Gleichzeitig bauen wir eine Datenstruktur auf, die für jede
+Seite eine Liste von Schnittpunkten beinhaltet. Dies ist ganz einfach, da wir
+vom Schnittpunkt den wir gerade gefunden haben immer wissen, zu welcher Kante er
+gehört und wir schon im Voraus berechnet haben, welche Seiten welche Kanten
+beinhalten. Sobald ein Schnittpunkt gefunden wird, wird es bei allen 3 Seiten
+die dessen Kante beinhalten, als Schnittpunkt auf der Oberfläche der Seite
+abgespeichert.
 
 Während diesem Prozess rechne ich auch den Durchschnitt aller Schnittpunkte aus.
-Dies wird sich innerhalb des Lösungskörpers befinden, und wird sich als
-Hilfreich erweisen um Normalvektore zu finden die gegen Aussen zeigen.
+Dieser wird sich innerhalb des Lösungskörpers befinden und wird sich als
+Hilfreich erweisen, um Normalvektore zu finden, die gegen Aussen zeigen.
 
 % explain why
 Zwei Schnittpunkte die sich auf der gleiche Würfelseite befinden, werden im
 entstehenden Schnittvolumen immer eine gemeinsame Kante haben. Aus diesem Grund
-können wir eine Liste von Nachbarpunkten für jeden Schnittpunkt aufbauen aus der
-Datenstruktur die für jede Seite die Punkte auf dessen Oberfläche beinhaltet.
+können wir eine Liste von Nachbarpunkten für jeden Schnittpunkt aufbauen. Dies
+geschieht aus der Datenstruktur, die für jede Seite die Punkte auf dessen
+Oberfläche beinhaltet.
 
-\subparagraph{Die Zusammensetzung der konvexen Hülle aus Dreiecken}
-Wir könnten mit einer einfachen Tiefensuche alle Dreiecke finden, wo zwei Kanten
-auch Kanten des Schnittvolumens sind. Wir machen eine Tiefensuche auf dem
-Nachbarschaftsgraph, behalten immer die vorherigen zwei Punkte im Kopf, und
-immer wenn wir zu einem Punkt gelangen zeichnen wir das Dreieck mit den
-vorherigen 2 Ecken. Das habe ich zuerst auch getan. Es treten zwei Probleme auf:
+\subparagraph{Die Zusammensetzung der konvexen Hülle aus
+Dreiecken}\label{spar:convex} Wir könnten mit einer einfachen Tiefensuche alle
+Dreiecke finden, wo zwei Kanten auch Kanten des Schnittvolumens sind. Daher
+machen wir eine Tiefensuche auf dem Nachbarschaftsgraph, behalten immer die
+vorherigen zwei Punkte im Kopf und immer wenn wir zu einem Punkt gelangen,
+zeichnen wir das Dreieck mit den vorherigen 2 Ecken. Das habe ich zunächst auch
+getan. Es treten zwei Probleme auf:
 
 \begin{itemize}
   % insert hexagon with hole
   \item
   \begin{description}
     \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4
-    Ecken, und die Dreiecke auf dieser Weise zeichnet, gibt es einen Loch in der
-    Mitte. Das ist einfach zu sehen auf der Abbildung~\ref{fig:hole}. Die Fläche
-    kann nicht durch Dreiecke abgedeckt sein, wo nur Punkte beinhalten die
-    benachbart sind. Es braucht auch Dreiecke, die aus einem Punk, und zwei
-    Punkten wo auf der gegenüberliegenen Seite sind bestehen.
+    Ecken, und die Dreiecke auf diese Weise zeichnet, gibt es ein Loch in der
+    Mitte. Das ist auf der Abbildung~\ref{fig:hole} zu sehen. Die Fläche kann
+    nicht durch Dreiecke abgedeckt sein, die nur Punkte beinhalten welche
+    benachbart sind. Es braucht auch Dreiecke, die aus einem Punkt, und zwei
+    zusätzlichen Punkten, die auf der gegenüberliegenen Seite liegen, bestehen.
     \end{description}
     \begin{figure}[H]
       \centering
@@ -840,15 +832,15 @@ vorherigen 2 Ecken. Das habe ich zuerst auch getan. Es treten zwei Probleme auf:
   \item
   \begin{description}
     \item[Z-Fighting] Wenn zwei Objekte und die Kamera in einer Linie sind,
-    verdeckt das eine Objekt das andere mindestens zum Teil. OpenGL geht damit so
-    um, dass im Verlauf des im Abschnitt~\ref{sssec:libraries} beschriebenen Rendering
-    Pipelines OpenGL doppelte Pixel aussortiert, und immer die näher zu der Kamera
-    behält. Da OpenGL aber mit Gleitkommazahlen arbeitet, die eine kleine aber
-    existente ungenauigkeit aufweisen, kommt es so das fallst zwei Flächen sehr
-    genau aufeinanderliegen, es sehr zufällig ist welches der Flächen behalten,
-    und welches weggeworfen wird. Dies führt zu einem vibrierenden Effekt: Wenn
-    sich das Bild bewegt, ist bei jedem der etlichen Bilder pro Sekunde ganz
-    zufällig eines der Flächen oben.
+    verdeckt das eine Objekt das andere mindestens zum Teil. OpenGL geht damit
+    so um, dass im Verlauf des im Abschnitt~\ref{sssec:libraries} beschriebenen
+    Rendering-Pipelines OpenGL doppelte Pixel aussortiert und immer die näher
+    bei der Kamera liegenden behält. Da OpenGL aber mit Gleitkommazahlen
+    arbeitet, die eine kleine aber existente ungenauigkeit aufweisen, kommt es
+    so, dass falls zwei Flächen sehr genau aufeinanderliegen, es sehr zufällig
+    ist, welche der Flächen behalten, und welche weggeworfen wird. Dies führt
+    zu einem vibrierenden Effekt: Wenn sich das Bild bewegt, ist bei jedem der
+    etlichen Bilder pro Sekunde ganz zufällig eine der Flächen oben.
 
     Wenn wir so wie beschrieben die Dreiecke zeichnen, dann wird wie man in der
     Abbildung sieht, ein gewisser Teil immer überlappen. Dies führt zu unschönem
@@ -856,43 +848,43 @@ vorherigen 2 Ecken. Das habe ich zuerst auch getan. Es treten zwei Probleme auf:
   \end{description}
 \end{itemize}
 
-Um vorläufig eines der Probleme zu beheben, habe ich einfach alle mögliche
-kombinationen mit drei Schnittpunkten genommen, und sie als Dreieck gerendert.
-Das löste natürlich das Problem von den Löchern. Es gab aber noch viel mehr
-Z-Fighting, da noch viel mehr Flächen überlappten.
+Um vorläufig eines der Probleme zu beheben, habe ich alle möglichen
+Kombinationen mit drei Schnittpunkten genommen und sie als Dreieck gerendert.
+Das löste natürlich das Problem der Löcher. Es führte aber zu noch viel mehr
+Z-Fighting, da nun viel mehr Flächen überlappten.
 
 Ab hier nenne ich die gefundenen Schnittpunke Ecken oder Eckpunkte. Sie sind
 nämlich die Ecken des Lösungsobjekts.
 
-Zuerst dachte ich daran, einen Algorithmus für dreidimensionale konvexe Hüllen zu
-implementieren. Diese sind aber sehr komplex, und ich habe gedacht das ich mir
-sicher etwas einfacheres überlegen kann. So bin ich auf folgenden Algorithmus
-gestossen:
+Zuerst dachte ich daran, einen Algorithmus für dreidimensionale konvexe Hüllen
+zu implementieren. Diese sind aber sehr komplex und ich habe gedacht, dass ich
+mir sicher etwas einfacheres überlegen kann. So bin ich auf folgenden
+Algorithmus gestossen:
 
 Wenn ich ein Dreieck auf einer Fläche vom Lösungsobjekt habe, wo zwei der drei
 Kanten auch Kanten des Lösungsobjekts sind, kann ich diese ganze Fläche des
-Lösungsobjekts mit Dreiecken belegen, ohne Überlappen oder Löcher. Das
+Lösungsobjekts mit Dreiecken belegen, ohne Überlappungen oder Löcher. Das
 Funktioniert folgendermassen: Ich merke mir den Normalvektor des Dreiecks, das
-ausserhalb des Lösungsobjekts zeigt. Um dies zu berechnen benutze ich den
-Durchschnitt aller Ecken des Lösungskörpers, wo ich schon berechnet habe als ich
-alle Ecken berechnet habe. Ich nehme eines der Punkte wo nicht in der Mitte ist
-als Ausgangspunkt. Der mittlere Punkt ist der Punkt, wo beide andere Punkte als
-Nachbar hat. Falls alle drei Punkte diese Eigenschaft besitzen, ist die ganze
-Fläche nur ein Dreieck, da die drei Punkte durch drei Kanten des Lösungsobjekts
-verbunden sind. Dann bricht der Algorithmus ab. Ansonten habe ich jetzt einen
-Ausgangspunkt, einen mittleren Punkt, und einen Endpunkt. Ich gehe jetzt alle
-Nachbarn vom Endpunkt durch. Ich kontrolliere immer, ob das Dreieck, das durch
-den Augangspunkt, dem Endpunkt, und dem neuen Punkt gebildet wird, den gleichen
-Normalvektor gegen Aussen hat wie das ursprüngliche Dreieck. Falls ja liegt es
-auf der gleichen Ebene, ist also Teil der gleichen Fläche. Diesen Dreieck zeiche
-ich. Der vorherige Endpunkt wird jetzt zum mittleren Punkt, und der neue Punkt
-zum Endpunkt. Ich widerhole diesen Prozess, bis der Endpunkt und der
-Augangspunkt der gleiche Punkt sind. Dann breche ich ab. Jedesmal dass ich ein
-Dreieck einzeichne, merke ich mir das es eingezeichnet wurde. Ich speichere auch
-jedesmal ab, dass das Dreieck gebildet durch den mittleren Punkt, dem Endpunkt,
-und dem richtigen neuen Punkt schon gezeichnet ist. Zwar ist dies nicht direkt
-schon gezeichnet, aber dessen Fläche wird nach dem Ende des Algorithmusses schon
-eingefüllt sein.
+ausserhalb des Lösungsobjekts zeigt. Um dies zu berechnen, benutze ich den
+Durchschnitt aller Ecken des Lösungskörpers, den ich bereits berechnet habe, als
+ich alle Ecken berechnet habe. Ich nehme einen der Punkte, der nicht in der
+Mitte liegt, als Ausgangspunkt. Der mittlere Punkt ist der Punkt, der beide
+anderen Punkte als Nachbar hat. Falls alle drei Punkte diese Eigenschaft
+besitzen, ist die ganze Fläche nur ein Dreieck, da die drei Punkte durch drei
+Kanten des Lösungsobjekts verbunden sind. Dann bricht der Algorithmus ab.
+Ansonten habe ich jetzt einen Ausgangspunkt, einen mittleren Punkt, und einen
+Endpunkt. Ich gehe jetzt alle Nachbarn vom Endpunkt durch. Ich kontrolliere
+immer, ob das Dreieck, das durch den Augangspunkt, dem Endpunkt, und dem neuen
+Punkt gebildet wird, den gleichen Normalvektor gegen Aussen hat, wie das
+ursprüngliche Dreieck. Falls ja, liegt es auf der gleichen Ebene, ist also Teil
+der gleichen Fläche. Dieses Dreieck zeiche ich. Der vorherige Endpunkt wird
+jetzt zum mittleren Punkt, und der neue Punkt zum Endpunkt. Ich widerhole diesen
+Prozess, bis der Endpunkt und der Augangspunkt der gleiche Punkt sind. Dann
+breche ich ab. Jedesmal wenn ich ein Dreieck einzeichne, merke ich mir, dass es
+eingezeichnet wurde. Ich speichere auch jedesmal ab, dass das Dreieck, gebildet
+durch den mittleren Punkt, dem Endpunkt, und dem richtigen neuen Punkt, bereits
+gezeichnet ist. Zwar ist dies nicht direkt schon gezeichnet, aber dessen Fläche
+wird nach dem Ende des Algorithmus eingefüllt sein.
 
 \begin{figure}[H]
 	\centering
@@ -911,7 +903,7 @@ Warum das immer eine richtige Lösung geben wird:
   Kanten Teil des Lösungsobjekts sind.
   \item Es wird von jedem Dreieck, das aufgebaut ist wie ein Startdreieck,
   versucht den Algorithmus zu starten. Nur wenn das Dreieck schon als ausgefüllt
-  markiert ist wird der Algorithmus doch nicht laufen gelassen.
+  markiert ist, wird der Algorithmus doch nicht laufen gelassen.
   \item Wenn von einem Startdreieck der Algorithmus gestartet wird, wird
   die ganze Fläche ausgefüllt, ohne überlappende Dreiecke.
   \item Es wird nie zweimal die gleiche Fläche ausgefüllt, da alle mögliche
@@ -925,27 +917,28 @@ Warum das immer eine richtige Lösung geben wird:
 % \end{itemize}
 
 \paragraph{Der Kameramanager}
-Dieses Modul beinhaltet alles was zur Kamera gehört. Es beinhaltet die Position
-und Winkel der Kamera, konstanten die die Dreh- und Bewegungsgschwindigkeit
+Dieses Modul beinhaltet alles, was zur Kamera gehört. Es beinhaltet die Position
+und Winkel der Kamera, Konstanten die die Dreh- und Bewegungsgschwindigkeit
 beeinflussen, sowie die momentane Bewegungsrichtung. Es kann jederzeit eine
-Transformationsmatrix vom Kameramanager abgefragt werden, das alle Objekte in der
-Welt so bewegt, dass simuliert wird das die Kamera in einer anderen Position
-ist. Dies ist nötig, da in OpenGL die Kamera nicht bewegt werden kann.
-Stattdessen muss die ganze Welt so gedreht und verschoben werden dass das
-Simuliert werden kann. Jeden Tick macht das Kameramanager ausserdem folgende Aktionen:
+Transformationsmatrix vom Kameramanager abgefragt werden, die alle Objekte in
+der Welt so bewegt, dass simuliert wird, dass die Kamera in einer anderen
+Position ist. Dies ist nötig, da in OpenGL die Kamera nicht bewegt werden kann.
+Stattdessen muss die ganze Welt so gedreht und verschoben werden, dass das
+simuliert werden kann. Jeden Tick macht das Kameramanager ausserdem folgende
+Aktionen:
 \begin{itemize}
 	\item Es bewegt die Kamera in die Richtung angegeben durch die momentan
 	gedrückten Tasten. Falls keine gedrückt sind, bewegt sich die Kamera nicht.
-  \item Es berechnet den Transformationsmatrix neu.
+  \item Es berechnet die Transformationsmatrix neu.
 \end{itemize}
 
 \paragraph{Das Hyperebenenmanager}
 Der Hyperebenenmanager speichert alle nötigen Parameter der Hyperebene. Dies
-sind sind ein Vektor, das dessen Position beschreibt, 3 Vektore, die die drei
-Einheitsvektore der dreidimensionalen Hyperebene bilden, und ein Normalvektor.
-Wie der Kameramanger beinhaltet es auch Konstanten für die Dreh- und
-Bewegungsgschwindigkeit. Ausserdem beinhalten es einen Vektor für die momentane
-Drehrichtung, und eine Zahl für die momentane Bewegungsrichtung. Die
+sind sind ein Vektor, der dessen Position beschreibt, 3 Vektore, die die drei
+Einheitsvektoren der dreidimensionalen Hyperebene bilden und ein Normalvektor.
+Wie der Kameramanger beinhaltet er auch Konstanten für die Dreh- und
+Bewegungsgschwindigkeit. Ausserdem beinhalten er einen Vektor für die momentane
+Drehrichtung und eine Zahl für die momentane Bewegungsrichtung. Die
 \code{tick()} Funktion des Hyperebenenmanagers macht folgendes:
 
 \begin{itemize}
@@ -956,7 +949,7 @@ Drehrichtung, und eine Zahl für die momentane Bewegungsrichtung. Die
 \paragraph{Inputmanager}
 Der Inputmanager ist nur eine Schnittstelle von GLFW zu meinem Programm. Es
 implementiert sogenannte `listener'. Das sind Funktionen, die ich selber nicht
-rufen werde, sondern im Fall das eine Taste gedrückt wird, oder die Maus bewegt
+rufen werde, sondern im Fall das eine Taste gedrückt wird oder die Maus bewegt
 wird, von GLFW gerufen werden.
 
 Wenn ein sogenanntes `Mausevent' wahrgenommen wird, ruft es ganz einfach die
@@ -970,46 +963,45 @@ losgelassen wird.
 
 Für mich ist aber interessant, ob eine Taste momentan gedrückt ist. Ich muss
 also selber abspeichern in welchem Zustand welche Tasten sind. Sobald eine Taste
-gedrückt wird, merke ich das sie gedrückt ist, und sobald es losgelassen wird
-merke ich das es nicht gedrückt ist. Ob eine Taste gedrückt ist oder nicht, kann
-dann jedes Modul, wo auf den Inputmanager zugriff hat, abfragen.
+gedrückt wird, merke ich dass sie gedrückt ist, und sobald es losgelassen wird
+merke ich, dass sie nicht gedrückt ist. Ob eine Taste gedrückt ist oder nicht,
+kann dann jedes Modul, welches auf den Inputmanager zugriff hat, abfragen.
 
 \paragraph{Der Renderer}
 Der Renderer ist dafür zuständing in jedem Tick mithilfe von OpenGL ein Bild zu
 zeichnen. 
 
-Ganz am Anfang beim starten des Programms schickt es die
-Schattierungsprogramme durch OpenGL an die Grafikkarte, und reserviert Speicher
-auf der Karte für die Daten die es später schicken wird.
+Ganz am Anfang beim starten des Programms, schickt es die Schattierungsprogramme
+durch OpenGL an die Grafikkarte und reserviert Speicher auf der Karte, für die
+Daten die es später schicken wird.
 
-Es hat ausserdem eine weitere Funktion, die nicht die \code{render()} Funktion
+Er hat ausserdem eine weitere Funktion, die nicht die \code{render()} Funktion
 ist. Mit \code{set\_size()} kann die grösse des Fensters angepasst werden falls
-es sich geändert hat. Das wird in der \code{main()} Funktion gerufen, wie schon
-beschrieben.
+es sich geändert hat. Das wird in der \code{main()} Funktion aufgerufen, wie
+bereits beschrieben.
 
 Die \code{render()} Funktion macht folgendes, in dieser Reihenfolge:
 \begin{itemize}
-  \item Es lässt den Intersektor alle Dreiecke generieren.
-  \item Es berechnet die Matrix das die Perspektive der Kamera simuliert.
-  \item Es berechnet mithilfe des Kameramanagers den Matrix das die Welt richtig
-  dreht und verschiebt.
-  \item Es schickt diese Matricen an die Grafikkarte.
-  \item Es schickt alle nötigen Daten für die Lichtberechnung wie
+  \item Sie lässt den Intersektor alle Dreiecke generieren.
+  \item Sie berechnet die Matrix, die die Perspektive der Kamera simuliert.
+  \item Sie berechnet mithilfe des Kameramanagers die Matrix, welche die Welt
+  richtig dreht und verschiebt.
+  \item Sie schickt diese Matricen an die Grafikkarte.
+  \item Sie schickt alle nötigen Daten für die Lichtberechnung wie
   Materialeigenschaften, Lichtintensität und Richtung und die Normalvektore der
   Dreiecke an die Grafikkarte.
-  \item Es schickt alle Dreiecke an die Grafikkarte.
-  \item Es schickt ein Signal, damit die Grafikkarte ein neues Bild generiert
+  \item Sie schickt alle Dreiecke an die Grafikkarte.
+  \item Sie schickt ein Signal, damit die Grafikkarte ein neues Bild generiert
   und an den Monitor schickt.
 \end{itemize}
 
 \paragraph{Shaderprogramme}
-Die Shaderprogramme, oder Schattierungsprogramme auf Deutsch sind die Programme
-die auf die Grafikkarte geladen werden, und dort mit den von mir angegebenen
+Die Shaderprogramme, oder Schattierungsprogramme auf Deutsch, sind die Programme,
+die auf die Grafikkarte geladen werden und dort mit den von mir angegebenen
 Daten die Farbe der einzelnen Pixel berechnen.
 
 Ich habe zwei Shaderprogramme: Einen Vertex- und einen Fragmentshader. Zwischen
-diesen beiden Programmen durchlaufen die Daten den Rest des Rendering
-Pipeline's, darunter auch die Rasterization. Während der Rasterization werden
+diesen beiden Programmen durchlaufen die Daten den Rest des Rendering-Pipeline's, darunter auch die Rasterization. Während der Rasterization werden
 alle Daten die spezifisch sind für einzelne Punkte auf das Dreieck interpoliert.
 
 \subparagraph{Lichtberechnung}
