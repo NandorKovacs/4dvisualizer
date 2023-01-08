@@ -1081,30 +1081,35 @@ vom Punkt reflektiert, ist proportional zu $\cos{\theta}$.
 \begin{align*}
   I_{diffus} &= Licht_{diffus} \cdot Material_{diffus} \cdot \cos{\theta}
 \end{align*}
-Um dies zu berechnen benutzen wir den Normalvektor der Fläche
-$\hat{N}$, und den Richtungsvektor des Lichtes $\hat{L}$.
-Das Skalarprodukt der beiden Vektoren gibt uns den Cosinus ihres Winkels; genau
-das brauchen wir. Ausserdem wollen brauchen wir diffuses Licht nur, wenn $ -90
-\leq \theta \leq 90$, da das Licht sonst gar nicht auf die Oberfläche scheint.
-Cosinus ist genau in diesem Bereich positiv. Also benutzen wir folgende
-Gleichung:
+Um dies zu berechnen benutzen wir den Normalvektor der Fläche $\hat{N}$, und den
+Richtungsvektor des Lichtes $\hat{L}$. Das Skalarprodukt der beiden Vektoren
+gibt uns den Cosinus ihres Winkels; genau das brauchen wir. Ausserdem wollen
+brauchen wir diffuses Licht nur, wenn $ -90 \leq \theta \leq 90$, da das Licht
+sonst gar nicht auf die Oberfläche scheint. Cosinus ist genau in diesem Bereich
+positiv. Also benutzen wir folgende Gleichung:
 \begin{align*}
   I_{diffus} &= Licht_{diffus} \cdot Material_{diffus} \cdot \max (\hat{N} \cdot \hat{L}, 0)
 \end{align*}
 Die spiegelnde Reflexion ist etwas spannender. Dies simuliert die überbelichtete
 Flecken, wo das Licht durch den Objekt genau in das Auge des Betrachters
 reflektiert wird. Wie viel spiegelnde Reflektion in einem Punkt ist, kommt
-darauf an, wie klein der Winkel vom austretenden Lichtvektor
-$\hat{R}$, und dem Vektor vom Punkt zum Auge $\hat{V}$
-ist. Wir können die Cosinusfunktion als `falloff' Funktion verwenden. Der
-Glanzwert des Materials ist der Exponent das die Cosinusfunktion bekommmt. So
-können wir die Falloff-Funktion stärker oder schwächer machen. So kommen wir zu
-der Gleichung:
+darauf an, wie klein der Winkel vom austretenden Lichtvektor $\hat{R}$, und dem
+Vektor vom Punkt zum Auge $\hat{V}$ ist. Wir können die Cosinusfunktion als
+`falloff' Funktion verwenden. Der Glanzwert des Materials ist der Exponent das
+die Cosinusfunktion bekommmt. So können wir die Falloff-Funktion stärker oder
+schwächer machen. So kommen wir zu der Gleichung:
 \begin{align*}
   I_{spiegelnd} &= Licht_{spiegelnd} \cdot Material_{spiegelnd} \cdot \max ({(\hat{R} \cdot \hat{V})}^{n}, 0)
 \end{align*}
 Wieder nehmen wir nur die positiven Werte. Sonst können spezielle Artifakte
 entstehen mit inverser Glanzflecken, flecken wo dünkler sind.
+\newline
+\newline
+Das ist das Phong-Beleuchtungsmodell. Ich habe es aus dem OpenGL Buch, und
+Wikipedia gelernt. Es ist ein empirisches Modell; es achtet nicht darauf, das
+nicht mehr Licht entsteht durch die Reflexion wie es vor der Reflektion gegeben
+hat. Es ist aber ein einfaches Modell, und die Unterschiede zu anderen Modellen
+ist nicht gross.
 
 \subparagraph{Der Vertexshader}
 Im Vertexshader bearbeitet man einen einzelnen Punkt. Man kann alles daran
@@ -1113,26 +1118,36 @@ an die Grafikkarte geschickt, die die Welt so drehen und wenden, dass die
 Kameraposition und die Perspektive stimmen. Diese wenden wir auf den Punkt an.
 
 Anfangs habe ich ausserdem die Position des Punktes genommen, und da die Farbe
-des Punktes auch als Vektor repräsentiert wird, einfach auch für die Farbe
+des Punktes auch als Vektor repräsentiert wird, es einfach auch als Farbe
 angegeben. Das resultierte in einem Objekt, das einen Farbverlauf hatte, da die
 Interpolation auch die Farben interpolierte.
 
-Für die Lichteffekte brauche ich aber kompliziertere Shader. Hier rechne ich
-drei Vektore aus:
-\begin{itemize}
-  \item \begin{description}
-    \item[den view Vektor] Der view Vektor ist der Vektor das vom Punkt in die
-    Mitte des Kameras zeigt.
-  \end{description}
-  \item \begin{description}
-    \item[den view Vektor] Der view Vektor ist der Vektor das vom Punkt in die
-    Mitte des Kameras zeigt.
-  \end{description}
-  \item \begin{description}
-    \item[den view Vektor] Der view Vektor ist der Vektor das vom Punkt in die
-    Mitte des Kameras zeigt.
-  \end{description}
-\end{itemize}
+Für die Lichteffekte brauche ich aber komplizierterere Shader. Hier für rechne
+ich drei Vektore aus der position des Punktes, der Matrixtransform der Kamera,
+und dem angegebenem Normalvektor der Fläche. Den Betrachtungsvektor
+$\overrightarrow{V}$, den Lichteinfallsvektor $\overrightarrow{L}$ und den
+Normalvektor $\overrightarrow{N}$. Ich schike die durch den Rasterizer, und
+werde sie erst im Fragmentshader wieder brauchen.
+
+\subparagraph{Der Fragmentshader}
+Im Fragmentshader wird ein einzelner Pixel bearbeitet. Hier geben wir an welche
+Farbe der Pixel annehmen soll. Wir können Parameter verwenden wie die
+Koordinaten des Pixels, oder die Identifikationszahl des Dreiecks zu dem der
+Pixel gehört. Ausserdem können wir Daten verwenden die wir weitergeschickt
+haben, oder die als konstanten in der Grafikkarte geladen sind von uns.
+
+Vom Vertexshader erhalte ich $\overrightarrow{V}$, $\overrightarrow{L}$ und
+$\overrightarrow{N}$. Durch die Interpolation sind sie sogar genau dem Pixel
+entsprechend den ich jetzt bearbeite, und nicht ungenau, da der Pixel sich in
+der mitte des Dreiecks befinden könnte, und wir diese Vektore nur in den Ecken
+des Dreiecks ausrechnen.
+
+Hier rechne ich jetzt $\overrightarrow{R}$ aus. Das geht ganz einfach, ich
+spiegle $\overrightarrow{L}$ and $\overrightarrow{N}$.
+
+Jetzt kann ich einfach die Formeln für ambiente, diffuse, und spiegelnde
+Reflektion verwenden, und dessen Summe als Farbe ausgeben.
+
 % \section{Literaturverzeichnis}
 
 % Die in der Arbeit erwähnten Quellen (Texte und Abbildungen) werden alphabetisch
