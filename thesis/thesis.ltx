@@ -11,6 +11,7 @@
 \usepackage{float}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{url}
 
 \definecolor{dark-green}{rgb}{0.0, 0.4, 0.0}
 \newcommand{\code}[1]{{\color{dark-green}\texttt{\textbf{#1}}}}
@@ -484,7 +485,7 @@ Schneidealgorithmus.
 %   werden auf dem Bildschirm angezeigt.
 % \end{enumerate}
 
-\subsection{Design}
+
 
 % \subsubsection{Modell}
 
@@ -500,39 +501,7 @@ Schneidealgorithmus.
 % Ecke sehen wir eine Bildschrimanzeige, das die Position und Orientation der
 % Hyperebene und der Kamera anzeigt.
 
-\subsubsection{Steuerungsmöglichkeiten}
 
-\begin{itemize}
-	\item Steuerung der Kamera
-	      \begin{itemize}
-		      \item Bewegen mit der Tastatur (left, right, forward, backward, up, down).
-		      \item Drehen mit der Maus (left, right, up, down).
-	      \end{itemize}
-	\item Steuerung der Hyperebene:
-	\item Vorwärts und Rückwerts entlang des Normalvektors verschieben.
-	\item Drehen entlang der Dimensionsachsen des Referenzrahmens.
-\end{itemize}
-
-\subsubsection{Konfigurations Format}
-
-% ! not done
-\begin{itemize}
-  \item Ein einfaches textbasiertes konfigurations Format.
-  \item Beinhaltet eine Spezifikation einer Hyperebene und eine beliebige Anzahl
-  von Spezifikationen für Würfel.
-  \item Alle Spezifikationen sehen folgendermassen aus: <Was> <Zahlen>
-  \item Leerzeichen, einschliesslich der Leertaste und Zeilenumbrüche können
-  beliebig verwendet werden.
-  \item Hyperebenen Spezifikation: HYPERPLANE <Ursprung> <3 orthogonale
-  Vektore>\newline
-  Die ersten 4 Zahlen zeigen zum Ursprung, die verbleibenden 3$\times$4 Zahlen sind die
-  drei Einheitsvektoren. Sie müssen orthogonal sein damit das Programm richtig
-  funktioniert.
-  \item Würfelspezifikation: CUBE <Grösse> <Ursprung> <4 orhtogonal
-  vectore>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
-  vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3$\times$4
-  Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
-\end{itemize}
 
 \subsection{Entwicklung}
 
@@ -679,7 +648,6 @@ erhalten einen ersten Eindruck vom 4d Würfel.
 \subparagraph{Prozess}
 Hier habe ich zuerst lange nichts programmiert, sondern habe mir mit Papier und
 Stift überlegt, wie das funktionieren soll. Ich habe beschlossen, dass ich die
-% maybe add figure
 Hyperebene mit zwei vierdimensionalen Vektoren repräsentiere. Eins ist ein
 Normalvektor, und der Andere beschreibt die Verschiebung der Hyperebene vom
 Ursprung. Hier habe ich mir auch ausgedacht, wie der Algorithmus funktionieren
@@ -858,7 +826,7 @@ Während diesem Prozess rechne ich auch den Durchschnitt aller Schnittpunkte aus
 Dieser wird sich innerhalb des Lösungskörpers befinden und wird sich als
 Hilfreich erweisen, um Normalvektore zu finden, die gegen Aussen zeigen.
 
-% explain why
+
 Zwei Schnittpunkte die sich auf der gleiche Würfelseite befinden, werden im
 entstehenden Schnittvolumen immer eine gemeinsame Kante haben. Aus diesem Grund
 können wir eine Liste von Nachbarpunkten für jeden Schnittpunkt aufbauen. Dies
@@ -1234,6 +1202,27 @@ vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
   \item Für Windows, lade den Zip-File von der Github release page herunter.
 \end{itemize}
 
+\subsubsection{Konfigurations Format}
+
+% ! not done
+\begin{itemize}
+  \item Ein einfaches textbasiertes konfigurations Format.
+  \item Beinhaltet eine Spezifikation einer Hyperebene und eine beliebige Anzahl
+  von Spezifikationen für Würfel.
+  \item Alle Spezifikationen sehen folgendermassen aus: <Was> <Zahlen>
+  \item Leerzeichen, einschliesslich der Leertaste und Zeilenumbrüche können
+  beliebig verwendet werden.
+  \item Hyperebenen Spezifikation: HYPERPLANE <Ursprung> <3 orthogonale
+  Vektore>\newline
+  Die ersten 4 Zahlen zeigen zum Ursprung, die verbleibenden 3$\times$4 Zahlen sind die
+  drei Einheitsvektoren. Sie müssen orthogonal sein damit das Programm richtig
+  funktioniert.
+  \item Würfelspezifikation: CUBE <Grösse> <Ursprung> <4 orhtogonal
+  vectore>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
+  vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3$\times$4
+  Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
+\end{itemize}
+
 \subsubsection{Das Programm mit einer gegebenen Konfiguration starten}
 
 \begin{itemize}
@@ -1254,12 +1243,43 @@ vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
 	funktionieren, wo sich sonst ö oder ä befinden)
 \end{itemize}
 
+\section{Literaturverzeichnis}
+\subsection{Bücher}
+\begin{itemize}
+  \item John L. Clevenger and V. Scott Gordon: Computer Graphics Programming in OpenGL with C++
+  \item Bjarne Stroustrup: The C++ programming language
+\end{itemize}
 
-% \section{Literaturverzeichnis}
+\subsection{Internetseiten}
+\begin{itemize}
+  \item \url{https://www.khronos.org/opengl/wiki/} \\
+  \begin{itemize}
+    \item \url{https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)}
+    \item \url{https://www.khronos.org/opengl/wiki/Uniform_(GLSL)}
+    \item \url{https://www.khronos.org/opengl/wiki/Built-in_Variable_(GLSL)}
+    \item \url{https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview}
+    \item \url{https://www.khronos.org/opengl/wiki/Vertex_Shader}
+    \item \url{https://www.khronos.org/opengl/wiki/Fragment_Shader}
+  \end{itemize}
+  \item \url{https://en.wikipedia.org/} \\
+  \begin{itemize}
+    \item \url{https://en.wikipedia.org/wiki/Tesseract} \\
+    \item \url{https://en.wikipedia.org/wiki/Four-dimensional_space} \\
+    \item \url{https://en.wikipedia.org/wiki/Rotations_in_4-dimensional_Euclidean_space} \\
+    \item \url{} \\
+    \item \url{} \\
+    \item \url{} \\
+    \item \url{} \\
+    \item \url{} \\
+    \item \url{} \\
+    \item \url{} \\
+    \item \url{} \\
+  \end{itemize}
+\end{itemize}
 
-% Die in der Arbeit erwähnten Quellen (Texte und Abbildungen) werden alphabetisch
-% nach Autoren aufgelistet. Für Internetquellen wird eine gesonderte Liste
-% erstellt.
+Die in der Arbeit erwähnten Quellen (Texte und Abbildungen) werden alphabetisch
+nach Autoren aufgelistet. Für Internetquellen wird eine gesonderte Liste
+erstellt.
 
 % \section{Anhang}
 
