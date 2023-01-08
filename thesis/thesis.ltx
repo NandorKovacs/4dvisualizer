@@ -1010,6 +1010,102 @@ diesen beiden Programmen durchlaufen die Daten den Rest des Rendering
 Pipeline's, darunter auch die Rasterization. Während der Rasterization werden
 alle Daten die spezifisch sind für einzelne Punkte auf das Dreieck interpoliert.
 
+\subparagraph{Lichtberechnung}
+Damit man Objekte gut erkennen kann braucht es Lichteffekte. Ohne Lichteffekte
+kann man schwer bis garnicht erkennen wo eine Fläche anfängt und wo sie endet,
+oder wo die Kanten und Ecken sind. Man sieht nur die Umrisse des Objekts, als
+wäre es ein farbiger Schatten. Wenn man sich bewegt kann man die Kanten und
+Ecken an den Veränderungen erahnen, aber auch das ist nicht verlässlich.
+
+Also möchten wir Licht simulieren. Das ist aber nicht ganz einfach. In der
+echten Welt sehen wir Licht und Schatten, weil Photone von Energiequellen
+ausgeschieden werden, die dann an Objekten abspringen, und schliesslich in unser
+Auge gehen, das wir dann wahrnehmen. Heutzutage wäre die Simulation von diesem
+Verhalten nicht unmöglich; man stösst immer häufiger auf sogenannte Ray-Tracing
+Algorithmen. Diese sind aber sehr komplex, und brauchen oft sehr viel
+Rechenleistung. Aus diesem Grund wähle ich eine einfachere Methode. Solche
+Methoden, welche nicht die echte Physik simulieren, nennen wir oft Modelle.
+
+Eines der weitverbreitetsten Modelle ist das `ADS' Modell. 
+\begin{itemize}
+  \item \begin{description}
+    \item[Ambient reflection] ist überall gleich stark, die Richtung des Lichtes
+    und die Position des Punktes auf dem Körper spielt keine Rolle.
+  \end{description}
+  \item \begin{description}
+    \item[Diffuse reflection] ist stärker oder schwächer, jenachdem woher das
+    Licht kommt, wo sich der Punkt auf dem Körper im Verhältniss zum Licht
+    befindet, und was der Einfallswinkel des Lichtes ist.
+  \end{description}
+  \item \begin{description}
+    \item[Specular reflection] macht einen Körper glänzend. Es rechnet kleine
+    Flecken aus, wo das Licht besonders hell erscheint, und bildet glänzende
+    Flecken auf dem Körper.
+  \end{description}
+\end{itemize}
+
+Es existieren viele verschiedene Arten von Belichtungselementen die man
+implementieren könnte. Ich werde aber zwei Elemente benutzen: 
+\begin{itemize}
+  \item \begin{description}
+    \item[Ambiente Belichtung], also Licht wo nur eine ambiente Komponente
+    enthält. Dies dient als Minimum, nichts kann stockdunkel sein, da alles von
+    diesem Licht etwas erhellt wird.
+  \end{description}
+  \item \begin{description}
+    \item[Richtungslicht], Licht das nur eine Richtung hat, nicht aber einen
+    Ursprungspunkt. Das Simuliert sehr weit entfernte Lichtquellen, wie zum
+    Beispiel die Sonne.
+  \end{description}
+\end{itemize}
+
+Wie fest ein Objekt auf ambiente, diffuse und spiegelnde Reflektion reagiert,
+kommt auf die Materialeigenschaften an. Lichter und Materialien haben beide ADS
+Werte. Diese geben wir mit RGBA (Red Green Blue Alpha) an. Materialien haben
+ausserdem einen sogenannten Glanzwert $n$; wie Glänzend das Material ist.
+\newline
+\newline
+Für jeden Pixel müssen wir nun die Intensität $I$ der Lichtreflektion bestimmen,
+den wir wahrnehmen. Das ist gleich der Summe von der ambienten, diffusen und
+spiegelnden Reflektion den wir in diesem Pixel wahrehmen.
+\begin{align*}
+  I_{beobachtet} &= I_{ambient} + I_{diffus} + I_{spiegelnd}
+\end{align*}
+Die ambiente Reflexion $I_{ambient}$ setzt sich folgendermassen zusammen:
+\begin{align*}
+  I_{ambient} &= Licht_{ambient} \cdot Material_{ambient}
+\end{align*}
+Die diffuse Reflexion $I_{diffus}$ ist schon etwas komplizierter, da es auch vom
+Einfallswinkel des Lichtes $\theta$ abhängt. Genauer, die Menge des Lichtes das
+vom Punkt reflektiert, ist proportional zu $\cos{\theta}$.
+\begin{align*}
+  I_{diffus} &= Licht_{diffus} \cdot Material_{diffus} \cdot \cos{\theta}
+\end{align*}
+Um dies zu berechnen benutzen wir den Normalvektor der Fläche
+$\hat{N}$, und den Richtungsvektor des Lichtes $\hat{L}$.
+Das Skalarprodukt der beiden Vektoren gibt uns den Cosinus ihres Winkels; genau
+das brauchen wir. Ausserdem wollen brauchen wir diffuses Licht nur, wenn $ -90
+\leq \theta \leq 90$, da das Licht sonst gar nicht auf die Oberfläche scheint.
+Cosinus ist genau in diesem Bereich positiv. Also benutzen wir folgende
+Gleichung:
+\begin{align*}
+  I_{diffus} &= Licht_{diffus} \cdot Material_{diffus} \cdot \max (\hat{N} \cdot \hat{L}, 0)
+\end{align*}
+Die spiegelnde Reflexion ist etwas spannender. Dies simuliert die überbelichtete
+Flecken, wo das Licht durch den Objekt genau in das Auge des Betrachters
+reflektiert wird. Wie viel spiegelnde Reflektion in einem Punkt ist, kommt
+darauf an, wie klein der Winkel vom austretenden Lichtvektor
+$\hat{R}$, und dem Vektor vom Punkt zum Auge $\hat{V}$
+ist. Wir können die Cosinusfunktion als `falloff' Funktion verwenden. Der
+Glanzwert des Materials ist der Exponent das die Cosinusfunktion bekommmt. So
+können wir die Falloff-Funktion stärker oder schwächer machen. So kommen wir zu
+der Gleichung:
+\begin{align*}
+  I_{spiegelnd} &= Licht_{spiegelnd} \cdot Material_{spiegelnd} \cdot \max ({(\hat{R} \cdot \hat{V})}^{n}, 0)
+\end{align*}
+Wieder nehmen wir nur die positiven Werte. Sonst können spezielle Artifakte
+entstehen mit inverser Glanzflecken, flecken wo dünkler sind.
+
 \subparagraph{Der Vertexshader}
 Im Vertexshader bearbeitet man einen einzelnen Punkt. Man kann alles daran
 verändern. Das machen ich auch. Wie im Renderer beschrieben werden zwei Matricen
