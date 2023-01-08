@@ -674,7 +674,7 @@ Materialeigenschaften, Lichtintensität und Farbe, und weiteres an die Shader
 schicken kann, und mit Formeln so die richtige Schattierung für jeden Pixel
 ausrechnen kann.
 
-\paragraph{Meilenstein 4: movable 4d cube}
+\paragraph{Meilenstein 4: Der Schnitt eines arbiträren 4d Würfels}
 
 \subparagraph{Key results}
 
@@ -721,10 +721,30 @@ Dies ist das erwartette Endprodukt von der ursprünglichen Projektbeschreibung.
 
 % This is a minimum viable solution of the original project description.
 
-\subsubsection{Module im Programm}
+\subsubsection{Die wichtigste Module im Programm}
+\paragraph{Die \code{main\(\)} Funktion} Die \code{main\(\)} Funktion ist die
+Funktion die gestartet wird wenn das Programm startet. Es stellt die
+Ausgangswerte aller Module ein und startet GLEW und GLFW\@. Nacher geht es in
+eine unendliche Schleife bis das Fenster geschlossen wird. Ein Zyklus in dieser
+Schleife nennen wir einen Tick. In deinem Tick geschieht folgendes:
+\begin{itemize}
+  \item Falls sich die Fenstergrösse verändert hat, wird dies im Renderer
+  angepasst.
+  \item Der Renderer rendert ein Bild.
+  \item Alle Tastatur- und Mausevente werden abgefragt, und vom Inputmodul
+  gehandhabt.
+  \item Es wird ausgerechnet wie viel Zeit verstrichen ist seit dem letzen Tick.
+  \item Die \code{tick\(\)} Funktion vom Kameramanager wird gerufen.
+  \item Die \code{tick\(\)} Funktion vom Hyperebenmanager wird gerufen.
+\end{itemize}
 
-\paragraph{Intersector}
-Die Aufgabe des Intersectors ist das Schneiden von einem kanonischen Würfel mit
+Die zwei \code{tick\(\)} Funktionen erhalten die verstrichene Zeit als
+Parameter, damit sie ausrechnen können was sich wie viel bewegen muss. Sonst
+kann es vorkommen, das die Kamera schneller ist falls der Computer schneller
+ist, da mehr Ticks pro Sekunde gemacht werden können.
+
+\paragraph{Der Intersektor}
+Die Aufgabe des Intersektors ist das Schneiden von einem kanonischen Würfel mit
 einer 3d Hyperebene.
 
 4d Würfel haben 3d und 2d Seiten. In diesem Abschnitt werde ich mit einer Seite
@@ -749,21 +769,55 @@ diesem letzten Fall würde es eigentlich unendlich viele Resultate geben, aber
 wir nehmen statt dem die zwei Enden der Kanten, da wir schlussendlich nur die
 Punkte brauchen, die die konvexe Hülle des Volumens ausmachen. Das schneiden ist
 trivial; Wir nehmen den gegebenen Transformationsmatrix der Hyperebene, und
-transformieren sie. Dann schauen wir die Distanz $d(A)$ zwischen Punkt A und der
-Hyperebene, und die Distanz $d(B)$ zwischen Punkt B und der Hyperebene an. Falls $d(A)
-\cdot d(B) > 0$ dann sind beide auf der gleichen Seite der Hyperebene, und es
-gibt keinen Schnittpunkt. Falls $d = 0$ für eines der Punkte, wird dieser Punkt
-als Schnittpunkt akzeptiert. Falls $d(A) = 0 \land d(B) = 0$ muss die Kante auf
-der Hyperebene liegen, somit geben wir beide Endpunkte A und B zurück. Ansonsten
-berechnen wir aus dem Verhältniss der beiden Distanzen wo auf der Kante der
-Schnittpunkt ist, und geben das zurück. So bauen wir eine Liste mit allen
-Schnittpunkten auf. Gleichzeitig bauen wir eine Datenstruktur auf, die für jede
-Seite eine Liste von Schnittpunkten beinhaltet auf. Dies ist ganz einfach, da
-wir vom Schnittpunkt den wir gerade gefunden haben immer wissen zu welcher Kante
-es gehört, und wir schon im Voraus berechnet haben welche Seiten welche Kanten
-beinhalten. Sobald ein Schnittpunkt gefunden wird, wird es bei allen 3 Seiten
-die dessen Kante beinhalten abgespeichert als Schnittpunkt auf der Oberfläche
-der Seite.
+transformieren die Kante. Somit ist jetzt die Welt so gedreht und verschoben,
+dass die Standardhyperebene equivalent zur Hyperebene, ohne dass die Welt
+transformiert ist, ist. Die Standardhyperebene ist die Hyperebene mit den Einheitsvektoren
+\begin{align}
+  \begin{pmatrix}
+    1 \\ 
+    0 \\ 
+    0 \\ 
+    0 
+  \end{pmatrix}
+  \begin{pmatrix}
+    0 \\ 
+    1 \\ 
+    0 \\ 
+    0 
+  \end{pmatrix}
+  \begin{pmatrix}
+    0 \\ 
+    0 \\ 
+    1 \\ 
+    0 
+  \end{pmatrix}
+\end{align}
+
+und dem Ursprung
+
+\begin{align}
+  \begin{pmatrix}
+    0 \\ 
+    0 \\ 
+    0 \\ 
+    0
+  \end{pmatrix}
+\end{align}
+. Dann schauen wir die Distanz $d(A)$ zwischen Punkt A und der Hyperebene, und
+die Distanz $d(B)$ zwischen Punkt B und der Standardhyperebene an. Falls $d(A)
+\cdot d(B) > 0$ dann sind beide auf der gleichen Seite der Standardhyperebene,
+und es gibt keinen Schnittpunkt. Falls $d = 0$ für eines der Punkte, wird dieser
+Punkt als Schnittpunkt akzeptiert. Falls $d(A) = 0 \land d(B) = 0$ muss die
+Kante auf der Standardhyperebene liegen, somit geben wir beide Endpunkte A und B
+zurück. Ansonsten berechnen wir aus dem Verhältniss der beiden Distanzen wo auf
+der Kante der Schnittpunkt ist, und geben das zurück. So bauen wir eine Liste
+mit allen Schnittpunkten auf. Gleichzeitig bauen wir eine Datenstruktur auf, die
+für jede Seite eine Liste von Schnittpunkten beinhaltet auf. Dies ist ganz
+einfach, da wir vom Schnittpunkt den wir gerade gefunden haben immer wissen zu
+welcher Kante es gehört, und wir schon im Voraus berechnet haben welche Seiten
+welche Kanten beinhalten. Sobald ein Schnittpunkt gefunden wird, wird es bei
+allen 3 Seiten die dessen Kante beinhalten abgespeichert als Schnittpunkt auf
+der Oberfläche der Seite.
 
 Während diesem Prozess rechne ich auch den Durchschnitt aller Schnittpunkte aus.
 Dies wird sich innerhalb des Lösungskörpers befinden, und wird sich als
@@ -867,38 +921,47 @@ Warum das immer eine richtige Lösung geben wird:
   Startdreiecke während dem Ausfüllen einer Fläche als ausgefüllt markiert werden.
 \end{itemize}
 
+% \paragraph{Rotation}
 
-% \begin{itemize} Bild
-%   %\item DieNachbarschaftsverhältnisse von den Seiten werden vorberechnet und abgespeichert.
-
-% 	\item uses precomputed face neigbourhood maps
-% 	\item uses a single face can have maximum 2 intersections
-% 	\item intersection points form a graph
-% 	\item walking the graph along face neigborhood map
-% 	\item use face normal to find planar subsets in the graph
+% \begin{itemize}
+% 	\item use transformation matrix combinations
 % \end{itemize}
 
-\paragraph{Rotation}
-
+\paragraph{Der Kameramanager}
+Dieses Modul beinhaltet alles was zur Kamera gehört. Es beinhaltet die Position
+und Winkel der Kamera, konstanten die die Dreh- und Bewegungsgschwindigkeit
+beeinflussen, sowie die momentane Bewegungsrichtung. Es kann jederzeit eine
+Transformationsmatrix vom Kameramanager abgefragt werden, das alle Objekte in der
+Welt so bewegt, dass simuliert wird das die Kamera in einer anderen Position
+ist. Dies ist nötig, da in OpenGL die Kamera nicht bewegt werden kann.
+Stattdessen muss die ganze Welt so gedreht und verschoben werden dass das
+Simuliert werden kann. Jeden Tick macht das Kameramanager ausserdem folgende Aktionen:
 \begin{itemize}
-	\item use transformation matrix combinations
+	\item Es bewegt die Kamera in die Richtung angegeben durch die momentan
+	gedrückten Tasten. Falls keine gedrückt sind, bewegt sich die Kamera nicht.
+  \item Es berechnet den Transformationsmatrix neu.
 \end{itemize}
 
-\paragraph{Camera manager}
+\paragraph{Das Hyperebenenmanager}
+Der Hyperebenenmanager speichert alle nötigen Parameter der Hyperebene. Dies
+sind sind ein Vektor, das dessen Position beschreibt, 3 Vektore, die die drei
+Einheitsvektore der dreidimenionalen Hyperebene bilden, und ein Normalvektor.
+Wie der Kameramanger beinhaltet es auch Konstanten für die Dreh- und
+Bewegungsgschwindigkeit. Ausserdem beinhalten es einen Vektor für die momentane
+Drehrichtung, und eine Zahl für die momentane Bewegungsrichtung. Es kann
+jederzeit eine Transformationsmatrix vom Hyperebenenmanager abgefragt werden,
+dass die Welt so transformiert dass die Standardhyperebene der momentanen
+Hyperebene entspricht. Die \code{tick\(\)} Funktion des Hyperebenenmanagers
+macht folgendes:
+
 
 \begin{itemize}
-	\item maintain \code{loc} (location), \code{pitch}, \code{yaw}
-	\item maintain current pan and rotation speeds
-	\item on tic, recalculate \code{transform} matrix
+  \item Die Hyperebene drehen, jenachdem welche Tasten gedrückt sind.
+  \item Die Hyperebene bewegen, falls eine der Bewegungstasten gedrückt ist.
 \end{itemize}
 
-\paragraph{Hyperplane manager}
-
-\begin{itemize}
-	\item maintain a hyperplane
-	\item maintain current rotation and move speeds
-	\item on tic, recalculate the hyperplane
-\end{itemize}
+Hier muss die Transformationsmatrix nicht bei jedem Tick berechnet werden, da es
+equivalent ist zum transponierten Identitätsmatrix der Hyperebene.
 
 \paragraph{Renderer}
 
