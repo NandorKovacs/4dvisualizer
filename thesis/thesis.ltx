@@ -435,37 +435,6 @@ Schneidealgorithmus.
   Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
 \end{itemize}
 
-\subsection{Bedienungsanleitung}
-
-\subsubsection{Installation}
-
-\begin{itemize}
-  \item Für Linux, lade den Quellcode herunter, installiere die
-  dev dependencies, kompiliere es.
-  % explain compilation process or include a zip file too
-  \item Für Windows, lade den Zip-File von der Github release page herunter.
-\end{itemize}
-
-\subsubsection{Das Programm mit einer gegebenen Konfiguration starten}
-
-\begin{itemize}
-  \item Finde den installierten \code{configs} Ordner.
-  \item Finde die installierte Binärdatei.
-  \item Lasse die Binärdatei von einem Command-Terminal laufen, und gebe den
-  konfigurations File als einzigen Parameter an.
-\end{itemize}
-
-\subsubsection{Das Programm steuern}
-
-\begin{itemize}
-	\item Die Kamera bewegen: A --- links, D --- rechts, W --- forwärts, S --- rückwärts, Shift --- Hoch, Ctrl --- Runter
-	\item Die Kamera drehen: Maus
-	\item Die Hyperebene auf seinem Normalvektor verschieben: R --- positive Richtung, F --- negative Richtung
-	\item Die Hyperebene drehen: O, P, \lbrack und L, ö, ä. (Auf einer
-	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Tasten
-	funktionieren, wo sich sonst ö oder ä befinden)
-\end{itemize}
-
 \subsection{Entwicklung}
 
 \subsubsection{Tools, Frameworks}
@@ -644,12 +613,6 @@ sehen und zu verstehen für den Benutzer. Jetzt erst sind die Kanten und Ecken
 sichtbar. Ohne Schattierung konnte man nur die Umrisse sehen, und die Kanten und
 Ecken durch Bewegung erahnen.
 
-% The program allows us to experiment with parameters, form a visual idea about
-% various projection shapes of the 4d cube and use it as an experiment and
-% development platform for subsequent milestones.
-
-% With object shading and lighting the rendered picture will be more easily understood by the user.
-
 \subparagraph{Prozess}
 Damit man überhaupt einen Punkt erscheinen lassen kann, benötigt man sogenannte
 Schattierungsprogramme. OpenGL funktioniert so, dass jeder Punkt eine sogenannte
@@ -812,7 +775,6 @@ zeichnen wir das Dreieck mit den vorherigen 2 Ecken. Das habe ich zunächst auch
 getan. Es treten zwei Probleme auf:
 
 \begin{itemize}
-  % insert hexagon with hole
   \item
   \begin{description}
     \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4
@@ -1161,6 +1123,38 @@ spiegle $\overrightarrow{L}$ an $\overrightarrow{N}$.
 Jetzt kann ich einfach die Formeln für ambiente, diffuse, und spiegelnde
 Reflexion verwenden, und dessen Summe als Farbe ausgeben. So erhalte ich den
 vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
+
+subsection{Bedienungsanleitung}
+
+\subsubsection{Installation}
+
+\begin{itemize}
+  \item Für Linux, lade den Quellcode herunter, installiere die
+  dev dependencies, kompiliere es.
+  % explain compilation process or include a zip file too
+  \item Für Windows, lade den Zip-File von der Github release page herunter.
+\end{itemize}
+
+\subsubsection{Das Programm mit einer gegebenen Konfiguration starten}
+
+\begin{itemize}
+  \item Finde den installierten \code{configs} Ordner.
+  \item Finde die installierte Binärdatei.
+  \item Lasse die Binärdatei von einem Command-Terminal laufen, und gebe den
+  konfigurations File als einzigen Parameter an.
+\end{itemize}
+
+\subsubsection{Das Programm steuern}
+
+\begin{itemize}
+	\item Die Kamera bewegen: A --- links, D --- rechts, W --- forwärts, S --- rückwärts, Shift --- Hoch, Ctrl --- Runter
+	\item Die Kamera drehen: Maus
+	\item Die Hyperebene auf seinem Normalvektor verschieben: R --- positive Richtung, F --- negative Richtung
+	\item Die Hyperebene drehen: O, P, \lbrack und L, ö, ä. (Auf einer
+	Deutsch-Schweizer Tastatur. Auf anderen Tastaturen sollten die Tasten
+	funktionieren, wo sich sonst ö oder ä befinden)
+\end{itemize}
+
 
 % \section{Literaturverzeichnis}
 
