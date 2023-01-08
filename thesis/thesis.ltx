@@ -6,6 +6,7 @@
 \usepackage{amsmath,systeme}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{xcolor}
@@ -258,6 +259,104 @@ letzte Koordinate, bekommen wir den dreidimensionalen kanonischen Würfel, aus
 einer höheren Dimension betrachtet. Die dreidimensionalen Seiten sind alles
 reguläre Würfel. Es davon hat es $4\times 2 = 8$.
 
+\subsubsection{Drehungen in vier Dimensionen}
+Hier schauen wir uns Drehungen um den Ursprung an. 
+\paragraph{Die Grundrotationen}
+In zwei Dimensionen kann man nur um Punkte drehen. So kann eine Drehung um den
+Ursprung mit einer einzigen Zahl; dem Winkel, angegeben werden.
+
+In drei Dimensionen wird es schon spannender. Wir haben jetzt drei verschiedene
+Drehungen. Wir können um die X-, Y- oder Z-Achse drehen. Alle andere Drehungen
+können durch diese drei Drehungen zusammengesetzt werden (Satz vom Fussball).
+
+In vier Dimensionen haben die Grundrotationen keine Achse, sondern rotieren um
+eine zweidimensionale Ebene. Um zu verstehen wieso das der Fall ist, müssen wir
+aufhören zu denken, dass Drehungen um etwas drehen, sondern einsehen das Drehungen
+immer eine zweidimensionale Ebene drehen. Deswegen hat es im 2d Raum nur einen
+Punkt (0d Objekt) der nicht bewegt wird bei einer Rotation. Im 3d Raum haben wir
+eine Fixachse (1d Objekt), die orhtogonale Gerade auf die drehende Fläche. So
+ist es intuitiver, dass es im 4d Raum bei einer Rotation eine Fixfläche (2d
+Objekt) existiert. 
+
+Aus diesem Grund existieren sechs Grundrotationen. Es hat vier Achsen, und je
+zwei drehen sich. Es gibt also ${4 \choose 2} = 6$ Kombinationen. Die sechs
+Grunddrehungen sind also die Drehungen um die XY, XZ, XW, YZ, YW und ZW Flächen.
+
+\paragraph{Die Drehmatrizen}
+Die Drehmatrizen in vier Dimensionen sind sehr ähnlich zu den dreidimensionalen
+Drehmatrizen.
+
+Das sind alle Drehmatrizen mit dem Drehwinkel $\alpha$:
+\begin{align*}
+  R(XY, \alpha) &= 
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & \cos \alpha & -\sin \alpha \\
+    0 & 0 & \sin \alpha & \cos \alpha 
+  \end{pmatrix} \\
+  R(XZ, \alpha) &=
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & \cos \alpha & 0 & -\sin \alpha \\
+    0 & 0 & 1 & 0 \\
+    0 & \sin \alpha & 0 & \cos \alpha 
+  \end{pmatrix} \\
+  R(XW, \alpha) &=
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & \cos \alpha & -\sin \alpha & 0 \\
+    0 & \sin \alpha & \cos \alpha & 0 \\
+    0 & 0 & 0 & 1 
+  \end{pmatrix} \\
+  R(YZ, \alpha) &=
+  \begin{pmatrix}
+    \cos \alpha & 0 & 0 & -\sin \alpha \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    \sin \alpha & 0 & 0 & \cos \alpha 
+  \end{pmatrix} \\
+  R(YW, \alpha) &=
+  \begin{pmatrix}
+    \cos \alpha & 0 & -\sin \alpha & 0 \\
+    0 & 1 & 0 & 0 \\
+    \sin \alpha & 0 & \cos \alpha & 0 \\
+    0 & 0 & 0 & 1 
+  \end{pmatrix} \\
+  R(ZW, \alpha) &=
+  \begin{pmatrix}
+    \cos \alpha & -\sin \alpha & 0 & 0 \\
+    \sin \alpha & \cos \alpha & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 
+  \end{pmatrix} \\
+\end{align*}
+Orhtogonale Matrizen mit einer Determinante von 1 sind Drehmatrizen. Alle sechs
+Matrizen erfüllen diese Kriterien.
+
+\paragraph{Drei Drehungen, um einen Einheitsvektor an einen beliebigen Ort auf
+der Einheitskugel zu drehen}
+\begin{align*}
+  R(ZW, \alpha) \cdot \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix} &= \begin{pmatrix} \cos \alpha \\ \sin \alpha \\ 0 \\ 0 \end{pmatrix} \\
+  R(YW, \beta) \cdot R(ZW, \alpha) \cdot \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix} &= \begin{pmatrix} \cos \alpha \cdot \cos \beta \\ \sin \alpha \\ \cos \alpha \cdot \sin \beta \\ 0 \end{pmatrix} \\
+  R(YZ, \gamma) \cdot R(YW, \beta) \cdot R(ZW, \alpha) \cdot \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix} &= \begin{pmatrix} \cos \alpha \cdot \cos \beta \cdot \cos \gamma \\ \sin \alpha \\ \cos \alpha \cdot \sin \beta \\ -\cos \alpha \cdot \cos \beta \cdot \sin \gamma \end{pmatrix}
+\end{align*}
+
+Jetzt drehe ich $\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}$ so, dass es
+$\begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix}$ wird für beliebige $a$, $b$,
+$c$ und $d$, so dass $\sqrt{a² + b² + c² + d²} = 1$ erfüllt ist. Das heisst,
+$(a, b, c, d)$ liegt auf dem Einheitskreis.
+
+Aus den oberen Rechnungen ist gut sichtbar:
+\begin{align*}
+  \alpha &= \arcsin (b) \\
+  \beta &= \arcsin (\frac{c}{\cos \alpha}) \\
+  \gamma &= \arccos (\frac{a}{\cos \alpha \cdot \cos \beta})
+\end{align*}
+
+Das zeigt das ein Körper mit einer arbiträren Drehung durch drei Drehungen
+beschrieben werden kann, und nicht alle sechs Grunddrehungen verwendet werden
+müssen dafür.
 
 \subsubsection{Schnittkörper eines 4d Würfels mit einer 3d Hyperebene}
 
@@ -1124,7 +1223,7 @@ Jetzt kann ich einfach die Formeln für ambiente, diffuse, und spiegelnde
 Reflexion verwenden, und dessen Summe als Farbe ausgeben. So erhalte ich den
 vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
 
-subsection{Bedienungsanleitung}
+\subsection{Bedienungsanleitung}
 
 \subsubsection{Installation}
 
