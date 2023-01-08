@@ -258,9 +258,9 @@ das Problem im dreidimenionalen Raum an. Wir sehen dass wir im Normalfall die
 Schnittfläche eines 3d Würfels und einer 2d Ebene als konvexe Hülle der
 Schnittpunkte der Ebene mit den Kanten des Würfels bekommen können (Figure~\ref{fig:3d-intersection}).
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.4]{3d-intersection.png}
+	\includegraphics[scale=0.2]{ma_diagrams/cube_intersect.png}
 	\caption{Schneidung eines 3d Würfels mit einer 2d Ebene. Siehe wie die
   Schnittfläche die konvexe Hülle der Schnittpunkte von der Ebene mit den Kanten
   des Würfels ist. }
@@ -462,7 +462,7 @@ Hyperebene und der Kamera anzeigt.
 \subsubsection{Tools, Frameworks}
 
 \begin{itemize}
-  \item Programming language: \code{C++}
+  \item Programming language: C++
 	\item Cross-platform windowing library with OpenGL support: GLFW\@.
 	\item Drawing: OpenGL
 	\item OpenGL loader: GLEW
@@ -470,7 +470,7 @@ Hyperebene und der Kamera anzeigt.
 \end{itemize}
 
 \paragraph{C++}
-\code{C++} ist meine präferierte Computersprache. Alles Programmcode das ich
+C++ ist meine präferierte Computersprache. Alles Programmcode das ich
 geschrieben habe ist in dieser Sprache, mit ausnahme der Shaderprogramme, die in
 glsl geschrieben werden müssen.
 
@@ -586,7 +586,7 @@ werde, und was ich in Klassen abstrahieren möchte.
 
 \subparagraph{Key results}
 
-Ein \code{C++} Programm, dass
+Ein C++ Programm, dass
 
 \begin{itemize}
   \item den Schnitt eines zentrierten, kanonischen 4d Wüfel mit einer arbiträren Hyperebene berechnet.
@@ -751,8 +751,22 @@ einer 3d Hyperebene.
 immer eine 2d Seite meinen.
 
 \subparagraph{Die Nachbarschaftsverhältnisse der Seiten}
-Jede Kante im Würfel ist Teil von 3 Seiten. Diese 3 Seiten nennen wir
-benachbart. Zuerst erstellen wir manuell eine Liste der Kanten. Für die Kanten
+Jede Kante im Würfel ist Teil von drei Seiten. Diese drei Seiten nennen wir
+benachbart. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.2]{ma_diagrams/3sides_per_edge1.png}
+	\caption{Drei benachbarte Seiten}
+	\label{fig:neigh1}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.2]{ma_diagrams/3sides_per_edge2.png}
+	\caption{Drei benachbarte Seiten}
+	\label{fig:neigh2}
+\end{figure}
+Zuerst erstellen wir manuell eine Liste der Kanten. Für die Kanten
 rechnen wir dann alle Seiten aus, die diese Kante beinhalten. Dies geschieht nur
 ganz am Anfang vom Programm, bevor das erste Bild erscheint. Die Kanten sind
 repräsentiert von zwei Vektoren, wo jeweils die zwei Endpunkte der Kanten
@@ -840,13 +854,20 @@ vorherigen 2 Ecken. Das habe ich zuerst auch getan. Es treten zwei Probleme auf:
   % insert hexagon with hole
   \item
   \begin{description}
-    \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4 Ecken,
-    und die Dreiecke auf dieser Weise zeichnet, gibt es einen Loch in der Mitte.
-    Das ist einfach zu sehen. Die Fläche kann nicht durch Dreiecke abgedeckt sein,
-    wo nur Punkte beinhalten die benachbart sind. Es braucht auch Dreiecke, die
-    aus einem Punk, und zwei Punkten wo auf der gegenüberliegenen Seite sind
-    bestehen.
+    \item[Löcher in der Oberfläche] Wenn man eine Fläche hat mit mehr als 4
+    Ecken, und die Dreiecke auf dieser Weise zeichnet, gibt es einen Loch in der
+    Mitte. Das ist einfach zu sehen auf der Abbildung~\ref{fig:hole}. Die Fläche
+    kann nicht durch Dreiecke abgedeckt sein, wo nur Punkte beinhalten die
+    benachbart sind. Es braucht auch Dreiecke, die aus einem Punk, und zwei
+    Punkten wo auf der gegenüberliegenen Seite sind bestehen.
     \end{description}
+    \begin{figure}[h]
+      \centering
+      \includegraphics[scale=0.15]{ma_diagrams/convex_hole.png}
+      \caption{Das Loch das mit dem gierigen Algorithmus entsteht}
+      \label{fig:hole}
+    \end{figure}
+  
   \item
   \begin{description}
     \item[Z-Fighting] Wenn zwei Objekte und die Kamera in einer Linie sind,
@@ -903,6 +924,13 @@ jedesmal ab, dass das Dreieck gebildet durch den mittleren Punkt, dem Endpunkt,
 und dem richtigen neuen Punkt schon gezeichnet ist. Zwar ist dies nicht direkt
 schon gezeichnet, aber dessen Fläche wird nach dem Ende des Algorithmusses schon
 eingefüllt sein.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.2]{ma_diagrams/convex_algorithm.png}
+	\caption{Der Algorithmus auf einem Sechseck. Merke die zwei wandernde grüne Punkte; das sind immer der mittlere Punkt und der Endpunkt}
+	\label{fig:convex}
+\end{figure}
 
 Jetzt mache ich die Tiefensuche, die ich Oben beschrieben habe. Ich suche jedes
 Dreieck, wo zwei Kanten auch Kanten des Lösungsobjekts sind. Falls dieses
