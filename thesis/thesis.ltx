@@ -986,7 +986,7 @@ Die \code{render()} Funktion macht folgendes, in dieser Reihenfolge:
   \item Sie berechnet die Matrix, die die Perspektive der Kamera simuliert.
   \item Sie berechnet mithilfe des Kameramanagers die Matrix, welche die Welt
   richtig dreht und verschiebt.
-  \item Sie schickt diese Matricen an die Grafikkarte.
+  \item Sie schickt diese Matrizen an die Grafikkarte.
   \item Sie schickt alle nötigen Daten für die Lichtberechnung wie
   Materialeigenschaften, Lichtintensität und Richtung und die Normalvektore der
   Dreiecke an die Grafikkarte.
@@ -1023,16 +1023,16 @@ Methoden, welche nicht die echte Physik simulieren, nennen wir oft Modelle.
 Eines der weitverbreitetsten Modelle ist das `ADS' Modell. 
 \begin{itemize}
   \item \begin{description}
-    \item[Ambient reflection] ist überall gleich stark, die Richtung des Lichtes
+    \item[Ambiente Reflexion] ist überall gleich stark, die Richtung des Lichtes
     und die Position des Punktes auf dem Körper spielt keine Rolle.
   \end{description}
   \item \begin{description}
-    \item[Diffuse reflection] ist stärker oder schwächer, jenachdem woher das
+    \item[Diffuse Reflexion] ist stärker oder schwächer, jenachdem woher das
     Licht kommt, wo sich der Punkt auf dem Körper im Verhältniss zum Licht
     befindet, und was der Einfallswinkel des Lichtes ist.
   \end{description}
   \item \begin{description}
-    \item[Specular reflection] macht einen Körper glänzend. Es rechnet kleine
+    \item[Spiegelnde Reflexion] macht einen Körper glänzend. Es rechnet kleine
     Flecken aus, wo das Licht besonders hell erscheint, und bildet glänzende
     Flecken auf dem Körper.
   \end{description}
@@ -1115,26 +1115,29 @@ Wieder nehmen wir nur die positiven Werte. Sonst können spezielle Artifakte
 entstehen mit inverser Glanzflecken, flecken wo dünkler sind.
 \newline
 \newline
-Das ist das Phong-Beleuchtungsmodell. Ich habe es aus dem OpenGL Buch, und
-Wikipedia gelernt. Es ist ein empirisches Modell; es achtet nicht darauf, das
-nicht mehr Licht entsteht durch die Reflexion wie es vor der Reflexion gegeben
-hat. Es ist aber ein einfaches Modell, und die Unterschiede zu anderen Modellen
-ist nicht gross.
+Diese Methode Lichteffekte zu berechnen ist das Phong-Beleuchtungsmodell. Ich
+habe es aus dem OpenGL Buch, und Wikipedia gelernt. Es ist ein empirisches
+Modell; es achtet nicht darauf, das nicht mehr Licht entsteht durch die
+Reflexion wie es vor der Reflexion gegeben hat. Es ist aber ein einfaches
+Modell, und die Unterschiede zu anderen Modellen ist nicht gross.
 
 \subparagraph{Der Vertexshader}
 Im Vertexshader bearbeitet man einen einzelnen Punkt. Man kann alles daran
-verändern. Das machen ich auch. Wie im Renderer beschrieben werden zwei Matricen
-an die Grafikkarte geschickt, die die Welt so drehen und wenden, dass die
-Kameraposition und die Perspektive stimmen. Diese wenden wir auf den Punkt an.
+verändern, was ich auch ausnutze. Wie im Renderer beschrieben werden zwei
+Matrizen an die Grafikkarte geschickt, die die Welt so drehen und wenden, dass
+die Kameraposition und die Perspektive stimmen. Diese wenden wir auf den Punkt
+an.
 
 Anfangs habe ich ausserdem die Position des Punktes genommen, und da die Farbe
 des Punktes auch als Vektor repräsentiert wird, es einfach auch als Farbe
 angegeben. Das resultierte in einem Objekt, das einen Farbverlauf hatte, da die
-Interpolation auch die Farben interpolierte.
+Interpolation auch die Farben interpolierte. Dies ist ein gutes Beispiel dafür,
+wie Daten durch die Rendering-Pipeline geschickt werden können, und dann auf der
+Fläche des Dreiecks interpoliert angewendet werden.
 
 Für die Lichteffekte brauche ich aber komplizierterere Shader. Hier für rechne
-ich drei Vektore aus der position des Punktes, der Matrixtransform der Kamera,
-und dem angegebenem Normalvektor der Fläche. Den Betrachtungsvektor
+ich drei Vektore aus der position des Punktes, der Matrixtransformation der
+Kamera, und dem angegebenem Normalvektor der Fläche. Den Betrachtungsvektor
 $\overrightarrow{V}$, den Lichteinfallsvektor $\overrightarrow{L}$ und den
 Normalvektor $\overrightarrow{N}$. Ich schike die durch den Rasterizer, und
 werde sie erst im Fragmentshader wieder brauchen.
@@ -1143,20 +1146,21 @@ werde sie erst im Fragmentshader wieder brauchen.
 Im Fragmentshader wird ein einzelner Pixel bearbeitet. Hier geben wir an welche
 Farbe der Pixel annehmen soll. Wir können Parameter verwenden wie die
 Koordinaten des Pixels, oder die Identifikationszahl des Dreiecks zu dem der
-Pixel gehört. Ausserdem können wir Daten verwenden die wir weitergeschickt
-haben, oder die als konstanten in der Grafikkarte geladen sind von uns.
+Pixel gehört. Ausserdem können wir Daten verwenden die wir aus dem Vertexshader
+weitergeschickt haben, oder Konstanten die wir im Voraus auf die Grafikkarte
+geladen haben.
 
-Vom Vertexshader erhalte ich $\overrightarrow{V}$, $\overrightarrow{L}$ und
-$\overrightarrow{N}$. Durch die Interpolation sind sie sogar genau dem Pixel
-entsprechend den ich jetzt bearbeite, und nicht ungenau, da der Pixel sich in
-der mitte des Dreiecks befinden könnte, und wir diese Vektore nur in den Ecken
-des Dreiecks ausrechnen.
+Vom Vertexshader wurden $\overrightarrow{V}$, $\overrightarrow{L}$ und
+$\overrightarrow{N}$ generiert, und weitergeschickt. Durch die Interpolation
+sind sie sogar genau dem Pixel entsprechend den ich jetzt bearbeite, obwohl ich
+sie nur für die drei Ecken des Dreiecks berechnet habe.
 
 Hier rechne ich jetzt $\overrightarrow{R}$ aus. Das geht ganz einfach, ich
-spiegle $\overrightarrow{L}$ and $\overrightarrow{N}$.
+spiegle $\overrightarrow{L}$ an $\overrightarrow{N}$.
 
 Jetzt kann ich einfach die Formeln für ambiente, diffuse, und spiegelnde
-Reflexion verwenden, und dessen Summe als Farbe ausgeben.
+Reflexion verwenden, und dessen Summe als Farbe ausgeben. So erhalte ich den
+vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
 
 % \section{Literaturverzeichnis}
 
