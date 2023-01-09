@@ -13,6 +13,7 @@
 \usepackage{hyperref}
 \usepackage{verbatim}
 \usepackage{url}
+\usepackage{pdfpages}
 
 \definecolor{dark-green}{rgb}{0.0, 0.4, 0.0}
 \newcommand{\code}[1]{{\color{dark-green}\texttt{\textbf{#1}}}}
@@ -25,13 +26,12 @@
 \title{4d visualisierungs Engine mit einer 3d Benutzeroberfläche als Hilfestellung beim Lernen und Experimentieren}
 \author{
   Maturitätsarbeit \\
-  Verfasser: Nandor Kovacs \\
-  Betreuer: Pietro Gilardi \\
   \\
   https://github.com/NandorKovacs/4dvisualizer \\
   \\
   MNG Rämibühl
 }
+
 
 % \author{
 %         Vitaly Surazhsky \\
@@ -150,12 +150,13 @@ auch fünf, und sechseckige Schnitte bekommen können. Wie sehen wohl verschiede
 vierdimensionale Schnitte aus? Diese Arbeit beschäftigt sich genau damit:
 mithilfe einer Computersimulation werden solche Schnitte dargestellt.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/hexagon_intersection.png}
-	\caption{Ein sechseckiger Schnitt eines Würfels}
-	\label{fig:hex_intersect}
-\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.2]{ma_diagrams/hexagon_intersection.png}
+% 	\caption{Ein sechseckiger Schnitt eines Würfels}
+% 	\label{fig:hex_intersect}
+% %\end{figure}
+
 
 Ein wichtiges Ziel ist, dass man die dreidimensionalen Resultate der Schnitte
 gut von allen Seiten begutachten kann. Dass heisst, dass sie drehbar und
@@ -201,13 +202,14 @@ Seitenlänge 1, auf der Hyperebene $F(x, y, z) = 0$. Einen zweiten Würfel
 verschiebe ich entlang der $w$-Achse um $1$. Verbindet man nun die Ecken der
 zwei Würfel, erhaltet man einen vierdimensionalen Würfel.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/4dcube_repr.png}
-	\caption{Vierdimensionaler Würfel, dargestellt durch zwei 3d Würfel mit
-	verbundenen Ecken. Die cyanfarbenen Kanten gehen durch die vierte Dimension}
-	\label{fig:4d_repr}
-\end{figure}
+%\begin{figure}[H]
+	% \centering
+	% \includegraphics[scale=0.2]{ma_diagrams/4dcube_repr.png}
+	% \caption{Vierdimensionaler Würfel, dargestellt durch zwei 3d Würfel mit
+	% verbundenen Ecken. Die cyanfarbenen Kanten gehen durch die vierte Dimension}
+	% \label{fig:4d_repr}
+%\end{figure}
+
 
 \subsubsection{Die Definition eines vierdimensionalen Würfels}
 
@@ -397,14 +399,15 @@ Schnittfläche eines 3d Würfels und einer 2d Ebene bekommen können, indem wir 
 Schnittpunkte der Ebene mit den Kanten des Würfels ausrechnen, und die konvexe
 Hülle dieser Schnittpunkte nehmen. (Figure~\ref{fig:3d-intersection}).
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/cube_intersect.png}
-	\caption{Schneidung eines 3d Würfels mit einer 2d Ebene. Siehe wie die
-  Schnittfläche die konvexe Hülle der Schnittpunkte von der Ebene mit den Kanten
-  des Würfels ist. }
-	\label{fig:3d-intersection}
-\end{figure}
+%\begin{figure}[H]
+	% \centering
+	% \includegraphics[scale=0.2]{ma_diagrams/cube_intersect.png}
+	% \caption{Schneidung eines 3d Würfels mit einer 2d Ebene. Siehe wie die
+  % Schnittfläche die konvexe Hülle der Schnittpunkte von der Ebene mit den Kanten
+  % des Würfels ist. }
+	% \label{fig:3d-intersection}
+%\end{figure}
+
 
 Im Normalfall hat es maximal einen Schnittpunkt mit jeder beliebigen Kante und
 der Schnittebene.
@@ -513,7 +516,7 @@ Diese Vorgehensweise erlaubt uns eine einfache Implementation des
 
 % \subsubsection{Modell}
 
-% \begin{figure}[H]
+% %\begin{figure}[H]
 % 	\centering
 % 	\includegraphics[scale=0.3]{mock.png}
 % 	\caption{Skizze der Applikation.}
@@ -605,12 +608,12 @@ GLFW\@. GLFW hilft bei der Kommunikation mit dem
 Operationssystem. Mithilfe von GLFW kann ich das Applikationsfenster erstellen
 und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.3]{ma_diagrams/libraries.png}
-	\caption{Ein Flussdiagramm der Kommunikation zwischen den Libraries und dem Computer}
-	\label{fig:libs}
-\end{figure}
+%\begin{figure}[H]
+	% \centering
+	% \includegraphics[scale=0.3]{ma_diagrams/libraries.png}
+	% \caption{Ein Flussdiagramm der Kommunikation zwischen den Libraries und dem Computer}
+	% \label{fig:libs}
+%\end{figure}
 
 Was noch nicht ganz klar ist, ist wie die Grafikkarte weiss, wo genau die
 berechneten Pixel hingehören. Dies wird gelöst, indem wir durch GLFW einen
@@ -630,12 +633,12 @@ angeht. Somit spricht GLFW nicht nur mit dem Operationsystem, sondern auch mit
 dem Compositor. Der Compositor erstellt mit OpenGL einen Kontext und gibt dann
 auch die Nummer des Kontextes an GLFW zurück.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.3]{ma_diagrams/context.png}
-	\caption{Der Unterschied zwischen den Operationssystemen, und wie mein Programm an einen OpenGL Kontext kommt}
-	\label{fig:ctx}
-\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.3]{ma_diagrams/context.png}
+% 	\caption{Der Unterschied zwischen den Operationssystemen, und wie mein Programm an einen OpenGL Kontext kommt}
+% 	\label{fig:ctx}
+%\end{figure}
 
 
 \subsubsection{Meilensteine}
@@ -900,18 +903,18 @@ immer eine 2d Seite gemeint.
 Jede Kante im Würfel ist Teil von drei Seiten. Diese drei Seiten nennen wir
 benachbart. 
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/3sides_per_edge1.png}
-	\caption{Drei benachbarte Seiten}
-	\label{fig:neigh1}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/3sides_per_edge2.png}
-	\caption{Drei benachbarte Seiten}
-	\label{fig:neigh2}
-\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.2]{ma_diagrams/3sides_per_edge1.png}
+% 	\caption{Drei benachbarte Seiten}
+% 	\label{fig:neigh1}
+% %\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.2]{ma_diagrams/3sides_per_edge2.png}
+% 	\caption{Drei benachbarte Seiten}
+% 	\label{fig:neigh2}
+%\end{figure}
 Zuerst erstellen wir manuell eine Liste der Kanten. Für die Kanten rechnen wir
 dann alle Seiten aus, die diese Kante beinhalten. Dies geschieht nur ganz am
 Anfang vom Programm, bevor das erste Bild erscheint. Die Kanten werden von zwei
@@ -973,12 +976,12 @@ getan. Es treten zwei Probleme auf:
     benachbart sind. Es braucht auch Dreiecke, die aus einem Punkt, und zwei
     zusätzlichen Punkten, die auf der gegenüberliegenen Seite liegen, bestehen.
     \end{description}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[scale=0.15]{ma_diagrams/convex_hole.png}
-      \caption{Das Loch das mit dem gierigen Algorithmus entsteht}
-      \label{fig:hole}
-    \end{figure}
+    % %\begin{figure}[H]
+    %   \centering
+    %   \includegraphics[scale=0.15]{ma_diagrams/convex_hole.png}
+    %   \caption{Das Loch das mit dem gierigen Algorithmus entsteht}
+    %   \label{fig:hole}
+    % %\end{figure}
   
   \item
   \begin{description}
@@ -1037,12 +1040,12 @@ Endpunkt, und dem richtigen neuen Punkt, bereits gezeichnet ist. Zwar ist dies
 nicht direkt schon gezeichnet, aber dessen Fläche wird nach dem Ende des
 Algorithmus eingefüllt sein.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/convex_algorithm.png}
-	\caption{Der Algorithmus auf einem Sechseck. Merke die zwei wandernde grüne Punkte; das sind immer der mittlere Punkt und der Endpunkt}
-	\label{fig:convex}
-\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.2]{ma_diagrams/convex_algorithm.png}
+% 	\caption{Der Algorithmus auf einem Sechseck. Merke die zwei wandernde grüne Punkte; das sind immer der mittlere Punkt und der Endpunkt}
+% 	\label{fig:convex}
+% %\end{figure}
 
 Jetzt mache ich die Tiefensuche, die ich Oben beschrieben habe. Ich suche jedes
 Dreieck, wo zwei Kanten auch Kanten des Lösungsobjekts sind. Falls dieses
@@ -1230,12 +1233,12 @@ vom Punkt reflektiert, ist proportional zu $\cos{\theta}$.
   I_{diffus} &= Licht_{diffus} \cdot Material_{diffus} \cdot \cos{\theta}
 \end{align*}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/light_diffuse.png}
-	\caption{Die wichtigen Parameter für diffuse Reflexion}
-	\label{fig:diffuse}
-\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.2]{ma_diagrams/light_diffuse.png}
+% 	\caption{Die wichtigen Parameter für diffuse Reflexion}
+% 	\label{fig:diffuse}
+% %\end{figure}
 
 Um dies zu berechnen benutzen wir den Normalvektor der Fläche $\hat{N}$, und den
 Richtungsvektor des Lichtes $\hat{L}$. Das Skalarprodukt der beiden Vektoren
@@ -1247,12 +1250,13 @@ positiv. Also benutzen wir folgende Gleichung:
   I_{diffus} &= Licht_{diffus} \cdot Material_{diffus} \cdot \max (\hat{N} \cdot \hat{L}, 0)
 \end{align*}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.2]{ma_diagrams/light_specular.png}
-	\caption{Die wichtigen Parameter für spiegelnde Reflexion}
-	\label{fig:specular}
-\end{figure}
+% %\begin{figure}[H]
+% 	\centering
+% 	\includegraphics[scale=0.2]{ma_diagrams/light_specular.png}
+% 	\caption{Die wichtigen Parameter für spiegelnde Reflexion}
+% 	\label{fig:specular}
+% %\end{figure}
+
 
 Die spiegelnde Reflexion ist etwas spannender. Dies simuliert die überbelichtete
 Flecken, wo das Licht durch den Objekt genau in das Auge des Betrachters
@@ -1481,24 +1485,27 @@ angegeben für die Grösse. Und ein Vektor wird angegeben als Ursprung.
 \end{itemize}
 
 \newpage
-Der/die Unterzeichnete bestätigt mit Unterschrift, dass die Arbeit selbständig verfasst
-und in schriftliche Form gebracht worden ist, dass sich die Mitwirkung anderer
-Personen auf Beratung und Korrekturlesen beschränkt hat und dass alle verwendeten
-Unterlagen und Gewährspersonen aufgeführt sind.
+% Der/die Unterzeichnete bestätigt mit Unterschrift, dass die Arbeit selbständig verfasst
+% und in schriftliche Form gebracht worden ist, dass sich die Mitwirkung anderer
+% Personen auf Beratung und Korrekturlesen beschränkt hat und dass alle verwendeten
+% Unterlagen und Gewährspersonen aufgeführt sind.
 
-\vspace{1,5 cm} 
-\begin{tabular}{p{3cm}p{.25cm}l}
-\dotfill \\ 
-Ort
-\end{tabular}
-\hfill 
-\begin{tabular}{p{3cm}p{.25m}l}
-\dotfill \\ 
-Datum
-\end{tabular}
-\hfill
-\begin{tabular}{p{3cm}p{.25cm}l}
-\dotfill \\ 
-Unterschrift
-\end{tabular}
+% \vspace{1,5 cm} 
+% \begin{tabular}{p{3cm}p{.25cm}l}
+% \dotfill \\ 
+% Ort
+% \end{tabular}
+% \hfill 
+% \begin{tabular}{p{3cm}p{.25m}l}
+% \dotfill \\ 
+% Datum
+% \end{tabular}
+% \hfill
+% \begin{tabular}{p{3cm}p{.25cm}l}
+% \dotfill \\ 
+% Unterschrift
+% \end{tabular}
+
+\includepdf{ma_diagrams/ma_saelbststandig.pdf}
+
 \end{document}
