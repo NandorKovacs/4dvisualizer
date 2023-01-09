@@ -24,7 +24,13 @@
 
 \title{4d visualisierungs Engine mit einer 3d Benutzeroberfläche als Hilfestellung beim Lernen und Experimentieren}
 \author{
-
+  Maturitätsarbeit \\
+  Verfasser: Nandor Kovacs \\
+  Betreuer: Pietro Gilardi \\
+  \\
+  https://github.com/NandorKovacs/4dvisualizer \\
+  \\
+  MNG Rämibühl
 }
 
 % \author{
@@ -42,6 +48,7 @@
 
 \begin{document}
 \maketitle
+\newpage
 \selectlanguage{english}
 \begin{abstract}
 	Ziel dieser Arbeit ist, vierdimensionale Würfel im dreidimensionalen Raum
@@ -1303,30 +1310,27 @@ vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
 \end{itemize}
 
 \subsubsection{Konfigurations Format}
+In einem Yaml File kann man Würfel beschreiben. Für jeden Würfel können mehrere
+Rotationen, eine Grösse und ein Ursprungsvektor angegeben werden. Es wird
+aufgelistet um wie viel Grad um welche Fläche gedreht wird. Eine Zahl wird
+angegeben für die Grösse. Und ein Vektor wird angegeben als Ursprung.
 
-% ! not done
-\begin{itemize}
-  \item Ein einfaches textbasiertes konfigurations Format.
-  \item Beinhaltet eine Spezifikation einer Hyperebene und eine beliebige Anzahl
-  von Spezifikationen für Würfel.
-  \item Alle Spezifikationen sehen folgendermassen aus: <Was> <Zahlen>
-  \item Leerzeichen, einschliesslich der Leertaste und Zeilenumbrüche können
-  beliebig verwendet werden.
-  \item Hyperebenen Spezifikation: HYPERPLANE <Ursprung> <3 orthogonale
-  Vektore>\newline
-  Die ersten 4 Zahlen zeigen zum Ursprung, die verbleibenden 3$\times$4 Zahlen sind die
-  drei Einheitsvektoren. Sie müssen orthogonal sein damit das Programm richtig
-  funktioniert.
-  \item Würfelspezifikation: CUBE <Grösse> <Ursprung> <4 orhtogonal
-  vectore>\newline Die Grösse ist eine einzelne Zahl, der Ursprung besteht aus
-  vier Zahlen die als Vektor zum Ursprung zeigen, und die verbleibenden 3$\times$4
-  Zahlen beschreiben die Einheitsvektoren in den Richtungen der Würfelseiten.
-\end{itemize}
+\begin{verbatim}
+  - cube:
+    rotation:
+      XY: 10
+    scale: 0.8
+    shift: [1.5, 0, 0, 0]
+  - cube:
+    shift: [-1.5, 0, 0, 0]
+    rotation:
+      ZY: 20
+      YW: 5
+  \end{verbatim}
 
 \subsubsection{Das Programm mit einer gegebenen Konfiguration starten}
 
 \begin{itemize}
-  \item Finde den installierten \code{configs} Ordner.
   \item Finde die installierte Binärdatei.
   \item Lasse die Binärdatei von einem Command-Terminal laufen, und gebe den
   konfigurations File als einzigen Parameter an.
@@ -1413,16 +1417,27 @@ vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
     \item \url{https://www.glfw.org/docs/latest/monitor_guide.html} \\
     (9.1.2023)
   \end{itemize}
-  \item \url{} \\
-
 \end{itemize}
 
-Die in der Arbeit erwähnten Quellen (Texte und Abbildungen) werden alphabetisch
-nach Autoren aufgelistet. Für Internetquellen wird eine gesonderte Liste
-erstellt.
+\newpage
+Der/die Unterzeichnete bestätigt mit Unterschrift, dass die Arbeit selbständig verfasst
+und in schriftliche Form gebracht worden ist, dass sich die Mitwirkung anderer
+Personen auf Beratung und Korrekturlesen beschränkt hat und dass alle verwendeten
+Unterlagen und Gewährspersonen aufgeführt sind.
 
-% \section{Anhang}
-
-% Hier erscheinen --- wenn sinnvoll --- Rohdaten und Beilagen.
-
+\vspace{1,5 cm} 
+\begin{tabular}{p{3cm}p{.25cm}l}
+\dotfill \\ 
+Ort
+\end{tabular}
+\hfill 
+\begin{tabular}{p{3cm}p{.25m}l}
+\dotfill \\ 
+Datum
+\end{tabular}
+\hfill
+\begin{tabular}{p{3cm}p{.25cm}l}
+\dotfill \\ 
+Unterschrift
+\end{tabular}
 \end{document}
