@@ -15,12 +15,18 @@
 #define NUM_VAOs 1
 #define NUM_VBOs 3
 
+// Forward declaration for the text drawing library (which must be included in
+// the c++ module.)
+class GLTtext;
+
 namespace viz {
 
 class Renderer {
  public:
   Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
            HyperplaneManager& hyperplane_manager, World const& world);
+
+  ~Renderer();
 
   void render();
   void set_size(glm::ivec2 size);
@@ -32,6 +38,7 @@ class Renderer {
 
   void send_triangles();
   void send_lines();
+  void draw_hud();
 
   World const& world;
 
@@ -86,7 +93,10 @@ class Renderer {
         normal_matrix_transform;
   };
   LightLoc light_loc;
-  // --------------------
+
+  // ------ HUD
+  GLTtext *text1;
+
 };
 
 }  // namespace viz

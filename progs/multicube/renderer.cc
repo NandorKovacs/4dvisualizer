@@ -2,11 +2,15 @@
 
 #include <GL/glew.h>
 
+#define GLT_IMPLEMENTATION
+#include "../../third_party/glText-master/gltext.h"
+
 #include <cmath>
 #include <cmrc/cmrc.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/color_space.hpp>
 #include <iostream>
+#include <sstream>
 
 #include "../../geometry/intersect.h"
 #include "../../lib/camera_manager.h"
@@ -22,7 +26,14 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
     : camera_manager{camera_manager},
       window_size{window_size},
       hyperplane_manager{hyperplane_manager},
-      world{world} {
+      world{world},
+      text1{gltCreateText()} {
+
+	if (!gltInit())
+	{
+    throw std::runtime_error{"Could not initialize glt"};
+	}
+
   cmrc::embedded_filesystem fs = cmrc::viz_multicube_glsl::get_filesystem();
 
   cmrc::file vshader = fs.open("light_vshader.glsl");
@@ -71,6 +82,10 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
 
   glGenBuffers(NUM_VBOs, vbo);
   CHECK_GL();
+}
+
+Renderer::~Renderer() {
+  gltDeleteText(text1);
 }
 
 void Renderer::setup_basic_projection(GLuint const mv_loc,
@@ -239,6 +254,20 @@ void Renderer::setup_light() {
   CHECK_GL();
 }
 
+void Renderer::draw_hud() {
+  std::ostringstream hud;
+  auto const& hp = hyperplane_manager.get_hyperplane();
+  hud << "Hyperplane:\n"
+  "Center: " << hp.pos << "\n"
+  "Unit vectors and normal:\n"
+  << hp.coord_system;
+  gltSetText(text1, hud.str().c_str());
+  gltBeginDraw();
+  gltColor(0.4f, 0.4f, 0.4f, 0.4f);
+  gltDrawText2D(text1, 0, 0, 1.0f);
+  gltEndDraw();
+}
+
 void Renderer::render() {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
@@ -264,6 +293,8 @@ void Renderer::render() {
 
   glDrawArrays(GL_LINES, 0, v_lines.size() / 2);
   CHECK_GL();
+
+  draw_hud();
 }
 void Renderer::set_size(glm::ivec2 size) { window_size = size; }
 }  // namespace viz
