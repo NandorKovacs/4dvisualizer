@@ -55,22 +55,17 @@
 	darzustellen.  Die Projektionsmethode, um den vierdimensionalen Raum in einem
 	dreidimensionalen Raum darzustellen, kann man sich folgenderweise vorstellen:
 	Nimmt man einen Kuchen und schneidet diesen in die Hälfte, wird die
-	Schnittfläche eine zweidimensionale Fläche. Anders ausgedrückt, habe ich einen
-	Körper im dreidimensionalen Raum, welche ich mit einem zweidimensionalen Raum
-	(also einer Ebene) schneide. In meinem Fall nehme ich eine `Hyperebene', also
-	einen dreidimensionalen Raum, und schneide damit den vierdimensionalen Raum.
-	Der Schnittköper wird mit Hilfe des Koordinatensystems des Schnittraumes auf
-	dem Bildschirm visualisiert.
+	Schnittfläche eine zweidimensionale Fläche. Anders ausgedrückt, nehme ich
+	einen Körper im dreidimensionalen Raum, welche ich mit einem zweidimensionalen
+	Raum (also einer Ebene) schneide. In dieser Arbeit nehme ich eine
+	`Hyperebene', also einen dreidimensionalen Raum, und schneide damit den
+	vierdimensionalen Raum. Der Schnittköper wird mit Hilfe des Koordinatensystems
+	des Schnittraumes auf dem Bildschirm visualisiert.
 \end{abstract}
 \selectlanguage{ngerman}
 \newpage
 \tableofcontents
 \pagebreak
-% \section{Inhaltsverzeichnis}
-% Überblick über den Aufbau: Gliederung in Kapitel und Unterkapitel. Vorwort
-% (nicht obligatorisch): Das Vorwort enthält Dinge, die nicht in die Arbeit
-% selbst gehören, z.B. Beweggründe, die zur Wahl des Themas geführt haben. Die
-% unterstützenden Personen und Institutionen werden genannt.
 
 \section{Vorwort}
 
@@ -108,28 +103,36 @@ und gehen durch die Ebene wo unsere Lebewesen leben. Diesesmal haben sie alle
 genügend Zeit um das Phänomen zu beobachten. Wenn sie sich alle anstrengen,
 können sie die Gabel sogar etwas bewegen. Alle beobachten gespannt wie die vier
 kleinen metallenen Objekte, die sichtbar von nichts zusammengehalten werden,
-trotzdem immer gleichweit voneinander bleiben, egal wie oder welches der vier
+trotzdem immer gleichweit voneinander bleiben, egal wie oder welches der Vier
 sie bewegen.
 \newline
 \newline
-Es hat mich schon immer beschäftigt, mir etwas vorstellen zu können, das
-eigentlich recht unvorstellbar ist. Für mich sind vierdimensionale Räume genau
-so ein Thema. Für meine Maturarbeit habe ich den kleinsten unvorstellbaren Raum
-gewählt, den vierdimensionalen Raum, und darin einen gut bekannten, einfachen
-Körper, den Würfel. Nur eine Kugel wäre einfacher gewesen, aber genau wie alle
-zweidimensionale Schnitte einer dreidimensionalen Kugel Kreisflächen sind, sind
-alle dreidimensionale Schnitte von vierdimensionalen Kugeln normale Kugeln.
+Es hat mich schon immer beschäftigt, mir Etwas vorstellen zu können, das
+eigentlich recht unvorstellbar ist. Für meine Maturarbeit habe ich den kleinsten
+unvorstellbaren Raum gewählt, den vierdimensionalen Raum, und darin einen gut
+bekannten, einfachen Körper, den Würfel. Nur eine Kugel wäre einfacher gewesen,
+aber genau wie alle zweidimensionale Schnitte einer dreidimensionalen Kugel
+Kreisflächen sind, sind alle dreidimensionale Schnitte von vierdimensionalen
+Kugeln normale Kugeln. Das macht die Aufgabe nicht so interessant wie ein
+Würfel.
 \newline
 \newline
-Hier möchte ich mich bei meinem Vater bedanken, der immer für mich da war, und
-mir geholfen hat wenn ich beim Programmieren stecken blieb. Er hat mir ausserdem
-geholfen die Technologien und Methoden kennen zu lernen, und die richtigen
-auszuwählen. Ich bedanke mich bei meiner Mutter, die mich stets ermutigt hat;
-und bei meinem Bruder, der oft schlafen musste während ich noch im Zimmer am
-arbeiten war. Ich möchte mich ausserdem bei meiner Begleitperson, Herr Pietro
-Gilardi, bedanken, für seine Unterstützung und dass er die Aufgabe angenommen
-hat meine Arbeit zu betreuen, nachdem meine vorherige Begleitperson die Schule
-verlassen hat und mich nicht weiter betreuen konnte.
+An dieser Stelle möchte ich mich bei meinem Vater bedanken, der immer für mich
+da war, und mir geholfen hat wenn ich beim Programmieren stecken blieb. Er hat
+mir ausserdem geholfen die Technologien und Methoden kennen zu lernen, und die
+richtigen auszuwählen. Ich bedanke mich bei meiner Mutter, die mich stets
+ermutigt hat; und bei meinem Bruder, Lorant, der oft schlafen musste während ich
+noch im Zimmer am arbeiten war. Mein Bruder Albert hat mir gezeigt wie ich die
+dreidimensionale Darstellungen erstellen kann. Ohne ihn wären die Bilder nicht
+so übersichtlich und schön. Ich möchte mich ausserdem bei meiner Begleitperson,
+Herr Pietro Gilardi, bedanken, für seine Unterstützung und dass er die Aufgabe
+angenommen hat meine Arbeit zu betreuen, nachdem meine vorherige Begleitperson
+die Schule verlassen hat und mich nicht weiter betreuen konnte.
+
+Ich möchte mich ausserdem bei meinen Freunden und Bekannten bedanken die mir
+beim Korrekturlesen geholfen haben: Dimitrij, Kyril und Nina. Sie haben mir
+etliche grammatische Fehler korrigiert, und mich auf schwer verstehbare
+Abschnitte hingewiesen.
 
 
 \section{Einleitung}
@@ -170,23 +173,23 @@ bewegbar sind, sowie verständlich gefärbt dargestellt werden.
 
 \subsection{Theorie}
 
-\subsubsection{Wie stellen wir uns einen vierdimensionalen Würfel vor? Was ist ein vierdimensionaler Würfel?}
+\subsubsection{Was ist ein vierdimensionaler Würfel, und wie kann man sich so einen Würfel vorstellen?}
 
 Um zu definieren, wie ein vierdimensionaler Würfel aufgebaut ist, werfe ich
 einen Blick auf den Unterschied zwischen einem dreidimensionalen Würfel und
 einem zweidimensionalen Würfel, wie auch einem zweidimensionalen Würfel und
 einem eindimensionalen Würfel. Ein- und zweidimensionale Würfel gibt es
-bekanntlich nicht. Was am nächsten an einen zweidimensionalen Würfel kommt, ist
+bekanntlich nicht. Was equivalent ist mit einem zweidimensionalen Würfel, ist
 ein Quadrat.
 
 Wie mache ich einen Würfel aus einem Quadrat? Anfänglich liegt das Quadrat
 einfach auf der Ebene $F(x, y) = 0$. Um daraus einen Würfel zu machen,
 dupliziere ich das Quadrat, und bewege es entlang der neuen Koordinatenachse,
 bis die zwei Quadrate gleich weit voneinander entfernt sind, wie auch die
-Seitenlänge eines Quadrats ist. Nun verbinde ich die Ecken der Quadrate, die
+Seitenlänge der Quadrate ist. Nun verbinde ich die Ecken der Quadrate, die
 übereinander liegen, sie werden zu einem Würfel.
 
-Genau gleich können wir aus einem eindimensionalen Würfel ein Quadrat machen.
+Genau gleich können wir aus einem eindimensionalen Würfel einen Quadrat machen.
 Jedes eindimensionale Objekt ist eine Strecke. So auch ein Würfel. Nehme ich
 jetzt eine Strecke, setze sie in einen zweidimensionalen Raum auf die Gerade
 $F(x) = 0$, dupliziere sie, und bewege die zweite Strecke auf der neuen y
@@ -194,10 +197,9 @@ Koordinate bis die zwei Strecken so weit voneinander  sind wie eine Strecke lang
 ist,  und verbinde dann die Ecken, erhalte ich ein Quadrat.
 
 So mache ich den Sprung auch eine Dimension höher. Ich nehme einen Würfel mit
-Seitenlänge 1, auf der Hyperebene $F(x, y, z) = 0$. Ich nehme einen zweiten
-Würfel und verschiebe ihn entlang der $w$-Achse um $1$. Nun verbinde ich alle
-Ecken der Würfel. Das entstandene Objekt nenne ich einen vierdimensionalen
-Würfel.
+Seitenlänge 1, auf der Hyperebene $F(x, y, z) = 0$. Einen zweiten Würfel
+verschiebe ich entlang der $w$-Achse um $1$. Verbindet man nun die Ecken der
+zwei Würfel, erhaltet man einen vierdimensionalen Würfel.
 
 \begin{figure}[H]
 	\centering
@@ -207,7 +209,7 @@ Würfel.
 	\label{fig:4d_repr}
 \end{figure}
 
-\subsubsection{Die definition eines vierdimensionalen Würfels}
+\subsubsection{Die Definition eines vierdimensionalen Würfels}
 
 Um einen vierdimensionalen Würfel zu definieren, müssen wir zuerst den
 vierdimensionalen Raum definieren. Dies definieren wir ähnlich zu den zwei- und
@@ -221,9 +223,8 @@ drei dimensionalen Räumen:
 	}
 \end{equation*}
 
-Es ist einfach zu sehen, dass es auf den Fall einer beliebigen $n\in \mathbb{N}$
+Es ist einfach zu sehen, dass es auf den Fall einer beliebigen  $R^{n}, n\in \mathbb{N}$
 ausehnbar ist.
-
 
 Eine Hyperebene ist folgendes: In einem n-dimensionalen Raum beschreibt sie alle
 Punkte, die durch einen Stützvektor und n-1 Richtungsvektoren beschrieben werden
@@ -247,15 +248,15 @@ Definieren wir nun Würfel in verschiedenen Dimensionen:
   \item der vierdimensionale kanonische Würfel:  $\{x, y, z, w\in\R\ |\ -1\leq x, y, z, w\leq 1\}$
 \end{itemize}
 Wir merken, dass im Fall des dreidimensionalen Würfels die Ecken genau die
-Punkte sind, nei denen alle drei Koordinaten die eine Ungleichung gleich ist.
-Das heisst, dass die Koordinaten $-1$ oder $1$ sind. Solche Tripel hat es $2^3 =
-8$, genau so viel, wie wir erwartet haben. Die Kanten bekommen wir
-folgenderweise: Aus den drei Koordinaten fixieren wir zwei beliebige auf einen
-der Grenzwerte (also $-1$ oder $1$), die dritte gleitet über den Intervall $(-1,
-1)$. Zwei Koordinaten aus drei auszuwählen, und dann für die zwei Koordinaten
-alle grenzwert Kombinationen durchgehen ergibt $3\times 2\times 2 = 12$
-Möglichkeiten. Genau so viele Kanten wie ein Würfel hat. Bei den Flächen gehen
-wir ähnlich vor, fixieren aber nur eine der Koordinaten auf $-1$ oder $1$.
+Punkte sind, bei denen alle drei Koordinaten den maximal oder minimal Wert
+haben. Das heisst, dass die Koordinaten $-1$ oder $1$ sind. Solche Tripel hat es
+$2^3 = 8$, genau so viel, wie man auf einem Würfel sehen kann. Die Kanten
+bekommen wir folgenderweise: Aus den drei Koordinaten fixieren wir zwei
+beliebige auf einen der Grenzwerte ($-1$ oder $1$), die dritte gleitet über den
+Intervall $(-1, 1)$. Zwei Koordinaten aus drei auszuwählen, und dann für die
+zwei Koordinaten alle grenzwert Kombinationen durchgehen ergibt $3\times 2\times
+2 = 12$ Möglichkeiten. Genau so viele Kanten hat ein Würfel. Bei den Flächen
+gehen wir ähnlich vor, fixieren aber nur eine der Koordinaten auf $-1$ oder $1$.
 Diesmal hat es $3\times 2=6$ Möglichkeiten, so viele Flächen hat ein Würfel.
 \newline\newline
 Was ist der Fall bei einem vierdimensionalen Würfel?
@@ -270,7 +271,7 @@ Würfel haben auch dreidimensionale Flächen. Diese bekommen wir, indem wir nur
 eine der Koordinaten bei $-1$ oder $1$ fixieren. Fixieren wir beispielsweise die
 letzte Koordinate, bekommen wir den dreidimensionalen kanonischen Würfel, aus
 einer höheren Dimension betrachtet. Die dreidimensionalen Seiten sind alles
-reguläre Würfel. Es davon hat es $4\times 2 = 8$.
+reguläre Würfel. Davon hat es $4\times 2 = 8$.
 
 \subsubsection{Drehungen in vier Dimensionen}
 Hier schauen wir uns Drehungen um den Ursprung an. 
@@ -280,20 +281,21 @@ Ursprung mit einer einzigen Zahl; dem Winkel, angegeben werden.
 
 In drei Dimensionen wird es schon spannender. Wir haben jetzt drei verschiedene
 Drehungen. Wir können um die X-, Y- oder Z-Achse drehen. Alle andere Drehungen
-können durch diese drei Drehungen zusammengesetzt werden (Satz vom Fussball).
+können durch diese drei Drehungen zusammengesetzt werden (Satz vom Fussball,
+\url{https://de.wikipedia.org/wiki/Satz_vom_Fu%C3%9Fball}).
 
-In vier Dimensionen haben die Grundrotationen keine Achse, sondern rotieren um
-eine zweidimensionale Ebene. Um zu verstehen wieso das der Fall ist, müssen wir
-aufhören zu denken, dass Drehungen um etwas drehen, sondern einsehen das Drehungen
-immer eine zweidimensionale Ebene drehen. Deswegen hat es im 2d Raum nur einen
-Punkt (0d Objekt) der nicht bewegt wird bei einer Rotation. Im 3d Raum haben wir
-eine Fixachse (1d Objekt), die orhtogonale Gerade auf die drehende Fläche. So
-ist es intuitiver, dass es im 4d Raum bei einer Rotation eine Fixfläche (2d
-Objekt) existiert. 
+In vier Dimensionen drehen sich die Grundrotationen um keine Achsen, sondern
+rotieren um eine zweidimensionale Ebene. Um zu verstehen wieso das der Fall ist,
+müssen wir aufhören zu denken, dass Drehungen um etwas drehen, sondern einsehen
+das Drehungen immer eine zweidimensionale Ebene drehen. Deswegen hat es im 2d
+Raum nur einen Punkt (0d Objekt) der nicht bewegt wird bei einer Rotation. Im 3d
+Raum haben wir eine Fixachse (1d Objekt), die orhtogonale Gerade auf die
+drehende Fläche. So ist es intuitiver, dass es im 4d Raum bei einer Rotation
+eine Fixfläche (2d Objekt) existiert. 
 
 Aus diesem Grund existieren sechs Grundrotationen. Es hat vier Achsen, und je
 zwei drehen sich. Es gibt also ${4 \choose 2} = 6$ Kombinationen. Die sechs
-Grunddrehungen sind also die Drehungen um die XY, XZ, XW, YZ, YW und ZW Flächen.
+Grunddrehungen sind die Drehungen um die XY, XZ, XW, YZ, YW und ZW Flächen.
 
 \paragraph{Die Drehmatrizen}
 Die Drehmatrizen in vier Dimensionen sind sehr ähnlich zu den dreidimensionalen
@@ -357,14 +359,24 @@ der Einheitskugel zu drehen}
 
 Jetzt drehe ich $\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}$ so, dass es
 $\begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix}$ wird für beliebige $a$, $b$,
-$c$ und $d$, so dass $\sqrt{a² + b² + c² + d²} = 1$ erfüllt ist. Das heisst,
+$c$ und $d$, so dass $\sqrt{a^{2} + b^{2} + c^{2} + d^{2}} = 1$ erfüllt ist. Das heisst,
 $(a, b, c, d)$ liegt auf dem Einheitskreis.
 
-Aus den oberen Rechnungen ist gut sichtbar:
+Wenn entweder $b$, $c$, oder $d$ 1 ergibt, sind alle anderen 0, da wir
+angenommen haben dass $\begin{pmatrix} a \\ b \\ c \\ d \end{pmatrix}$ die Länge
+1 hat. Dann braucht es nur eine einzige Drehung. Ansonsten:
+
 \begin{align*}
   \alpha &= \arcsin (b) \\
   \beta &= \arcsin (\frac{c}{\cos \alpha}) \\
   \gamma &= \arccos (\frac{a}{\cos \alpha \cdot \cos \beta})
+\end{align*}
+
+Das dies lösbar ist im Normalfall, zeigen folgende Ungleichungen:
+\begin{align*}
+  |b| &\leq 1 \\
+  |c| &= \sqrt{1-a^{2}-b^{2}-c^{2}} \leq \sqrt{1-b^{2}} = \sqrt{1-\sin^{2} \alpha} = |\cos \alpha| \\
+  |a| &\leq \sqrt{1-c^{2}} \leq \sqrt{\cos^{2} \alpha - c^{2}} = |\cos \alpha| \cdot \sqrt{1 - \frac{c^{2}}{\cos^{2} \alpha}} = |\cos \alpha| \cdot \sqrt{1-\sin^{2} \beta} = |\cos \alpha| \cdot |\cos \beta|
 \end{align*}
 
 Das zeigt das ein Körper mit einer arbiträren Drehung durch drei Drehungen
@@ -403,8 +415,8 @@ Würfels komplett auf der Schnittebene liegen.
 Für diese Fälle bleibt der Algorithmus korrekt, denn wir nehmen einfach beide
 Enden der gegebenen Kante und betrachten diese Punkte als Schnittpunkte mit der
 Schnittebene und der Kante. (Es ist einfach zu sehen, dass alle Punkte zwischen
-diesen zwei in der konvexen Hülle sind von jedem Set von Punkten wo beide
-Endpunkte beinhalten).
+diesen zwei Punkten in der konvexen Hülle sind von jedem Set von Punkten welche
+beide Endpunkte beinhalten).
 
 Wir beweisen, dass der gleiche Algorithmus anwendbar ist, wenn wir einen 4d
 Würfel mit einer 3d Hyperebene schneiden: im Normalfall wird der Schnittköper
@@ -470,7 +482,7 @@ den Schnitt eines 4d Würfels und einer 3d Hyperbene zu bestimmen:
 \end{enumerate}
 
 Diese Vorgehensweise erlaubt uns eine einfache Implementation des
-Schneidealgorithmus.
+\mbox{Schneidealgorithmus}.
 
 % \subsection{Spezifikation}
 
@@ -517,7 +529,7 @@ Schneidealgorithmus.
 
 \subsection{Entwicklung}
 
-\subsubsection{Tools, Frameworks}
+\subsubsection{Tools und Frameworks}
 
 \begin{itemize}
   \item Programming language: C++
@@ -530,34 +542,36 @@ Schneidealgorithmus.
 \paragraph{C++}
 C++ ist meine präferierte Computersprache. Der gesamte Programmcode den ich
 geschrieben habe, ist in dieser Sprache, mit Ausnahme der Shaderprogramme, die
-in glsl geschrieben werden müssen.
+in GLSL geschrieben werden müssen.
 
-\paragraph{GFLW}
-GLFW ist eine Library die Anwendungsfenster und Eingabe über Maus und Tastatur
-verwaltet. Mithilfe von GLFW ist es möglich für uns, ein Fenster mit dem
-Programm zu öffnen, um eine Oberfläche zum Zeichnen zu erhalten.
+\paragraph{GLFW}
+GLFW  (Graphics Library Framework) ist eine Library die Anwendungsfenster und
+Eingabe über Maus und Tastatur verwaltet. Mithilfe von GLFW ist es möglich für
+uns, ein Fenster mit dem Programm zu öffnen, um eine Oberfläche zum Zeichnen zu
+erhalten.
 
 \paragraph{OpenGL}
 OpenGL ist im Prinzip das was uns erlaubt mit der Graphikkarte zu komunizieren.
-Wir rufen OpenGL Funktionen auf, und schicken damit unsere Punkte an die
+Wir rufen OpenGL Funktionen auf, und schicken damit unsere Daten an die
 Grafikkarte. Wir schicken ausserdem unser Schattierungsprogramme an die
 Grafikkarte. Die Grafikkarte benutzt diese Programme dann in der richtigen
-Reihenfolge, um zu berechnen, welche Pixel auf dem Bildschirm welche Farbe haben
+Reihenfolge, um zu berechnen welche Pixel auf dem Bildschirm welche Farbe haben
 sollen.
 
 \paragraph{GLEW}
 OpenGL hat eine API (Das heisst Funktionen, die man benutzen kann im eigenen
 Code) die Öffentlich ist. Aber je nach Graphikkarten Hersteller und
 Operationssystem sind diese Funktionen anderst implementiert. Ausserdem gibt es
-viele OpenGL Versionen, und manchmal möchte man, dass ein Programm auf mehreren
-Versionen funktioniert. Im Normalfall werden die Funktionen einer API während
-der Compilation in das eigene Programm compiliert. Mit OpenGL aber wird nur eine
-sehr kleine Anzahl der Funktionen direkt hineincompiliert, viele der Funktionen
-müssen abgefragt werden. Somit kann man nach einer Funktion `Zeichnen' fragen,
-und falls diese auf mehreren OpenGL Versionen existiert, funktioniert das
-Programm auf all diesen Versionen. Damit man dieses Abfragen nicht selbst machen
-muss, exisitert GLEW\@. GLEW erledigt dies ganz automatisch, man muss nur einige
-Parameter angeben und dann funktioniert es von alleine.
+viele Versionen von OpenGL, und manchmal möchte man, dass ein Programm auf
+mehreren Versionen funktioniert. Im Normalfall werden die Funktionen einer API
+während der Compilation in das eigene Programm compiliert. Mit OpenGL aber wird
+nur eine sehr kleine Anzahl der Funktionen direkt hineincompiliert, viele der
+Funktionen müssen abgefragt werden. Somit kann man beispielsweise nach einer
+Funktion `Zeichnen' fragen, und falls diese auf mehrere OpenGL Versionen
+existiert, funktioniert das Programm auf all diesen Versionen. Damit man dieses
+Abfragen nicht selbst machen muss, exisitert GLEW\@. GLEW erledigt dies ganz
+automatisch, man muss nur einige Parameter angeben und dann funktioniert es von
+alleine.
 
 \subsubsection{Die Funktionsweise und das Zusammenspiel der Libraries, der
 Graphikkarte und des Operationssystems}\label{sssec:libraries} Die Libraries,
@@ -565,8 +579,8 @@ die ich benutzt habe, wurden oben beschrieben. Hier erläutere ich, wie sie gena
 funktionieren. Mit einem Programm ein Applikationsfenster zu öffnen und zu
 benutzen ist ganz einfach mit Libraries, die im Hintergrund alles komplizierte
 automatisch lösen. Dafür haben diese immer sehr viele Einschränkungen. Will man
-wirklich frei sein, zu tun und zu lassen was man will, muss man ganz vieles
-selbst lernen und umsetzen.
+wirklich frei sein, zu tun und lassen was man will, muss man ganz Vieles selbst
+lernen und umsetzen.
 
 Aus diesem Grund habe ich mich dazu entschieden zu lernen, wie man mit OpenGL
 umgeht. OpenGL ist eines der meistverbreiteteten API's für zwei- und
@@ -580,14 +594,14 @@ Punkten in einem 3d Raum (repräsentiert durch Vektoren) sowie die
 Schattierungsprogramme auf die Grafikkarte. Alles andere, also die Berechnungen
 und die Verwaltung des Bildschirms, geschieht `von alleine'. Es wird von der
 Grafikkarte übernommen, und ist nicht unsere Verantwortung. Die
-Schattierungsprogramme, sofern wir sie in den richtigen Ort geladen haben,
+Schattierungsprogramme, sofern wir sie an den richtigen Ort geladen haben,
 verändern und interpretieren unsere Daten, sodass aus Punkten, Farben und
 Vektoren eine Menge Pixel entstehen. 
 
 OpenGL selber ist aber nur ein Werkzeug, um mit der Grafikkarte zu komunizieren.
 Um ein Fenster zu öffnen und Tastendrücke zu erkennen und verwenden im Programm,
 brauche ich auch eine Schnittstelle mit dem Operationssystem. Dafür verwende ich
-GLFW\@. GLFW (Graphics Library Framework) hilft bei der Kommunikation mit dem
+GLFW\@. GLFW hilft bei der Kommunikation mit dem
 Operationssystem. Mithilfe von GLFW kann ich das Applikationsfenster erstellen
 und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 
@@ -599,27 +613,27 @@ und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 \end{figure}
 
 Was noch nicht ganz klar ist, ist wie die Grafikkarte weiss, wo genau die
-berechneten Pixel hingehören. Dies ist so gelöst, dass wir durch GLFW einen
-sogenannten Context beim Erstellen des Fensters erhalten. Wenn wir die Daten und
+berechneten Pixel hingehören. Dies wird gelöst, indem wir durch GLFW einen
+sogenannten Kontext beim Erstellen des Fensters erhalten. Wenn wir die Daten und
 Programme an die Grafikkarte schicken, schicken wir zudem die Information
-welchen Context wir benutzen.
+welchen Kontext wir benutzen.
 
-Je nach Operationssystem bekommt GLFW so einen Context auf unterschiedlicher
-Weise für uns. Auf Windows werden die Fenster vom Operationssystem verwalten.
+Je nach Operationssystem bekommt GLFW so einen Kontext auf unterschiedlicher
+Weise für uns. Auf Windows werden die Fenster vom Operationssystem verwaltet.
 Das heisst, das GLFW mithilfe des Operationssystems ein Fenster erstellt, was
-widerum auf der Grafikkarte einen Context erstellt, und an GLFW die Nummer des
-Contextes auf der Karte mitteilt. Auf Linux, zumindest auf der Distribution die
+widerum auf der Grafikkarte einen Kontext erstellt, und an GLFW die Nummer des
+Kontextes auf der Karte mitteilt. Auf Linux, zumindest auf der Verteilung die
 ich benutze, gibt es einen sogenannten Compositor. Dieser sorgt dafür, dass alle
 Fenster richtig funktionieren, macht das man bei transparenten Fenster das
 sieht, was unter dem Fenster ist und verwaltet allgemeint alles, was Fenster
 angeht. Somit spricht GLFW nicht nur mit dem Operationsystem, sondern auch mit
-dem Compositor. Der Compositor erstellt durch OpenGL einen Context und gibt dann
-auch die Nummer des Contextes an GLFW zurück.
+dem Compositor. Der Compositor erstellt mit OpenGL einen Kontext und gibt dann
+auch die Nummer des Kontextes an GLFW zurück.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.3]{ma_diagrams/context.png}
-	\caption{Der Unterschied zwischen den Operationssystemen, und wie mein Programm an einen OpenGL Context kommt}
+	\caption{Der Unterschied zwischen den Operationssystemen, und wie mein Programm an einen OpenGL Kontext kommt}
 	\label{fig:ctx}
 \end{figure}
 
@@ -637,7 +651,7 @@ auch die Nummer des Contextes an GLFW zurück.
 
 \subparagraph{Value}
 
-Wir haben eine Arbetisumgebung aufgebaut, und haben ein Verständnis für die
+Wir haben eine Arbeitsumgebung aufgebaut, und haben ein Verständnis für die
 Frameworks und Libraries erarbeitet.
 
 \subparagraph{Prozess}
@@ -710,12 +724,12 @@ Ecken durch Bewegung erahnen.
 Damit man überhaupt einen Punkt erscheinen lassen kann, benötigt man sogenannte
 Schattierungsprogramme. OpenGL funktioniert so, dass jeder Punkt eine sogenannte
 Rendering-Pipeline durchläuft. Vereinfacht sieht das so aus, dass zuerst jeder
-Punkt durch den Vertex Shader geht, dann alle Primitive (in unserem Fall
-Dreiecke, aber es könnten auch Linien sein) durch den Tesselation Shader und dem
-Geometry Shader gehen. Dann geschieht die Rasterization, das heisst, dass jetzt
+Punkt durch den Vertexshader geht, dann alle Primitive (in unserem Fall
+Dreiecke, aber es könnten auch Linien sein) durch den Tesselationshader und dem
+Geometryshader gehen. Dann geschieht die Rasterisation, das heisst, dass jetzt
 die einzelnen Pixel auf dem Bildschirm berechnet werden. Schlussendlich geht
 jeder Pixel noch durch den sogenannten Fragment Shader. Uns interessiert nur der
-Vertex Shader und der Fragment Shader. Für dieses Projekt ist es nicht nötig die
+Vertexshader und der Fragmentshader. Für dieses Projekt ist es nicht nötig die
 anderen zu benutzen. 
 
 Wie man solche Shattierungsprogramme (Shader) schreibt, habe ich schon im
@@ -723,11 +737,11 @@ Verlauf des Arbeitsprozesses gelernt. Doch erst in diesem Schritt habe ich genau
 lernen und verstehen müssen, wie man sie am besten benutzt und was es für Tricks
 gibt. Bis zu diesem Moment habe ich nur primitive Shader gehabt (Beispielsweise
 habe ich nur jedem Punkt eine Farbe gegeben, und darauf vertraut, dass während
-dem Rasterizationsverfahren durch Interpolation ein Farbverlauf entstehen wird
-auf dem Würfel). Jetzt habe ich aus dem OpenGL Buch gelernt, wie man Lichteffekte
-haben kann, indem man Informationen wie den Ursprung des Lichtes,
+dem Rasterizationsverfahren durch Interpolation auf dem Würfel ein Farbverlauf
+entstehen wird). Jetzt habe ich aus dem OpenGL Buch gelernt, wie man
+Lichteffekte machen kann, indem man Informationen wie den Ursprung des Lichtes,
 Materialeigenschaften, Lichtintensität und Farbe und weiteres an die Shader
-schicken kann und mit Formeln so die richtige Schattierung für jeden Pixel
+schickent und mit Formeln so die richtige Schattierung für jeden Pixel
 ausrechnen kann.
 
 \paragraph{Meilenstein 4: Der Schnitt eines arbiträren 4d Würfels}
@@ -736,7 +750,8 @@ ausrechnen kann.
 
 Der Würfel ist nicht mehr zwingend zentriert beim Ursprung. Er kann sich jetzt
 an einem arbiträren Ort im 4d Raum, mit einer arbiträren Drehung befinden. Dies
-ist hier aber erst nur im code beeinflussbar, man kann den Würfel nicht bewegen.
+ist hier aber vorerst nur im Code beeinflussbar, man kann den Würfel nicht
+einstellen oder bewegen.
 
 \subparagraph{Value}
 
@@ -853,11 +868,11 @@ Intersektor aufruft. Der Programm war schon so strukturiert, dass keine weitere
 Änderungen nötig waren. Alles andere funktionierte von alleine.
 
 \subsubsection{Die wichtigste Module im Programm}
-\paragraph{Die main() Funktion} Die \code{main()} Funktion ist die
-Funktion die gestartet wird, wenn das Programm startet. Es stellt die
-Ausgangswerte aller Module ein und startet GLEW und GLFW\@. Danach geht es in
-eine unendliche Schleife bis das Fenster geschlossen wird. Ein Zyklus in dieser
-Schleife nennen wir einen Tick. In einem Tick geschieht folgendes:
+\paragraph{Die main() Funktion} Die \code{main()} Funktion ist die Funktion die
+gestartet wird, wenn das Programm startet. Sie stellt die Ausgangswerte aller
+Module ein und startet GLEW und GLFW\@. Danach startet sie eine unendliche
+Schleife bis das Fenster geschlossen wird. Ein Zyklus in dieser Schleife nennen
+wir einen Tick. In einem Tick geschieht folgendes:
 \begin{itemize}
   \item Falls sich die Fenstergrösse verändert hat, wird dies im Renderer
   angepasst.
@@ -913,21 +928,21 @@ zwei Ergebnisse, falls die Kante mit der Hypereben in einer Ebene liegt. In
 diesem letzten Fall würde es eigentlich unendlich viele Resultate geben, aber
 wir nehmen statt dem die zwei Enden der Kanten, da wir schlussendlich nur die
 Punkte brauchen, die die konvexe Hülle des Volumens ausmachen. Das Schneiden ist
-trivial; Wir betrachten die Distanz $d(A)$ zwischen Punkt A und der Hyperebene,
-und die Distanz $d(B)$ zwischen Punkt B und der Hyperebene. Falls $d(A) \cdot
-d(B) > 0$ dann sind beide auf der gleichen Seite der Hyperebene, und es gibt
-keinen Schnittpunkt. Falls $d = 0$ für eine der Punkte, wird dieser Punkt als
-Schnittpunkt akzeptiert. Falls $d(A) = 0 \land d(B) = 0$ muss die Kante auf der
-Hyperebene liegen. Somit geben wir beide Endpunkte A und B zurück. Ansonsten
-berechnen wir aus dem Verhältniss der beiden Distanzen wo auf der Kante der
-Schnittpunkt liegt und geben das zurück. So erarbeiten wir eine Liste mit allen
-Schnittpunkten. Gleichzeitig bauen wir eine Datenstruktur auf, die für jede
-Seite eine Liste von Schnittpunkten beinhaltet. Dies ist ganz einfach, da wir
-vom Schnittpunkt den wir gerade gefunden haben immer wissen, zu welcher Kante er
-gehört und wir schon im Voraus berechnet haben, welche Seiten welche Kanten
-beinhalten. Sobald ein Schnittpunkt gefunden wird, wird es bei allen 3 Seiten
-die dessen Kante beinhalten, als Schnittpunkt auf der Oberfläche der Seite
-abgespeichert.
+trivial; Die Punkte A und B sind die Endpunkte der Kante. Wir betrachten die
+Distanz $d(A)$ zwischen Punkt A und der Hyperebene, und die Distanz $d(B)$
+zwischen Punkt B und der Hyperebene. Falls $d(A) \cdot d(B) > 0$ dann sind beide
+auf der gleichen Seite der Hyperebene, und es gibt keinen Schnittpunkt. Falls $d
+= 0$ für eine der Punkte, wird dieser Punkt als Schnittpunkt akzeptiert. Falls
+$d(A) = 0 \land d(B) = 0$ muss die Kante auf der Hyperebene liegen. Somit geben
+wir beide Endpunkte A und B zurück. Ansonsten berechnen wir aus dem Verhältniss
+der beiden Distanzen wo auf der Kante der Schnittpunkt liegt und geben das
+zurück. So erarbeiten wir eine Liste mit allen Schnittpunkten. Gleichzeitig
+bauen wir eine Datenstruktur auf, die für jede Seite eine Liste von
+Schnittpunkten beinhaltet. Dies ist ganz einfach, da wir vom Schnittpunkt den
+wir gerade gefunden haben immer wissen, zu welcher Kante er gehört und wir schon
+im Voraus berechnet haben, welche Seiten welche Kanten beinhalten. Sobald ein
+Schnittpunkt gefunden wird, wird es bei allen 3 Seiten die dessen Kante
+beinhalten, als Schnittpunkt auf der Oberfläche der Seite abgespeichert.
 
 Während diesem Prozess rechne ich auch den Durchschnitt aller Schnittpunkte aus.
 Dieser wird sich innerhalb des Lösungskörpers befinden und wird sich als
@@ -972,15 +987,15 @@ getan. Es treten zwei Probleme auf:
     so um, dass im Verlauf des im Abschnitt~\ref{sssec:libraries} beschriebenen
     Rendering-Pipelines OpenGL doppelte Pixel aussortiert und immer die näher
     bei der Kamera liegenden behält. Da OpenGL aber mit Gleitkommazahlen
-    arbeitet, die eine kleine aber existente ungenauigkeit aufweisen, kommt es
+    arbeitet, die eine kleine aber existente Ungenauigkeit aufweisen, kommt es
     so, dass falls zwei Flächen sehr genau aufeinanderliegen, es sehr zufällig
     ist, welche der Flächen behalten, und welche weggeworfen wird. Dies führt
     zu einem vibrierenden Effekt: Wenn sich das Bild bewegt, ist bei jedem der
     etlichen Bilder pro Sekunde ganz zufällig eine der Flächen oben.
 
     Wenn wir so wie beschrieben die Dreiecke zeichnen, dann wird wie man in der
-    Abbildung sieht, ein gewisser Teil immer überlappen. Dies führt zu unschönem
-    Z-Fighting.
+    Abbildung sieht, ein gewisser Teil immer überlappen. Dies führt zu eiem
+    unschönem Effekt, das Z-Fighting genannt ist.
   \end{description}
 \end{itemize}
 
@@ -989,38 +1004,38 @@ Kombinationen mit drei Schnittpunkten genommen und sie als Dreieck gerendert.
 Das löste natürlich das Problem der Löcher. Es führte aber zu noch viel mehr
 Z-Fighting, da nun viel mehr Flächen überlappten.
 
-Ab hier nenne ich die gefundenen Schnittpunke Ecken oder Eckpunkte. Sie sind
+Von nun an nenne ich die gefundenen Schnittpunke Ecken oder Eckpunkte. Sie sind
 nämlich die Ecken des Lösungsobjekts.
 
 Zuerst dachte ich daran, einen Algorithmus für dreidimensionale konvexe Hüllen
 zu implementieren. Diese sind aber sehr komplex und ich habe gedacht, dass ich
-mir sicher etwas einfacheres überlegen kann. So bin ich auf folgenden
+mir sicher etwas Einfacheres überlegen kann. So bin ich auf folgenden den
 Algorithmus gestossen:
 
-Wenn ich ein Dreieck auf einer Fläche vom Lösungsobjekt habe, wo zwei der drei
+Wenn ich ein Dreieck auf einer Fläche des Lösungsobjekts habe, wo zwei der drei
 Kanten auch Kanten des Lösungsobjekts sind, kann ich diese ganze Fläche des
 Lösungsobjekts mit Dreiecken belegen, ohne Überlappungen oder Löcher. Das
 Funktioniert folgendermassen: Ich merke mir den Normalvektor des Dreiecks, das
 ausserhalb des Lösungsobjekts zeigt. Um dies zu berechnen, benutze ich den
-Durchschnitt aller Ecken des Lösungskörpers, den ich bereits berechnet habe, als
-ich alle Ecken berechnet habe. Ich nehme einen der Punkte, der nicht in der
-Mitte liegt, als Ausgangspunkt. Der mittlere Punkt ist der Punkt, der beide
-anderen Punkte als Nachbar hat. Falls alle drei Punkte diese Eigenschaft
-besitzen, ist die ganze Fläche nur ein Dreieck, da die drei Punkte durch drei
-Kanten des Lösungsobjekts verbunden sind. Dann bricht der Algorithmus ab.
-Ansonten habe ich jetzt einen Ausgangspunkt, einen mittleren Punkt, und einen
-Endpunkt. Ich gehe jetzt alle Nachbarn vom Endpunkt durch. Ich kontrolliere
-immer, ob das Dreieck, das durch den Augangspunkt, dem Endpunkt, und dem neuen
-Punkt gebildet wird, den gleichen Normalvektor gegen Aussen hat, wie das
-ursprüngliche Dreieck. Falls ja, liegt es auf der gleichen Ebene, ist also Teil
-der gleichen Fläche. Dieses Dreieck zeiche ich. Der vorherige Endpunkt wird
-jetzt zum mittleren Punkt, und der neue Punkt zum Endpunkt. Ich widerhole diesen
-Prozess, bis der Endpunkt und der Augangspunkt der gleiche Punkt sind. Dann
-breche ich ab. Jedesmal wenn ich ein Dreieck einzeichne, merke ich mir, dass es
-eingezeichnet wurde. Ich speichere auch jedesmal ab, dass das Dreieck, gebildet
-durch den mittleren Punkt, dem Endpunkt, und dem richtigen neuen Punkt, bereits
-gezeichnet ist. Zwar ist dies nicht direkt schon gezeichnet, aber dessen Fläche
-wird nach dem Ende des Algorithmus eingefüllt sein.
+Durchschnitt aller Ecken des Lösungskörpers, den ich generiert habe als ich alle
+Ecken berechnete. Ich nehme einen der Punkte, der nicht in der Mitte liegt, als
+Ausgangspunkt. Der mittlere Punkt ist der Punkt, der beide anderen Punkte als
+Nachbar hat. Falls alle drei Punkte diese Eigenschaft besitzen, ist die ganze
+Fläche nur ein Dreieck, da die drei Punkte durch drei Kanten des Lösungsobjekts
+verbunden sind. Dann bricht der Algorithmus ab. Ansonten habe ich jetzt einen
+Ausgangspunkt, einen mittleren Punkt, und einen Endpunkt. Ich gehe jetzt alle
+Nachbarn vom Endpunkt durch. Ich kontrolliere immer, ob das Dreieck, das durch
+den Augangspunkt, dem Endpunkt, und dem neuen Punkt gebildet wird, den gleichen
+Normalvektor gegen Aussen hat, wie das ursprüngliche Dreieck. Falls ja, liegt es
+auf der gleichen Ebene, ist also Teil der gleichen Fläche. Dieses Dreieck zeiche
+ich. Der vorherige Endpunkt wird jetzt zum mittleren Punkt, und der neue Punkt
+zum Endpunkt. Ich widerhole diesen Prozess, bis der Endpunkt und der
+Augangspunkt der gleiche Punkt sind. Dann breche ich ab. Jedesmal wenn ich ein
+Dreieck einzeichne, merke ich mir, dass es eingezeichnet wurde. Ich speichere
+auch jedesmal ab, dass das Dreieck, gebildet durch den mittleren Punkt, dem
+Endpunkt, und dem richtigen neuen Punkt, bereits gezeichnet ist. Zwar ist dies
+nicht direkt schon gezeichnet, aber dessen Fläche wird nach dem Ende des
+Algorithmus eingefüllt sein.
 
 \begin{figure}[H]
 	\centering
@@ -1033,7 +1048,7 @@ Jetzt mache ich die Tiefensuche, die ich Oben beschrieben habe. Ich suche jedes
 Dreieck, wo zwei Kanten auch Kanten des Lösungsobjekts sind. Falls dieses
 Dreieck noch nicht ausgefüllt ist, lasse ich den Algorithmus laufen.
 
-Warum das immer eine richtige Lösung geben wird: 
+Hier zeige ich warum das immer eine richtige Lösung geben wird: 
 \begin{itemize}
   \item Jede Fläche wird Dreiecke enthalten mit so einem Startdreieck, wo zwei
   Kanten Teil des Lösungsobjekts sind.
@@ -1068,14 +1083,17 @@ Aktionen:
   \item Es berechnet die Transformationsmatrix neu.
 \end{itemize}
 
-\paragraph{Das Hyperebenenmanager}
-Der Hyperebenenmanager speichert alle nötigen Parameter der Hyperebene. Dies
-sind sind ein Vektor, der dessen Position beschreibt, 3 Vektore, die die drei
+\paragraph{Der Hyperebenenmanager}
+Der Hyperebenenmanager speichert alle nötigen Parameter der Hyperebene. Dies ist
+ein Vektor, der dessen Position beschreibt, 3 Vektore, welche die drei
 Einheitsvektoren der dreidimensionalen Hyperebene bilden und ein Normalvektor.
 Wie der Kameramanger beinhaltet er auch Konstanten für die Dreh- und
 Bewegungsgschwindigkeit. Ausserdem beinhalten er einen Vektor für die momentane
-Drehrichtung und eine Zahl für die momentane Bewegungsrichtung. Die
-\code{tick()} Funktion des Hyperebenenmanagers macht folgendes:
+Drehrichtung und eine Zahl für die momentane Bewegungsrichtung. Hier braucht es
+nur eine Zahl, da es nur in die Richtung der eigenen Normalen verschoben werden
+kann, und somit nur angegeben werden muss, ob es in die positive oder negative
+Richtung bewegt wird. Die \code{tick()} Funktion des Hyperebenenmanagers macht
+folgendes:
 
 \begin{itemize}
   \item Die Hyperebene drehen, jenachdem welche Tasten gedrückt sind.
@@ -1359,44 +1377,44 @@ angegeben für die Grösse. Und ein Vektor wird angegeben als Ursprung.
   \item \url{https://www.khronos.org/opengl/wiki/} \\
   \begin{itemize}
     \item \url{https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)}\\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://www.khronos.org/opengl/wiki/Uniform_(GLSL)}\\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://www.khronos.org/opengl/wiki/Built-in_Variable_(GLSL)}\\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview}\\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://www.khronos.org/opengl/wiki/Vertex_Shader}\\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://www.khronos.org/opengl/wiki/Fragment_Shader}\\
-    (9.1.2023)\\
+    (9.1.2023)
   \end{itemize}
   \item \url{https://en.wikipedia.org/} \\
   \begin{itemize}
     \item \url{https://en.wikipedia.org/wiki/Tesseract} \\
-    (6.1.2023)\\
+    (6.1.2023)
     \item \url{https://en.wikipedia.org/wiki/Four-dimensional_space} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://en.wikipedia.org/wiki/Rotations_in_4-dimensional_Euclidean_space} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://de.wikipedia.org/wiki/Drehmatrix} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://en.wikipedia.org/wiki/Phong_reflection_model} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://en.wikipedia.org/wiki/Phong_shading} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://en.wikipedia.org/wiki/Transformation_matrix} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{https://en.wikipedia.org/wiki/Z-fighting} \\
-    (8.1.2023)\\
+    (8.1.2023)
     \item \url{https://en.wikipedia.org/wiki/GLFW} \\
-    (8.1.2023)\\
+    (8.1.2023)
     \item \url{https://en.wikipedia.org/wiki/OpenGL} \\
-    (8.1.2023)\\
+    (8.1.2023)
     \item \url{https://en.wikipedia.org/wiki/OpenGL_Shading_Language} \\
-    (8.1.2023)\\
+    (8.1.2023)
     \item \url{https://de.wikipedia.org/wiki/Satz_vom_Fu%C3%9Fball} \\
-    (9.1.2023)\\
+    (9.1.2023)
     \item \url{} \\
   \end{itemize}
   \item \url{https://www.qfbox.info/4d/vis/10-rot-1} \\
