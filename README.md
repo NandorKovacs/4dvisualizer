@@ -69,3 +69,8 @@ computer games.
 Use the mouse to turn the camera. You need to have a coordinated movement
 of the mouse and the keys on the left hand to go around an object.
 
+# Gallery
+
+![screenshot of multicube](./docs/screenshots/multicube-01.png)
+![screenshot of 4dcube](./docs/screenshots/cube4-01.png)
+![screenshot of 3dcube](./docs/screenshots/cube3-01.png)
