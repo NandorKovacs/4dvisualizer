@@ -1320,12 +1320,56 @@ vollständigen Bild, der schlussendlich auf dem Bildschirm zu sehen ist.
 
 \subsubsection{Installation}
 
+\paragraph{Windows}
+
+\subparagraph{Die Binärdateien herunterladen}
 \begin{itemize}
-  \item Für Linux, lade den Quellcode herunter, installiere die
-  dev dependencies, kompiliere es.
-  % explain compilation process or include a zip file too
-  \item Für Windows, lade den Zip-File von der Github release page herunter.
+\item Lade den Release-Zip-File von der Releases Seite auf GitHub herunter, und
+entzippe es. \url{https://github.com/NandorKovacs/4dvisualizer/releases}
 \end{itemize}
+
+Die Binärdateien befinden sich im resultierenden Ordner, und die
+Weltkonfigurationen in einem Ordner mit dem Namen \texttt{worlds}.
+
+Um die neuste Binärdatei laufen zu lassen, benutze folgenden Command:
+\texttt{multicube.exe ..\progs\multicube\worlds\two_rotated_cubes.world.yaml}
+
+\subparagraph{Den Quellcode kompilieren}
+
+\begin{itemize}
+\item Installiere Build Tools for Visual Studio 2022 von \url{https://visualstudio.microsoft.com/downloads/}.
+\item Installiere CMake (>3.24) von \url{https://cmake.org/download/}.
+\item Lade den Quellcode-Zip-File von der Releases Seite auf HitHub herunter, und entzippe es. \url{https://github.com/NandorKovacs/4dvisualizer/releases}
+\item Im Start Menü, starte `x64 Native Tools Command Prompt for VS 2022',
+wechsle zum Ordner des Quellcodes mithilfe von `cd', und lasse folgende Commands
+laufen:
+\begin{verbatim}
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+\end{verbatim}
+\end{itemize}
+
+Alle Libraries sollen automatisch heruntergeladen und kompiliert werden. Die
+resultierende Binärdateien befinden sich hier: \texttt{build/progs/<program
+name>/Release/<program name>.exe}.
+
+Um die neueste Version des Programms laufen zu lassen, führe folgenden Command
+aus: \texttt{progs\multicube\Release\multicube.exe ..\progs\multicube\worlds\two_rotated_cubes.world.yaml}
+
+Um das Programm zu beenden, drücke Q.
+
+\paragraph{Linux}
+
+Um den Quellcode auf Linux zu kompilieren, werden die gleichen Schritte wie für
+Windows benötigt. Build Tools for Visual Studio 2022 wird aber nicht benötigt.
+
+Auf Ubuntu, benutze stattdessen diesen Command:
+\being{verbatim}
+sudo apt-get install build-essentials
+\end{verbatim}
+
 
 \subsubsection{Konfigurations Format}
 In einem Yaml File kann man Würfel beschreiben. Für jeden Würfel können mehrere
