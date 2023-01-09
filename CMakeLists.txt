@@ -29,6 +29,15 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cmrc)
 
+# Yaml reader ------------------
+
+FetchContent_Declare(
+  yaml-cpp
+  GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+  GIT_TAG yaml-cpp-0.7.0
+)
+FetchContent_MakeAvailable(yaml-cpp)
+
 # ------------------------------
 
 set(GL_LIB 
@@ -41,3 +50,4 @@ add_subdirectory(geometry)
 add_subdirectory(lib)
 add_subdirectory(progs/3dcube)
 add_subdirectory(progs/4dcube)
+add_subdirectory(progs/multicube)

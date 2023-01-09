@@ -18,9 +18,9 @@ void HyperplaneManager::tick(double time) {
         hyperplane.normal() * float(speed * time * move_direction);
   }
 
-  DLOG << "normal: " << hyperplane.normal() << std::endl;
-  DLOG << "pos: " << hyperplane.pos << std::endl;
-  std::cerr << "------" << std::endl;
+  //DLOG << "normal: " << hyperplane.normal() << std::endl;
+  //DLOG << "pos: " << hyperplane.pos << std::endl;
+  //std::cerr << "------" << std::endl;
 }
 
 void HyperplaneManager::rotate_axis(float rad, glm::vec4& axis) {
@@ -56,6 +56,15 @@ glm::mat4 HyperplaneManager::get_transform() {
 }
 glm::vec4& HyperplaneManager::get_origin() { return hyperplane.pos; }
 
-Hyperplane& HyperplaneManager::get_hyperplane() { return hyperplane; };
+Hyperplane const &HyperplaneManager::get_hyperplane() const {
+  return hyperplane;
+}
+
+Hyperplane HyperplaneManager::get_hyperplane(math::Transformation const& t) {
+  return Hyperplane{
+    t.reverse(hyperplane.pos),
+    t.reverse_rotate_matrix_columns(hyperplane.coord_system)
+  };
+};
 
 }  // namespace viz

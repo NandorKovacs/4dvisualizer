@@ -2,6 +2,8 @@
 
 add_library(geometry
   intersect.cc
+  4d_math.cc
+  geometry.cc
 )
 
 add_executable(intersect_test

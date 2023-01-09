@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include "../geometry/geometry.h"
+#include "../geometry/4d_math.h"
 
 namespace viz {
 
@@ -21,7 +22,8 @@ class HyperplaneManager {
   glm::mat4 get_transform();
   glm::vec4& get_origin();
 
-  Hyperplane& get_hyperplane();
+  Hyperplane const& get_hyperplane() const;
+  Hyperplane get_hyperplane(math::Transformation const& t);
  private:
   Hyperplane hyperplane;
   
