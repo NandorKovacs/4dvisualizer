@@ -11,6 +11,7 @@
 \usepackage{float}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{verbatim}
 \usepackage{url}
 
 \definecolor{dark-green}{rgb}{0.0, 0.4, 0.0}
@@ -579,6 +580,13 @@ GLFW\@. GLFW (Graphics Library Framework) hilft bei der Kommunikation mit dem
 Operationssystem. Mithilfe von GLFW kann ich das Applikationsfenster erstellen
 und verwalten, Tastendrücke wahrnehmen und die Mausbewegung benutzen.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{ma_diagrams/libraries.png}
+	\caption{Ein Flussdiagramm der Kommunikation zwischen den Libraries und dem Computer}
+	\label{fig:libs}
+\end{figure}
+
 Was noch nicht ganz klar ist, ist wie die Grafikkarte weiss, wo genau die
 berechneten Pixel hingehören. Dies ist so gelöst, dass wir durch GLFW einen
 sogenannten Context beim Erstellen des Fensters erhalten. Wenn wir die Daten und
@@ -596,6 +604,13 @@ sieht, was unter dem Fenster ist und verwaltet allgemeint alles, was Fenster
 angeht. Somit spricht GLFW nicht nur mit dem Operationsystem, sondern auch mit
 dem Compositor. Der Compositor erstellt durch OpenGL einen Context und gibt dann
 auch die Nummer des Contextes an GLFW zurück.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{ma_diagrams/context.png}
+	\caption{Der Unterschied zwischen den Operationssystemen, und wie mein Programm an einen OpenGL Context kommt}
+	\label{fig:ctx}
+\end{figure}
 
 
 \subsubsection{Meilensteine}
@@ -712,12 +727,57 @@ Der Würfel ist nicht mehr zwingend zentriert beim Ursprung. Er kann sich jetzt
 an einem arbiträren Ort im 4d Raum, mit einer arbiträren Drehung befinden. Dies
 ist hier aber erst nur im code beeinflussbar, man kann den Würfel nicht bewegen.
 
-
 \subparagraph{Value}
 
 Wir haben ein Skelett vom Kern des Programms.
 
-% We have a skeleton of the core of the code with end to end functionality.
+\subparagraph{Prozess}
+Am wichtigsten war einen Weg zu finden, die Transformation von einem arbiträren
+Würfel in den kanonischen Würfel zu repräsentieren. Da die grösste Matrix in der
+standard OpenGL mathematik Library eine $4\times 4$ Matrix ist, habe ich mich
+entschieden nicht die ganze Transformation mit einem Matrix zu beschreiben,
+sondern eine Klasse zu erstellen die zuerst eine Drehung, dann eine Skalierung,
+und als letztes eine Translation durchführt.
+
+Das wir die Transformation mit diesen drei Komponenten beschreiben, wird etwas
+später einen weiteren grossen Vorteil haben: der Benutzer wird sehr einfach so
+eine Transformation angeben können. Man kann alle drei Komponente unabhängig
+voneinander beliebig einstellen, ohne das Probleme entstehen können.
+
+Angenommen wir haben eine Transformation $T$, welche den kanonischen Würfel in
+den arbiträren Würfel verschiebt. Es hat die folgende drei Komponente: $T =
+T_{\mathrm{translation}}\circ T_{\mathrm{skalierung}}\circ
+T_{\mathrm{rotation}}$. Wir wollen jetzt eine Transformierte Hyperebene haben,
+so dass das Schneiden des kanonischen Würfels mit dieser Hyperebene, und dann
+die zurück Transformierung des Schnittes genau den gesuchten Schnitt des
+arbiträren Würfels ergibt.
+
+Dafür müssen wir einfach nur den Ursprung der Hyperebene mit $T^{-1}$
+transformieren. Das machen wir, indem wir die Inverse der Komponenten in der
+umgekehrten Reihenfolge anwenden: $T^{-1} = T^{-1}_{\mathrm{rotation}}\circ
+T^{-1}_{\mathrm{skalierung}}\circ T^{-1}_{\mathrm{translation}}$. An den
+Einheitsvektoren der Hyperebene wenden wir nur die Inverse der Rotation an. Um
+zu verstehen wieso das funktioniert, muss man einfach überlegen was $T$ macht:
+es transformiert den kanonischen Würfel in den gewählten Würfel. Logischerweise
+macht $T^{-1}$ also genau das Umgekehrte. Und wenn wir diese inverse
+Transformation auch an die Hyperebene anwenden, `geht sie mit dem Würfel mit'.
+In anderen Worten, $T^{-1}$ ist eine Operation, dass ein Koordinatensystem
+erstellt, in dem der gewählte Würfel der kanonische Würfel ist.
+
+Dies zu programmieren war recht unkompliziert. Ich habe ein separates Modul
+erstellt, das die vierdimensionale Transformationen für mich macht. Dann habe
+ich kleine Änderungen am bestehenden Code vorgenommen: im Renderer rufe ich den
+Intersektror mit der Transformierten Hyperebene auf, und Transformiere die
+Resultate auch zurück.
+
+Um die resultierenden 3d Vektore richtig zu Transformieren, müssen wir sie
+zuerst in 4d Vektore zurückkonvertieren mithilfe der Hyperebene. Dann können wir
+$T$ an ihnen anwenden, und sie dann wieder in 3d Vektore zurückwandeln.
+
+Es muss immer gut aufgepasst werden, ob ein Vektor ein Ortsvektor ist oder
+nicht. Für Vektore die keine Ortsvektore sind, müssen wir den Ursprung der
+Hyperebene subtrahieren, und nur die Rotation anwenden, ohne den anderen zwei
+Komponenten der Transformation.
 
 \paragraph{Meilenstein 5: Ein Format, dass den Aufbau einer Welt beschreibt}
 
@@ -732,6 +792,35 @@ Wir haben ein Skelett vom Kern des Programms.
 
 Wir sind bereit das Endprodukt zusammenzustellen.
 
+\subparagraph{Prozess}
+Um einfach mit dem Programm spielen und experimentieren zu können brauchte ich
+einen Konfigurationsfileformat das leserlich ist. Ich habe mich für den
+beliebten Yaml Format entschieden, da es sehr leserlich ist, und simple
+Libraries verfügbar sind die es für mich einlesen können.
+
+Der folgende Codestück demonstriert wie das Fileformat funktioniert:
+
+\begin{verbatim}
+- cube:
+  rotation:
+    XY: 10
+  scale: 0.8
+  shift: [1.5, 0, 0, 0]
+- cube:
+  shift: [-1.5, 0, 0, 0]
+  rotation:
+    ZY: 20
+    YW: 5
+\end{verbatim}
+
+Man muss einfach den Programm aus einem Command-Terminal starten, und ein
+Konfigurationsfile als Parameter angeben:
+
+\begin{verbatim}
+$ cd directory_with_binary/
+$ ./multicube path_to_config_file
+\end{verbatim}
+
 \paragraph{Meilenstein 6: Die Renderung einer Welt}
 
 \subparagraph{Key results}
@@ -744,6 +833,13 @@ präsentiert.
 \subparagraph{Value}
 
 Dies ist das erwartete Endprodukt von der ursprünglichen Projektbeschreibung.
+
+\subparagraph{Prozess}
+Nachdem das Fileformat implementiert war, hatte ich eine Datenstruktur mit einer
+Liste von Würfeln, repräsentiert durch Transformationen. Ich habe im Renderer
+eine Schleife hinzugefügt die diese Liste durchläuft, und für jeden Würfel den
+Intersektor aufruft. Der Programm war schon so strukturiert, dass keine weitere
+Änderungen nötig waren. Alles andere funktionierte von alleine.
 
 \subsubsection{Die wichtigste Module im Programm}
 \paragraph{Die main() Funktion} Die \code{main()} Funktion ist die
