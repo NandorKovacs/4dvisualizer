@@ -6,3 +6,4 @@
     shift: [-1.5, 0, 0, 0]
     rotation:
       ZY: 20
+      YW: 5
