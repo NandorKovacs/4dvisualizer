@@ -25,7 +25,7 @@ GLuint create_shader_program(std::string vshader_content, std::string fshader_co
   CHECK_GL();
 
   glCompileShader(vshader);
-  CHECK_GL([&]() {
+  CHECK_GL_EXTRA([&]() {
     GLint num_compiled = 0;
     glGetShaderiv(vshader, GL_COMPILE_STATUS, &num_compiled);
     CHECK_GL();
@@ -38,7 +38,7 @@ GLuint create_shader_program(std::string vshader_content, std::string fshader_co
   });
 
   glCompileShader(fshader);
-  CHECK_GL([&]() {
+  CHECK_GL_EXTRA([&]() {
     GLint num_compiled = 0;
     glGetShaderiv(fshader, GL_COMPILE_STATUS, &num_compiled);
     CHECK_GL();
@@ -60,7 +60,7 @@ GLuint create_shader_program(std::string vshader_content, std::string fshader_co
   CHECK_GL();
 
   glLinkProgram(prog);
-  CHECK_GL([&]() {
+  CHECK_GL_EXTRA([&]() {
     GLint linked;
     glGetProgramiv(prog, GL_LINK_STATUS, &linked);
     if (linked) {

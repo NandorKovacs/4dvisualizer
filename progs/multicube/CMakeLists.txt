@@ -9,7 +9,9 @@ PUBLIC
   4dvisualizer_lib
   geometry
   viz_multicube_glsl
-  ${GL_LIB}
+  glew_s
+  glfw
+  glm::glm
 )
 
 cmrc_add_resource_library(viz_multicube_glsl

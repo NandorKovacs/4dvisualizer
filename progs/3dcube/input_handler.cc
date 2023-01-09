@@ -5,6 +5,7 @@
 #include <functional>
 #include <unordered_map>
 
+#include "../../lib/scan_codes.h"
 #include "../../lib/errors.h"
 #include "../../lib/key_manager.h"
 
@@ -23,6 +24,7 @@ static void key_event_callback(GLFWwindow* window, int key, int scancode,
   }
   it->second->on_key_action(window, key, scancode, action, mods);
 }
+
 static void mouse_event_callback(GLFWwindow* window, double x, double y) {
   auto it = handlers.find(window);
   if (it == handlers.end()) {
@@ -34,6 +36,10 @@ static void mouse_event_callback(GLFWwindow* window, double x, double y) {
 
 void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
                                  int action, int mods) {
+  if (scancode == VIZ_SC_Q) {
+    glfwTerminate();
+    std::exit(EXIT_SUCCESS);
+  }
   for (key_manager::KeyManager& km : key_managers) {
     km.on_action(scancode, action);
   }
@@ -65,20 +71,20 @@ InputHandler::InputHandler(GLFWwindow* window, CameraManager& camera_manager)
   auto set_move_Z = std::bind(&CameraManager::set_move_Z, &camera_manager, _1);
 
   key_managers.push_back(key_manager::KeyManager{
-      {/*A*/38},
-      {/*D*/40},
+      {VIZ_SC_A},
+      {VIZ_SC_D},
       set_move_X,
       1.0f,
   });
   key_managers.push_back(key_manager::KeyManager{
-      {/*L_CTRL*/37},
-      {/*L_SHIFT*/50, /*SPACE*/65},
+      {VIZ_SC_L_CTRL},
+      {VIZ_SC_L_SHIFT, VIZ_SC_SPACE},
       set_move_Y,
       1.0f,
   });
   key_managers.push_back(key_manager::KeyManager{
-      {/*W*/25},
-      {/*S*/39},
+      {VIZ_SC_W},
+      {VIZ_SC_S},
       set_move_Z,
       1.0f,
   });

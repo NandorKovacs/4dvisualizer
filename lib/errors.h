@@ -15,7 +15,8 @@ bool print_opengl_error();
 void check_gl(std::string file, int line,
               std::function<bool()> extra_check = nullptr);
 
-#define CHECK_GL(...) check_gl(__FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
+#define CHECK_GL() check_gl(__FILE__, __LINE__)
+#define CHECK_GL_EXTRA(fn) check_gl(__FILE__, __LINE__, fn)
 
 void check_glfw(std::string message, std::string file, int line);
 

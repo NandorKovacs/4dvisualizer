@@ -9,6 +9,9 @@ add_library(4dvisualizer_lib
 )
 
 target_link_libraries(4dvisualizer_lib
-  ${GL_LIB}
+PUBLIC
+  glew_s
   yaml-cpp
+  glm::glm
 )
+

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 include(FetchContent)
 
-# GoogleTest --------
+# Dependencies
 
 FetchContent_Declare(
   googletest
@@ -15,36 +15,49 @@ FetchContent_Declare(
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-enable_testing()
-
-include(GoogleTest)
-
-# CMRC --------------
 
 FetchContent_Declare(
   cmrc
   GIT_REPOSITORY https://github.com/vector-of-bool/cmrc.git
   GIT_TAG 2.0.1
 )
-FetchContent_MakeAvailable(cmrc)
-
-# Yaml reader ------------------
 
 FetchContent_Declare(
   yaml-cpp
   GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
   GIT_TAG yaml-cpp-0.7.0
 )
-FetchContent_MakeAvailable(yaml-cpp)
+
+FetchContent_Declare(
+  glm
+  GIT_REPOSITORY https://github.com/g-truc/glm.git
+  GIT_TAG 0.9.9.8
+)
+
+FetchContent_Declare(
+  glew
+  SOURCE_SUBDIR build/cmake
+  URL https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.tgz
+)
+
+FetchContent_Declare(
+  glfw
+  GIT_REPOSITORY https://github.com/glfw/glfw.git
+  GIT_TAG 3.3.8
+)
 
 # ------------------------------
+FetchContent_MakeAvailable(googletest cmrc yaml-cpp glm glew glfw)
 
-set(GL_LIB 
-  -lglfw
-  -lGLEW
-  -lGL
-)
+enable_testing()
+include(GoogleTest)
+
+if (WIN32)
+  include_directories(
+    "${glew_SOURCE_DIR}/include"
+    "${GLFW_SOURCE_DIR}/include"
+  )
+endif()
 
 add_subdirectory(geometry)
 add_subdirectory(lib)

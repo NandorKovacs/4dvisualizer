@@ -15,7 +15,7 @@ namespace {
 constexpr float pi = 3.14159265359;
 
 glm::vec4 parse_shift(YAML::Node const& n) {
-  if (!n.IsSequence() || !n.size() == 4) {
+  if (!n.IsSequence() || n.size() != 4) {
     std::ostringstream err;
     err << "Cube shift must be a vector of 4 floats. Got: " << n;
     throw std::runtime_error{err.str()};
@@ -53,7 +53,7 @@ std::vector<math::Rotation> parse_rotation(YAML::Node const& n) {
     std::string key = rot_it->first.as<std::string>();
     float angle = rot_it->second.as<float>() / 360 * 2 * pi;
     math::Plane p = math::planeFromString(key);
-    res.emplace_back(p, angle);
+    res.push_back({p, angle});
   }
   return res;
 }
@@ -108,7 +108,7 @@ World::World(std::string file_name) {
         rot = rotate(r.plane, r.angle) * rot;
       }
 
-      cubes.emplace_back(math::Transformation{rot, scaling, translate});
+      cubes.push_back({math::Transformation{rot, scaling, translate}});
     }
   }
 
