@@ -22,6 +22,7 @@
 
 #else
 
+#define VIZ_SC_Q 11
 #define VIZ_SC_A 38
 #define VIZ_SC_D 40
 #define VIZ_SC_L_CTRL 37

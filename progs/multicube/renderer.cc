@@ -158,8 +158,8 @@ void Renderer::setup_vertices() {
       push_pt(v_lines, t.pts[2]);
       push_pt(v_lines, t.pts[0]);
 
-      push_pt(v_lines, (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f);
-      push_pt(v_lines, normal + (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f);
+      // push_pt(v_lines, (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f);
+      // push_pt(v_lines, normal + (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f);
 
       ++count;
     };
