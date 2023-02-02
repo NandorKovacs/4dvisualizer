@@ -22,7 +22,7 @@
 
 #else
 
-#define VIZ_SC_Q 11
+#define VIZ_SC_Q 24
 #define VIZ_SC_A 38
 #define VIZ_SC_D 40
 #define VIZ_SC_L_CTRL 37
@@ -38,6 +38,8 @@
 #define VIZ_SC_SEMICOLON 47
 #define VIZ_SC_LBRACKET 34
 #define VIZ_SC_APOSTROPHE 48
+#define VIZ_SC_1 10
+#define VIZ_SC_2 11
 
 #endif
 

@@ -3,8 +3,6 @@
 #include <GL/glew.h>
 
 #define GLT_IMPLEMENTATION
-#include "../../third_party/glText-master/gltext.h"
-
 #include <cmath>
 #include <cmrc/cmrc.hpp>
 #include <glm/glm.hpp>
@@ -16,6 +14,7 @@
 #include "../../lib/camera_manager.h"
 #include "../../lib/errors.h"
 #include "../../lib/shader_loader.h"
+#include "../../third_party/glText-master/gltext.h"
 
 CMRC_DECLARE(viz_multicube_glsl);
 
@@ -28,11 +27,9 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
       hyperplane_manager{hyperplane_manager},
       world{world},
       text1{gltCreateText()} {
-
-	if (!gltInit())
-	{
+  if (!gltInit()) {
     throw std::runtime_error{"Could not initialize glt"};
-	}
+  }
 
   cmrc::embedded_filesystem fs = cmrc::viz_multicube_glsl::get_filesystem();
 
@@ -42,9 +39,20 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
       create_shader_program(std::string{vshader.begin(), vshader.end()},
                             std::string{fshader.begin(), fshader.end()});
 
+  cmrc::file color_vshader = fs.open("color_vshader.glsl");
+  cmrc::file color_fshader = fs.open("color_fshader.glsl");
+  color_prog = create_shader_program(
+      std::string{color_vshader.begin(), color_vshader.end()},
+      std::string{color_fshader.begin(), color_fshader.end()});
+
   light_loc.mv = glGetUniformLocation(light_prog, "mv_matrix");
   CHECK_GL();
   light_loc.proj = glGetUniformLocation(light_prog, "proj_matrix");
+  CHECK_GL();
+
+  light_loc.mv = glGetUniformLocation(color_prog, "mvc_matrix");
+  CHECK_GL();
+  light_loc.proj = glGetUniformLocation(color_prog, "projc_matrix");
   CHECK_GL();
 
   light_loc.material_mat = glGetUniformLocation(light_prog, "material.mat");
@@ -84,9 +92,7 @@ Renderer::Renderer(glm::ivec2 window_size, CameraManager& camera_manager,
   CHECK_GL();
 }
 
-Renderer::~Renderer() {
-  gltDeleteText(text1);
-}
+Renderer::~Renderer() { gltDeleteText(text1); }
 
 void Renderer::setup_basic_projection(GLuint const mv_loc,
                                       GLuint const proj_loc) {
@@ -117,6 +123,12 @@ void push_pt(std::vector<float>& f, glm::vec3 const& pt) {
   f.push_back(pt.z);
   // f.push_back(color);
 };
+void push_pt(std::vector<float>& f, glm::vec3 const& pt, int color) {
+  f.push_back(pt.x);
+  f.push_back(pt.y);
+  f.push_back(pt.z);
+  f.push_back(color);
+};
 }  // namespace
 
 void Renderer::setup_vertices() {
@@ -136,9 +148,9 @@ void Renderer::setup_vertices() {
     };
 
     auto handle_triangle = [&](intersect::Triangle const& tt,
-                               glm::vec3 const& nn) {
-
-      glm::vec3 normal = hyperplane.to_rel(hyperplane.pos -
+                               glm::vec3 const& nn, int color) {
+      glm::vec3 normal = hyperplane.to_rel(
+          hyperplane.pos -
           cube.transformation.forward_rotate(transformed_hyperplane.to_abs(nn) -
                                              transformed_hyperplane.pos));
 
@@ -147,7 +159,7 @@ void Renderer::setup_vertices() {
 
       for (int i = 0; i < 3; ++i) {
         glm::vec3 const& pt = t.pts[i];
-        push_pt(triangle_vertices, pt);
+        push_pt(triangle_vertices, pt, color);
       }
       push_pt(triangle_normals, normal);
 
@@ -169,13 +181,19 @@ void Renderer::setup_vertices() {
 }
 
 void Renderer::send_triangles() {
-  glUseProgram(light_prog);
+  if (is_color) {
+    glUseProgram(color_prog);
+  } else {
+    glUseProgram(light_prog);
+  }
 
   glBindVertexArray(vao[0]);
   CHECK_GL();
 
   setup_basic_projection(light_loc.mv, light_loc.proj);
-  setup_light();
+  if (!is_color) {
+    setup_light();
+  }
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
   CHECK_GL();
@@ -184,7 +202,7 @@ void Renderer::send_triangles() {
                triangle_vertices.data(), GL_STREAM_DRAW);
   CHECK_GL();
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
   CHECK_GL();
 
   glEnableVertexAttribArray(0);
@@ -258,9 +276,11 @@ void Renderer::draw_hud() {
   std::ostringstream hud;
   auto const& hp = hyperplane_manager.get_hyperplane();
   hud << "Hyperplane:\n"
-  "Center: " << hp.pos << "\n"
-  "Unit vectors and normal:\n"
-  << hp.coord_system;
+         "Center: "
+      << hp.pos
+      << "\n"
+         "Unit vectors and normal:\n"
+      << hp.coord_system;
   gltSetText(text1, hud.str().c_str());
   gltBeginDraw();
   gltColor(0.4f, 0.4f, 0.4f, 0.4f);

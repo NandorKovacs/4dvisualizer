@@ -32,6 +32,7 @@ struct Intersections {
   typedef vec_t::iterator iterator;
 
   vec_t pts;
+  std::array<int, max_intersections> edge_id;
 
   inline void dump() {
     std::cerr << "-----intersections------" << std::endl;
@@ -143,7 +144,7 @@ class Intersector {
    * @return int The number of valid items in res.
    */
   void intersect(
-      std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
+      std::function<void(Triangle const&, glm::vec3 const& normal, int color)> emit,
       Hyperplane const& plane);
 
  private:
@@ -151,9 +152,11 @@ class Intersector {
 
   glm::vec3 triangle_normal(int i, int j, int k);
 
+  int get_color(int a, int b, int c);
+
   void sweep(int i, int j, int k,
-             std::function<void(Triangle const&, glm::vec3 const& normal)>,
-             VisitedTriangles& visited_triangles, glm::vec3 const& center);
+             std::function<void(Triangle const&, glm::vec3 const& normal, int color)>,
+             VisitedTriangles& visited_triangles, glm::vec3 const& center, int color);
   Intersections intersections;
   FaceContentMap face_content_map;
   NeighboursMap neighbours_map;

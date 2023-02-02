@@ -2,14 +2,15 @@
 
 #include <GL/glew.h>
 
-#include <functional>
-#include <unordered_map>
-#include <iostream>
 #include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <unordered_map>
 
-#include "../../lib/scan_codes.h"
 #include "../../lib/errors.h"
 #include "../../lib/key_manager.h"
+#include "../../lib/scan_codes.h"
+#include "renderer.h"
 
 using namespace std::placeholders;
 namespace viz {
@@ -37,6 +38,15 @@ static void mouse_event_callback(GLFWwindow* window, double x, double y) {
 
 void InputHandler::on_key_action(GLFWwindow* window, int key, int scancode,
                                  int action, int mods) {
+  if (scancode == VIZ_SC_1) {
+    renderer.is_color = false;
+    return;
+  }
+  if (scancode == VIZ_SC_2) {
+    renderer.is_color = true;
+    return;
+  }
+  
   if (scancode == VIZ_SC_Q) {
     glfwTerminate();
     std::exit(EXIT_SUCCESS);
@@ -60,10 +70,12 @@ void InputHandler::on_mouse_action(GLFWwindow* window, double x, double y) {
 }
 
 InputHandler::InputHandler(GLFWwindow* window, CameraManager& camera_manager,
-                           HyperplaneManager& hyperplane_manager)
+                           HyperplaneManager& hyperplane_manager,
+                           Renderer& renderer)
     : window{window},
       camera_manager{camera_manager},
-      hyperplane_manager{hyperplane_manager} {
+      hyperplane_manager{hyperplane_manager},
+      renderer{renderer} {
   glfwSetKeyCallback(window, key_event_callback);
   CHECK_GLFW("set_key_callback");
   glfwSetCursorPosCallback(window, mouse_event_callback);

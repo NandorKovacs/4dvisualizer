@@ -56,9 +56,9 @@ int main(int argc, char** argv) {
   WindowSizeTracker window_size{window};
   CameraManager camera_manager;
   viz::HyperplaneManager hyperplane_manager;
-  viz::InputHandler input_handler(window, camera_manager, hyperplane_manager);
-  viz::Renderer renderer{window_size.get(), camera_manager, hyperplane_manager, world};
-
+  viz::Renderer renderer{window_size.get(), camera_manager, hyperplane_manager,
+                         world};
+  viz::InputHandler input_handler(window, camera_manager, hyperplane_manager, renderer);
   double prev_time = 0;
   while (!glfwWindowShouldClose(window)) {
     if (window_size.should_update()) {

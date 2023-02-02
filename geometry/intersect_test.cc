@@ -27,7 +27,7 @@ TEST(IntersectTest, IntersectWithDefaultPlane) {
 
   std::vector<Triangle> triangles;
   intersector.intersect(
-      [&](Triangle const& t, glm::vec3 const& normal) {
+      [&](Triangle const& t, glm::vec3 const& normal, int color) {
         triangles.push_back(t);
         // std::cerr << t << std::endl;
       },

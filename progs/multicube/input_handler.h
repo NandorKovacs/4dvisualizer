@@ -9,12 +9,13 @@
 #include "../../lib/camera_manager.h"
 #include "../../lib/hyperplane_manager.h"
 #include "../../lib/key_manager.h"
+#include "renderer.h"
 
 namespace viz {
 
 class InputHandler {
  public:
-  InputHandler(GLFWwindow* window, CameraManager& camera_manager, HyperplaneManager& hyperplane_manager);
+  InputHandler(GLFWwindow* window, CameraManager& camera_manager, HyperplaneManager& hyperplane_manager, Renderer& renderer);
 
   void on_key_action(GLFWwindow* window, int key, int scancode, int action,
                      int mods);
@@ -27,6 +28,7 @@ class InputHandler {
   GLFWwindow* window;
   CameraManager& camera_manager;
   HyperplaneManager& hyperplane_manager;
+  Renderer& renderer;
 
   std::vector<key_manager::KeyManager> key_managers;
 };

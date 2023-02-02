@@ -13,7 +13,7 @@
 #include "../../lib/world_loader.h"
 
 #define NUM_VAOs 1
-#define NUM_VBOs 3
+#define NUM_VBOs 4
 
 // Forward declaration for the text drawing library (which must be included in
 // the c++ module.)
@@ -31,6 +31,8 @@ class Renderer {
   void render();
   void set_size(glm::ivec2 size);
 
+  bool is_color = false;
+
  private:
   void setup_vertices();
   void setup_basic_projection(GLuint const mv_loc, GLuint const proj_loc);
@@ -44,7 +46,7 @@ class Renderer {
 
   GLuint vao[NUM_VAOs];
   GLuint vbo[NUM_VBOs];
-  GLuint light_prog, wireframe_prog;
+  GLuint light_prog, wireframe_prog, color_prog;
 
   glm::ivec2 window_size;
   float aspect;
@@ -59,15 +61,23 @@ class Renderer {
   CameraManager& camera_manager;
   HyperplaneManager& hyperplane_manager;
 
-
   // ----- wireframe program locations
   struct WireframeLoc {
     GLuint mv, proj;
   };
   WireframeLoc wireframe_loc;
 
-
   // ----- lighting stuff
+
+  // glm::vec4 colors[8] = {
+  //     glm::vec4{255, 255, 255, 1}, glm::vec4{137, 18, 20, 1},
+  //     glm::vec4{13, 72, 172, 1},   glm::vec4{255, 85, 37, 1},
+  //     glm::vec4{25, 155, 76, 1},   glm::vec4{254, 213, 47, 1},
+  //     glm::vec4{255, 192, 203, 1}, glm::vec4{128, 0, 128, 1}};
+
+  // std::vector<float> colors{255, 255, 255, 1,   137, 18, 20,  1,  13,  72,  172,
+  //                           1,   255, 85,  37,  1,   25, 155, 76, 1,   254, 213,
+  //                           47,  1,   255, 192, 203, 1,  128, 0,  128, 1};
 
   Material gold_material{{glm::vec4{0.2473f, 0.1995f, 0.0745f, 1},
                           glm::vec4{0.7516f, 0.6065f, 0.2265f, 1},
@@ -88,15 +98,13 @@ class Renderer {
   struct LightLoc {
     GLuint mv, proj;
 
-    GLuint material_mat, material_shine, global_ambient,
-        directional_mat, directional_direction,
-        normal_matrix_transform;
+    GLuint material_mat, material_shine, global_ambient, directional_mat,
+        directional_direction, normal_matrix_transform;
   };
   LightLoc light_loc;
 
   // ------ HUD
-  GLTtext *text1;
-
+  GLTtext* text1;
 };
 
 }  // namespace viz

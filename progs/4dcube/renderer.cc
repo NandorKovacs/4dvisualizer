@@ -107,7 +107,7 @@ void Renderer::setup_vertices() {
   int count = 0;
 
   auto handle_triangle = [&](intersect::Triangle const& t,
-                             glm::vec3 const& normal) {
+                             glm::vec3 const& normal, int color) {
     for (int i = 0; i < 3; ++i) {
       glm::vec3 const& pt = t.pts[i];
       push_pt(triangle_vertices, pt);

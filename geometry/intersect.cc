@@ -153,18 +153,44 @@ glm::vec3 Intersector::triangle_normal(int i, int j, int k) {
   return glm::normalize(glm::cross(ipt(j) - ipt(i), ipt(k) - ipt(i)));
 }
 
+int Intersector::get_color(int a, int b, int c) {
+  Edge e = edges[intersections.edge_id[a]],
+       e2 = edges[intersections.edge_id[b]],
+       e3 = edges[intersections.edge_id[c]];
+  std::array<int, 6> same_coords[4]{
+      {e.a.x, e.b.x, e2.a.x, e2.b.x, e3.a.x, e3.b.x},
+      {e.a.y, e.b.y, e2.a.y, e2.b.y, e3.a.y, e3.b.y},
+      {e.a.z, e.b.z, e2.a.z, e2.b.z, e3.a.z, e3.b.z},
+      {e.a.w, e.b.w, e2.a.w, e2.b.w, e3.a.w, e3.b.w}};
+
+  for (int i = 0; i < 4; ++i) {
+    int x = 0;
+    for (int j = 0; j < 6; ++j) {
+      x += same_coords[i][j];
+    }
+  
+    if (x == 6) {
+      return i;
+    }
+    if (x == -6) {
+      return i + 4;
+    }
+  }
+}
+
 void Intersector::sweep(
     int i, int j, int k,
-    std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
-    VisitedTriangles& visited_triangles, glm::vec3 const& center) {
-  auto emit_with_normal = [&](Triangle const& t) {
+    std::function<void(Triangle const&, glm::vec3 const& normal, int color)>
+        emit,
+    VisitedTriangles& visited_triangles, glm::vec3 const& center, int color) {
+  auto emit_with_normal = [&](Triangle const& t, int color) {
     glm::vec3 normal = {glm::cross(t.pts[0] - t.pts[1], t.pts[2] - t.pts[1])};
     glm::vec3 t_center = (t.pts[0] + t.pts[1] + t.pts[2]) / 3.0f;
 
     if (glm::dot(center - t_center, normal) > 0) {
       normal = normal * -1.0f;
     }
-    emit(t, normal);
+    emit(t, normal, color);
   };
 
   std::bitset<max_intersections> visited;
@@ -217,7 +243,10 @@ void Intersector::sweep(
     }
 
     visited_triangles.set(prev, c, best_n);
-    emit_with_normal(Triangle{ipt(i), ipt(c), ipt(best_n)});
+
+    emit_with_normal(Triangle{ipt(i), ipt(c), ipt(best_n)},
+                     get_color(i, c, best_n));
+
     prev = c;
     c = best_n;
     visited[c] = true;
@@ -225,21 +254,23 @@ void Intersector::sweep(
 
   visited_triangles.set(prev, c, k);
   visited_triangles.set(c, k, i);
-  emit_with_normal(Triangle{ipt(c), ipt(k), ipt(i)});
+  emit_with_normal(Triangle{ipt(c), ipt(k), ipt(i)}, get_color(c, k, i));
 }
 
 void Intersector::intersect(
-    std::function<void(Triangle const&, glm::vec3 const& normal)> emit,
+    std::function<void(Triangle const&, glm::vec3 const& normal, int color)>
+        emit,
     Hyperplane const& plane) {
   glm::mat4x3 dim_transform = glm::transpose(plane.coord_system);
 
   Intersections::iterator it = intersections.pts.begin();
   glm::vec3 center{0.0f, 0.0f, 0.0f};
-  for (Edge const& e : edges) {
+  for (int i = 0; i < edges.size(); ++i) {
+    Edge e = edges[i];
     int n = intersect_edge(it, e, plane, dim_transform);
-
-    for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
       face_content_map.insert(e, intersections.count);
+      intersections.edge_id[intersections.count] = i;
       ++intersections.count;
 
       center += *it;
@@ -252,12 +283,14 @@ void Intersector::intersect(
 
   VisitedTriangles visited_triangles;
 
+  int color = 0;
   for (int i = 0; i < neighbours_map.count; ++i) {
     NeighboursMap::Neighbours const& ns = neighbours_map.neighbours[i];
 
     for (int j = 0; j < ns.count; ++j) {
       for (int k = j + 1; k < ns.count; ++k) {
-        sweep(i, ns.ids[j], ns.ids[k], emit, visited_triangles, center);
+        sweep(i, ns.ids[j], ns.ids[k], emit, visited_triangles, center, color);
+        ++color;
       }
     }
   }

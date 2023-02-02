@@ -7,8 +7,6 @@
 
 #include "key_input.h"
 
-constexpr double frame_wait_time = 0.01;
-
 int main(int argc, char** argv) {
   GLFWwindow* window;
 
@@ -19,7 +17,7 @@ int main(int argc, char** argv) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  window = glfwCreateWindow(1024, 800, "4dviz", NULL, NULL);
+  window = glfwCreateWindow(50, 50, "4dviz", NULL, NULL);
 
   if (!window) {
     std::cerr << "Error: window not created." << std::endl;
@@ -27,19 +25,6 @@ int main(int argc, char** argv) {
   }
 
   glfwMakeContextCurrent(window);
-
-  glewExperimental = GL_TRUE;
-  GLenum glew_err = glewInit();
-  if (GLEW_OK != glew_err) {
-    std::cerr << "Glew init error: " << glewGetErrorString(glew_err)
-              << std::endl;
-    std::terminate();
-  }
-
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  if (glfwRawMouseMotionSupported()) {
-    glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-  }
 
   viz::utils::InputHandler handler{window};
 
